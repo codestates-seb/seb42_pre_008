@@ -1,5 +1,14 @@
-import { AiFillAccountBook } from "react-icons/ai";
+import styled from "styled-components";
+import NavOnLogout from "../component/NavOnLogout";
+
+export const QuestionContainer = styled.article``;
+
 const QuestionList = () => {
-    return <AiFillAccountBook></AiFillAccountBook>
-}
-export default QuestionList
+    return (
+        <>
+            <NavOnLogout />
+            <QuestionContainer>여기 보이니</QuestionContainer>
+        </>
+    );
+};
+export default QuestionList;

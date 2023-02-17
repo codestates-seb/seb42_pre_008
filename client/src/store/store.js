@@ -1,9 +1,10 @@
-import { compose, createStore,} from "redux";
-import rootReducer from "../reducers/rootReducer";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-  : compose;
-const store = createStore(rootReducer, composeEnhancers());
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from '../counterSlice'
 
-export default store;
+const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+});
+export default store

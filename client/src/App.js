@@ -1,4 +1,4 @@
-import { useEffect, useState ,Suspense} from "react";
+import { useEffect, Suspense} from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Login from './pages/Login'
@@ -8,7 +8,7 @@ import QuestionForm from './pages/QuestionForm'
 import QuestionList from './pages/QuestionList'
 import SignIn from './pages/SignIn'
 import { useDispatch } from 'react-redux'
-import setTester from "./actions/testAction";
+import { read } from './counterSlice'
 
 function App() {
   const dispatch = useDispatch()
@@ -24,7 +24,7 @@ function App() {
         return res.json();
     })
     .then(data => {
-        dispatch(setTester(data))
+        dispatch(read(data))
     })
     .catch(err => {
         console.log(err)

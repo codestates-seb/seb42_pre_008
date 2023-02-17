@@ -28,6 +28,7 @@ export const Menu = styled.button`
     font-size: 1rem;
     background-color: transparent;
     border: none;
+    color: #FFFFFF;
     :hover {
         background-color: #e4e6e7;
         border-radius: 5vh;
@@ -37,7 +38,7 @@ export const LoginButton = styled.button`
     font-size: 1rem;
     height: 4vh;
     padding: 0 1vh;
-    /* margin-left: 1vh; */
+    margin-left: 1vh;
     border-radius: 0.3vh;
     background-color: #e3ecf3;
     color: #477199;

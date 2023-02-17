@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const UseFetch = (endpoint = "") => {
+const useFetch = (endpoint = "") => {
     const [data, setData] = useState(null);
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ const UseFetch = (endpoint = "") => {
 
         setTimeout(() => {
             //이부분 본인 서버 링크로 수정
-            fetch(`${process.env.REACT_APP_API_URL}${endpoint}`, {
+            fetch(`http://localhost:3001/${endpoint}`, {
                 signal: abortCont.signal,
             })
                 .then((res) => {
@@ -38,4 +38,4 @@ const UseFetch = (endpoint = "") => {
     return [data, isPending, error];
 };
 
-export default UseFetch;
+export default useFetch;

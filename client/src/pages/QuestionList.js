@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Footer from "../component/Footer";
+import NavOnLogin from "../component/NavOnLogin";
 import NavOnLogout from "../component/NavOnLogout";
 
 export const QuestionContainer = styled.article``;
@@ -7,7 +9,9 @@ const QuestionList = () => {
     return (
         <>
             <NavOnLogout />
-            <QuestionContainer>여기 보이니</QuestionContainer>
+            <NavOnLogin />
+            {/* <QuestionContainer></QuestionContainer> */}
+            <Footer></Footer>
         </>
     );
 };

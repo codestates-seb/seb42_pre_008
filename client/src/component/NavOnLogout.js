@@ -2,6 +2,10 @@ import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
 
 export const Nav = styled.nav`
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

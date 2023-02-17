@@ -2,10 +2,15 @@ import React, {useState} from "react";
 import {FcGoogle} from 'react-icons/fc'
 import { Link, useNavigate } from "react-router-dom";
 import {MdOutlineOpenInNew} from 'react-icons/md'
-import {SiNaver} from 'react-icons/si'
+// import {SiNaver} from 'react-icons/si'
 import {AiOutlineGithub, AiOutlineFacebook} from 'react-icons/ai'
 import { fetchLogin } from "../util/fetchLogin";
+import styled from 'styled-components';
 
+const DivWrapper = styled.div`
+justify-content: center;
+align-items: middle;
+`;
 
 export default function Login () {
     const navigate = useNavigate();
@@ -45,8 +50,9 @@ export default function Login () {
 
 
     return (
-		<>
+		<DivWrapper>
 			<div className="lg:w-full w-full bg-gray-200 h-screen flex justify-center items-center">
+                dd
 				<div className="items-center flex flex-col  h-fit">
 					<div className="flex">
 						<div className="mt-24 mx-auto">
@@ -142,7 +148,7 @@ export default function Login () {
 					</div>
 				</div>
 			</div>
-		</>
+		</DivWrapper>
 	);
 }
 

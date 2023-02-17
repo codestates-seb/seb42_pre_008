@@ -11,7 +11,7 @@ export const fetchLogin = async (data) => {
         if (!res.ok) {
             console.log(res);
             if (res.status === 401) alert('이메일 또는 비밀번호가 틀렸습니다.', '확인해주세요')
-            throw Error('fetch the data for that reource')
+            throw Error('fetch the data for that resource')
         }
         if(res.status === 200) {
             alert('로그인 되었습니다.')

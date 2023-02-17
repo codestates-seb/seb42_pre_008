@@ -1,11 +1,10 @@
 import UseFetch from "../util/UseFetch"
 
-const setTester = (endpoint = '') => {
-    const [data, isPending, error] = UseFetch(endpoint)
-
+const setTester = (data) => {
     return {
       type: 'READ',
-      payload: [data, isPending, error] 
+      payload: [data] 
     }
 }
+
 export default setTester

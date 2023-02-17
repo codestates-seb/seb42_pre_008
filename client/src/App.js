@@ -12,7 +12,25 @@ import setTester from "./actions/testAction";
 
 function App() {
   const dispatch = useDispatch()
-  dispatch(setTester())
+
+  useEffect(() => {
+    const abortCont = new AbortController();
+
+    fetch( process.env.REACT_APP_API_URL, { signal: abortCont.signal })
+    .then(res => {
+        if (!res.ok) { 
+            throw Error('could not fetch the data for that resource');
+        } 
+        return res.json();
+    })
+    .then(data => {
+        dispatch(setTester(data))
+    })
+    .catch(err => {
+        console.log(err)
+    })
+    return () => abortCont.abort();
+    }, [])
 
   return (
     <BrowserRouter>

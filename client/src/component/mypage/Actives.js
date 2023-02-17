@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import {Link, useParams} from 'react-router-dom';
+import Answers from "./Answers";
+import Questions from "./Questions";
 import Summary from "./Summary";
 
 
@@ -10,8 +12,8 @@ const Actives = () => {
 
     const menuArray = [
         {name: "Summary", content: <Summary />},
-        {name: 'Answers', content: <></>},
-        {name: 'Questions', content: <></>},
+        {name: 'Answers', content: <Answers />},
+        {name: 'Questions', content: <Questions />},
     ];
 
     const selectMenuHandler = (index) => {

@@ -27,6 +27,7 @@ function MyPage() {
                         <Routes>
                             <Route exact path="/" element={<Actives/>} />
                             <Route exact path="/actives" element={<Actives />} />
+                            <Route exact path="/settings/*" element={<Actives />} />
                         </Routes>
                     </div>
                 </div>

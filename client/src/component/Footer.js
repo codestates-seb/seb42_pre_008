@@ -1,15 +1,14 @@
 import styled from "styled-components";
 
 export const StyledFooter = styled.footer`
-    position: absolute;
-    left: 0;
-    right: 0;
+    position: relative;
     bottom: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: flex-start;
     height: 20vh;
+    margin: 0;
     background-color: #242629;
 `;
 export const Contents = styled.span`

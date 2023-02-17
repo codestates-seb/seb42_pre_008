@@ -1,12 +1,15 @@
-import useFetch from '../util/useFetch';
+// import useFetch from '../util/useFetch';
+import { useSelector } from 'react-redux'
+
+
 
 const QuestionDetail = () => {
-    const [data, isPending, error] = useFetch(`${process.env.REACT_APP_API_URL}`);
+    // const [data, isPending, error] = useFetch(`${process.env.REACT_APP_API_URL}`);
+    const counter = useSelector(state => state)
+    
     return(
         <div >
-         {data && console.log(data)}
-            {console.log(isPending)}
-            {console.log(error)}
+            {counter && console.log(counter)}
         </div>
     )
 }

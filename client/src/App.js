@@ -7,8 +7,13 @@ import QuestionDetail from './pages/QuestionDetail'
 import QuestionForm from './pages/QuestionForm'
 import QuestionList from './pages/QuestionList'
 import SignIn from './pages/SignIn'
+import { useDispatch } from 'react-redux'
+import setTester from "./actions/testAction";
 
 function App() {
+  const dispatch = useDispatch()
+  dispatch(setTester())
+
   return (
     <BrowserRouter>
     {/* { error && <div>{ error }</div> } */}

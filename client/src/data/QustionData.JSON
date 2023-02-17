@@ -1,0 +1,60 @@
+{
+    "todos": [
+      {
+        "id": 1,
+        "name": "shoping list",
+        "update": "2023.02.09",
+        "list": [
+          {
+            "index": 2,
+            "todo": "텀블러",
+            "check": true
+          },
+          {
+            "index": 3,
+            "todo": "충전기",
+            "check": true
+          },
+          {
+            "index": 5,
+            "todo": "배",
+            "check": true
+          },
+          {
+            "index": 6,
+            "todo": "단무지",
+            "check": false
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "to-do list",
+        "update": "2023.02.01",
+        "list": [
+          {
+            "index": 1,
+            "todo": "장보기",
+            "check": false
+          },
+          {
+            "index": 2,
+            "todo": "공부하기",
+            "check": false
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "name": "study list",
+        "update": "2023.02.01",
+        "list": [
+          {
+            "index": 1,
+            "todo": "딥다이브",
+            "check": false
+          }
+        ]
+      }
+    ]
+  }

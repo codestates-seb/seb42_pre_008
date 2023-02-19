@@ -20,8 +20,7 @@ const Button = styled.button`
 `
 
 const QuestionRead = () => {
-    const questionData = useSelector(state => state)
-    
+
     return (
         <QuestionReadWrap>
             <QuestionHeadWrap>

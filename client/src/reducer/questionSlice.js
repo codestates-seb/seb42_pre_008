@@ -1,3 +1,4 @@
+//redux 필요여부 확인 후 삭제
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {

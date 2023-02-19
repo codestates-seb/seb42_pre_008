@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { fetchCreate } from '../util/api'
 import { fetchDelete } from '../util/api'
 import { fetchPatch } from '../util/api'
+import QuestionRead from './QuestionRead'
 
 
 const QuestionDetail = () => {
@@ -37,7 +37,8 @@ const QuestionDetail = () => {
     }
     
     return(
-        <div >
+        <div>
+            <QuestionRead/>
             <input onChange={ (e) => setdata(e.target.value)} value ={data} ></input>
             <button onClick={ onHandleClick }>제출</button>
             <input onChange={ (e) => setid(e.target.value)} value ={id} ></input>

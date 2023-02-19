@@ -4,8 +4,8 @@ const initialState = {
     value: [],
   }
   
-  export const counterSlice = createSlice({
-    name: 'tester',
+  export const questionDataSlice = createSlice({
+    name: 'questionData',
     initialState,
     reducers: {
       read: (state, action) => {
@@ -14,5 +14,5 @@ const initialState = {
     },
   })
   
-  export const { read } = counterSlice.actions
-  export default counterSlice.reducer
+  export const { read } = questionDataSlice.actions
+  export default questionDataSlice.reducer

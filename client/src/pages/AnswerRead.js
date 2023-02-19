@@ -28,7 +28,7 @@ const AnswerRead = () => {
                 <Button><AiFillCaretUp/></Button>
                     <span>좋아요개수</span>
                 <Button><AiFillCaretDown/></Button>
-                <Button >채택</Button>
+                <Button>채택</Button>
                 <Button>수정</Button>
                 <Button>삭제</Button>
                 <p>답변내용</p>

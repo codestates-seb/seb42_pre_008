@@ -15,7 +15,7 @@ export const Nav = styled.nav`
     border-top: 0.5vh solid #f48023;
     border-bottom: 0.2vh solid #e4e6e7;
     background-color: #f9f9f9;
-    font-size: 1.3rem;
+    font-size: 20.8px;
     z-index: 1;
 `;
 export const Menu = styled.button`
@@ -25,7 +25,7 @@ export const Menu = styled.button`
     height: 4vh;
     margin-right: 1vh;
     padding: 0 1vh;
-    font-size: 1rem;
+    font-size: 16px;
     background-color: transparent;
     border: none;
     :hover {
@@ -34,7 +34,7 @@ export const Menu = styled.button`
     }
 `;
 export const LoginButton = styled.button`
-    font-size: 1rem;
+    font-size: 16px;
     height: 4vh;
     padding: 0 1vh;
     margin-left: 1vh;
@@ -48,7 +48,7 @@ export const LoginButton = styled.button`
     }
 `;
 export const SignupButton = styled.button`
-    font-size: 1rem;
+    font-size: 16px;
     height: 4vh;
     padding: 0 1vh;
     margin-left: 1vh;
@@ -74,7 +74,7 @@ export const SearchBox = styled.div`
     font-weight: bold;
     color: #bcbbbc;
     #magnifyingGlass {
-        font-size: 1.3rem;
+        font-size: 20.8px;
     }
 `;
 export const Input = styled.input`
@@ -84,7 +84,7 @@ export const Input = styled.input`
     height: 4vh;
     padding: 0;
     border: none;
-    font-size: 1rem;
+    font-size: 16px;
 `;
 export const Logo = styled.img`
     height: 2.7vh;

@@ -15,7 +15,7 @@ export const Nav = styled.nav`
     border-top: 0.5vh solid #f48023;
     border-bottom: 0.2vh solid #e4e6e7;
     background-color: #f9f9f9;
-    font-size: 1.3rem;
+    font-size: 20.8px;
     z-index: 1;
 `;
 export const Menu = styled.button`
@@ -25,17 +25,17 @@ export const Menu = styled.button`
     height: 4vh;
     margin-right: 1vh;
     padding: 0 1vh;
-    font-size: 1rem;
+    font-size: 16px;
     background-color: transparent;
     border: none;
-    color: #FFFFFF;
+    color: #ffffff;
     :hover {
         background-color: #e4e6e7;
         border-radius: 5vh;
     }
 `;
 export const LoginButton = styled.button`
-    font-size: 1rem;
+    font-size: 16px;
     height: 4vh;
     padding: 0 1vh;
     margin-left: 1vh;
@@ -49,12 +49,12 @@ export const LoginButton = styled.button`
     }
 `;
 export const SignupButton = styled.button`
-    font-size: 1rem;
+    font-size: 16px;
     height: 4vh;
     padding: 0 1vh;
     margin-left: 1vh;
     border-radius: 0.3vh;
-    background-color: #0995FF;
+    background-color: #0995ff;
     color: white;
     border: 1px solid #477199;
     box-shadow: inset 0px 0px 0px 0px #54a3f7;
@@ -76,7 +76,7 @@ export const SearchBox = styled.div`
     font-weight: bold;
     color: #bcbbbc;
     #magnifyingGlass {
-        font-size: 1.3rem;
+        font-size: 20.8px;
     }
 `;
 export const Input = styled.input`

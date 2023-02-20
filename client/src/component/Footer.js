@@ -9,7 +9,7 @@ export const StyledFooter = styled.footer`
     align-items: flex-start;
     height: 20vh;
     margin: 0;
-    background-color: #23262A;
+    background-color: #23262a;
 `;
 export const Contents = styled.span`
     height: 10vh;
@@ -20,13 +20,13 @@ export const Contents = styled.span`
     color: white;
     span {
         margin-bottom: 0.7vh;
-        font-size: 0.8rem;
-        color: #9199A1;
+        font-size: 12.8px;
+        color: #9199a1;
     }
     .title {
         font-weight: bold;
-        color: #BABFC4;
-        font-size: 0.9rem;
+        color: #babfc4;
+        font-size: 14.4px;
     }
 `;
 export const Smallests = styled.span`
@@ -35,8 +35,8 @@ export const Smallests = styled.span`
     justify-content: space-between;
     margin-top: 3vh;
     height: 10vh;
-    font-size: 0.6rem;
-    color: #9199A1;
+    font-size: 9.6px;
+    color: #9199a1;
 `;
 export const Upper = styled.div`
     display: flex;

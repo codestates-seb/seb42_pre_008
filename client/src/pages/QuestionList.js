@@ -185,7 +185,7 @@ const QuestionList = () => {
                 <>
                     <NavOnLogout />
                     {/* <NavOnLogin /> */}
-                    <QuestionListWrapper>
+                    {/* <QuestionListWrapper>
                         <QuestionContainer>
                             <QuestionListHeader>
                                 <InsideHeaderUpper>
@@ -256,8 +256,8 @@ const QuestionList = () => {
                                 </QuestionUnit>
                             ))}
                         </QuestionContainer>
-                    </QuestionListWrapper>
-                    <Footer />
+                    </QuestionListWrapper> */}
+                    {/* <Footer /> */}
                 </>
             )}
         </>

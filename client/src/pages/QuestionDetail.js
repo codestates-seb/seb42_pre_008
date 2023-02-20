@@ -6,7 +6,7 @@ import QuestionRead from './QuestionRead'
 import AnswerRead  from './AnswerRead'
 
 
-const QuestionDetail = () => {
+const QuestionDetail = ({login,userInfo,endpoint}) => {
     const [data,setdata] = useState('')
     const [id,setid] = useState('')
     const [update,setUpdate] = useState('')
@@ -37,8 +37,8 @@ const QuestionDetail = () => {
     
     return(
         <div>
-            <QuestionRead/>
-            <AnswerRead/>
+            <QuestionRead login={login}/>
+            <AnswerRead login={login}/>
             <input onChange={ (e) => setdata(e.target.value)} value ={data} ></input>
             <button onClick={ onHandleClick }>제출</button>
             <input onChange={ (e) => setid(e.target.value)} value ={id} ></input>

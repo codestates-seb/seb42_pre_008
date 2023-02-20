@@ -1,4 +1,4 @@
-import { useEffect, Suspense} from "react";
+import { useEffect, Suspense ,useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Login from './pages/Login'
@@ -9,15 +9,17 @@ import QuestionList from './pages/QuestionList'
 import SignIn from './pages/SignIn'
 
 function App() {
+  const [login,setLogin] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const [endpoint, setEndpoint] = useState(null);
 
   return (
     <BrowserRouter>
-    {/* { error && <div>{ error }</div> } */}
     <Suspense>
         <Routes>
           <Route exact path="/" element={<QuestionList />} />
           <Route path="/question-form" element={<QuestionForm />} />
-          <Route path="/question-detail" element={<QuestionDetail />} />
+          <Route path="/question-detail" element={<QuestionDetail login={login} userInfo={userInfo} endpoint={endpoint}/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/mypage" element={<MyPage />} />

@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
-import { useSelector } from 'react-redux'
 
 const QuestionHeadWrap = styled.div`
 
@@ -18,6 +17,7 @@ const QuestionReadWrap = styled.div`
 const Button = styled.button`
 
 `
+
 
 const QuestionRead = () => {
 

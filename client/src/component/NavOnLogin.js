@@ -54,7 +54,7 @@ export const SignupButton = styled.button`
     padding: 0 1vh;
     margin-left: 1vh;
     border-radius: 0.3vh;
-    background-color: #4393f8;
+    background-color: #0995FF;
     color: white;
     border: 1px solid #477199;
     box-shadow: inset 0px 0px 0px 0px #54a3f7;

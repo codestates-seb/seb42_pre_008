@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense } from "react";
+import { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Login from "./pages/Login";
@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 `;
 

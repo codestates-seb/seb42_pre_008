@@ -106,12 +106,12 @@ export const QuestionContent = styled.div`
     font-size: 0.9rem;
 `;
 export const Left = styled.span`
-    border: 1px solid green;
+    /* border: 1px solid green; */
     width: 100px;
 `;
 export const Right = styled.span`
-    border: 1px solid gold;
-    width: 700ppx;
+    /* border: 1px solid gold; */
+    width: 700px;
 `;
 export const QuestionInfo = styled.div`
     display: flex;

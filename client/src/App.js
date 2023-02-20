@@ -11,7 +11,40 @@ import SignIn from './pages/SignIn'
 function App() {
   const [login,setLogin] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [error,setError] = useState(null)
+  //QuestionList -> QuestionDetail로 엔드포인트를 전달합니다
   const [endpoint, setEndpoint] = useState(null);
+
+  //로그인 여부를 확인해 회원정보를 저장합니다
+  useEffect(() => {
+    const abortCont = new AbortController();
+
+    setTimeout(() => {
+      //여기서 endpoint를 수정해주면 됩니다
+    fetch(process.env.REACT_APP_API_URL, 
+          { signal: abortCont.signal,
+            //인증정보를 포함하는 옵션입니다
+            credentials: "include" 
+          })
+    .then(res => {
+        if (!res.ok) { 
+            throw Error('could not fetch the data for that resource');
+        } 
+        return res.json();
+    })
+    .then(data => {
+        setLogin(true);
+        setUserInfo(data);
+        setError(null);
+    })
+    .catch(err => {
+        setLogin(false);
+        setError(err.message);
+    })
+    }, 1000);
+
+    return () => abortCont.abort();
+  }, []);
 
   return (
     <BrowserRouter>

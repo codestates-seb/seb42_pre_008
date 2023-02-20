@@ -12,25 +12,47 @@ justify-content: center;
 max-width: auto;
 max-height: auto;
 `
+const Nav = styled.nav`
+position: sticky;
+top: 60px;
+width: 164px;
+max-height: calc(100vh - 180px);
+flex-grow: 0;
+flex-shrink: 0;
+flex-basis: 164px;
+`
+const MainContent = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 0 auto;
+max-width: 1024px;
+padding: 0 1rem;
+
+&.so-with-one-side {
+  margin-top: 60px;
+  padding-left: 250px;
+}
+`
+
 
 function MyPage() {
     return (
         <MainWrapper>
             <Container>
-                <nav className="sticky max-h-[calc(100vh-180px)] top-[60px] w-[164px] flex-grow-0 flex-shrink-0 basis-[164px]">
+                <Nav>
                     {/* sidebar */}
-                </nav>
-                <div className="so-main-content so-with-one-side">
+                </Nav>
+
+                <MainContent className="so-main-content so-with-one-side">
                     <div className="p-6 w-[1100px]">
-
-
                         <Routes>
                             <Route exact path="/" element={<Actives/>} />
                             <Route exact path="/actives" element={<Actives />} />
                             <Route exact path="/settings/*" element={<Actives />} />
                         </Routes>
                     </div>
-                </div>
+                </MainContent>
             </Container>
         </MainWrapper>
 

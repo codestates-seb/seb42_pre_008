@@ -10,7 +10,7 @@ import SignIn from './pages/SignIn'
 
 function App() {
   const [login,setLogin] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo,setUserInfo] = useState(null);
   const [error,setError] = useState(null)
   //QuestionList -> QuestionDetail로 엔드포인트를 전달합니다
   const [endpoint, setEndpoint] = useState(null);

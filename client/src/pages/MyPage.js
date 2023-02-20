@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Actives from '../component/mypage/Actives'
 import { Routes, Route } from "react-router-dom";
+import NavOnLogout from "../component/NavOnLogout";
+import NavOnLogin from "../component/NavOnLogin"
 
 
 const MainWrapper = styled.div`
@@ -38,6 +40,8 @@ padding: 0 1rem;
 
 function MyPage() {
     return (
+        <>
+        <NavOnLogin />
         <MainWrapper>
             <Container>
                 <Nav>
@@ -55,7 +59,7 @@ function MyPage() {
                 </MainContent>
             </Container>
         </MainWrapper>
-
+        </>
     )
 }
 

@@ -1,6 +1,7 @@
 import { useEffect, Suspense, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import LeftSide from "./component/mypage/LeftSide";
 import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
 import QuestionDetail from "./pages/QuestionDetail";
@@ -80,6 +81,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/sign-in" element={<SignIn />} />
                         <Route path="/mypage" element={<MyPage />} />
+                        <Route path="/side" element={<LeftSide />} />
                     </Routes>
                 </Suspense>
             </BrowserRouter>

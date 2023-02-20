@@ -107,9 +107,11 @@ export const QuestionContent = styled.div`
 `;
 export const Left = styled.span`
     border: 1px solid green;
+    width: 100px;
 `;
 export const Right = styled.span`
     border: 1px solid gold;
+    width: 700ppx;
 `;
 export const QuestionInfo = styled.div`
     display: flex;
@@ -185,7 +187,7 @@ const QuestionList = () => {
                 <>
                     <NavOnLogout />
                     {/* <NavOnLogin /> */}
-                    {/* <QuestionListWrapper>
+                    <QuestionListWrapper>
                         <QuestionContainer>
                             <QuestionListHeader>
                                 <InsideHeaderUpper>
@@ -256,8 +258,8 @@ const QuestionList = () => {
                                 </QuestionUnit>
                             ))}
                         </QuestionContainer>
-                    </QuestionListWrapper> */}
-                    {/* <Footer /> */}
+                    </QuestionListWrapper>
+                    <Footer />
                 </>
             )}
         </>

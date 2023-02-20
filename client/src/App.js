@@ -1,12 +1,20 @@
 import { useEffect, Suspense ,useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import styled from "styled-components";
-import Login from './pages/Login'
-import MyPage from './pages/MyPage'
-import QuestionDetail from './pages/QuestionDetail'
-import QuestionForm from './pages/QuestionForm'
-import QuestionList from './pages/QuestionList'
-import SignIn from './pages/SignIn'
+import { createGlobalStyle } from "styled-components";
+import Login from "./pages/Login";
+import MyPage from "./pages/MyPage";
+import QuestionDetail from "./pages/QuestionDetail";
+import QuestionForm from "./pages/QuestionForm";
+import QuestionList from "./pages/QuestionList";
+import SignIn from "./pages/SignIn";
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+`;
 
 function App() {
   const [login,setLogin] = useState(false);

@@ -295,7 +295,7 @@ export default function Login (props) {
 							</GoogleBtn>
 
 							<GithubBtn>
-                                <GithubLogo/>
+                <GithubLogo/>
 								Log in with GitHub
 							</GithubBtn>
 
@@ -307,15 +307,15 @@ export default function Login (props) {
 							<FormContainer>
 								<div>Email</div>
 								<input
-                                    onChange={onEmailChange}
-                                    value={userEmail}
+                  onChange={onEmailChange}
+                  value={userEmail}
 									type="email"
 								/>
 								
 								<div>Password</div>
 								<input
 									onChange={onPasswordChange}
-                                    value={userPassword}
+                  value={userPassword}
 									type="password"
 								/>
 								<SubmitBtn

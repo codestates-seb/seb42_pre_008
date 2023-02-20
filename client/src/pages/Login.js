@@ -11,7 +11,7 @@ const DivWrapper = styled.div`
 justify-content: center;
 align-items: middle;
 `;
-
+//
 const Container = styled.div`
   width: 100%;
   background-color: #E5E7EB;

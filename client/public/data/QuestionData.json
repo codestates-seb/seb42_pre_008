@@ -24,7 +24,7 @@
       "title" : "How i can use custom listview in react-native-google-places-autocomplete?",
       "content" : "I have two autocompleteinputs but i want them to use same listview to look nicer. The app i am developing looks like lyft in lyft they use two text inputs in destination selection screen. How i ca",
       "tag" : ["javascript", "react", "json-server"],
-      "author" : "JudiPARK0416",
+      "author" : "IKori",
       "createdAt" : "date",
       "view": 4,
       "votes" : 8,
@@ -49,15 +49,5 @@
       "view": 10,
       "votes" : 76875,
       "answers" : 0
-  },{
-    "id" : 6,
-    "title" : "QueryDSL with DB2 fetching Nested Json object or Json array aggregation Response",
-    "content" : "I am trying to fetch nested JSON objects and JSON List from Database using QueryDSL. I have used a native query with LISTAGG and JSON_OBJECT. Native Query : SELECT",
-    "tag" : ["javascript", "react", "json-server"],
-    "author" : "IKori",
-    "createdAt" : "date",
-    "view": 3891,
-    "votes" : 75,
-    "answers" : 5
-}]
+  }]
 }

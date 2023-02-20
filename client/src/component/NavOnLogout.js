@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
 
 export const Nav = styled.nav`
-    position: fixed;
+    position: sticky;
     top: 0;
     right: 0;
     left: 0;
@@ -15,7 +15,7 @@ export const Nav = styled.nav`
     border-top: 0.4vh solid #f48023;
     border-bottom: 0.2vh solid #e4e6e7;
     background-color: #f9f9f9;
-    z-index: 1;
+    z-index: 2;
 `;
 export const Menu = styled.button`
     display: flex;

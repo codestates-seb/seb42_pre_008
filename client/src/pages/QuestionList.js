@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import Adds from "../component/Adds";
 import Footer from "../component/Footer";
 import NavOnLogout from "../component/NavOnLogout";
+import Sidebar from "../component/Sidebar";
 import useFetch from "../util/useFetch";
 // import NavOnLogin from "../component/NavOnLogin";
 
@@ -8,25 +10,24 @@ export const QuestionListWrapper = styled.main`
     position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
     width: 100%;
     height: 120vh;
-    margin-top: 5.7vh;
+    margin-top: 0vh;
 `;
 export const QuestionContainer = styled.main`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     justify-content: start;
-    /* width: 70vw; */
     border-left: 0.2vh solid #e4e6e7;
+    padding-right: 2vh;
 `;
 export const QuestionListHeader = styled.header`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    height: 15vh;
-    width: 56.5vw;
+    width: 55vw;
     border-bottom: 0.2vh solid #e4e6e7;
 `;
 export const InsideHeaderUpper = styled.div`
@@ -39,7 +40,7 @@ export const InsideHeaderLower = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 2vh 2vh 2vh 3vh;
+    padding: 3vh 2vh 2vh 3vh;
 `;
 export const Title = styled.span`
     font-size: 2rem;
@@ -48,7 +49,6 @@ export const Title = styled.span`
 export const AskQuestionButton = styled.button`
     font-size: 13px;
     margin-top: 2vh;
-    /* height: 4vh; */
     padding: 1vh;
     border-radius: 0.3vh;
     background-color: #0995ff;
@@ -67,7 +67,7 @@ export const FilterOptions = styled.span`
 `;
 export const FilterButton = styled.button`
     font-size: 0.8rem;
-    height: 3vh;
+    height: 4vh;
     padding: 0 1vh;
     background-color: white;
     color: #6a737c;
@@ -80,8 +80,9 @@ export const FilterButton = styled.button`
 export const QuestionUnit = styled.section`
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: space-evenly;
     justify-content: space-evenly;
+    width: 55vw;
     padding: 1vh 0 2vh 0;
     border-bottom: 0.7px solid #d2d2d2;
 `;
@@ -90,13 +91,14 @@ export const QuestionTitle = styled.p`
     align-items: flex-start;
     margin-bottom: 0.5vh;
     color: #0074cc;
+    width: 43vw;
     font-size: 1.1rem;
 `;
 export const QuestionContent = styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    width: 45vw;
+    width: 43vw;
     font-size: 0.9rem;
 `;
 export const Left = styled.span`
@@ -114,7 +116,7 @@ export const QuestionInfo = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 45vw;
+    width: 43vw;
     padding-top: 1vh;
     font-size: 0.9rem;
 `;
@@ -185,6 +187,7 @@ const QuestionList = () => {
                     <NavOnLogout />
                     {/* <NavOnLogin /> */}
                     <QuestionListWrapper>
+                    <Sidebar />
                         <QuestionContainer>
                             <QuestionListHeader>
                                 <InsideHeaderUpper>
@@ -255,6 +258,7 @@ const QuestionList = () => {
                                 </QuestionUnit>
                             ))}
                         </QuestionContainer>
+                        <Adds/>
                     </QuestionListWrapper>
                     <Footer />
                 </>

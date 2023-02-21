@@ -74,19 +74,93 @@ const DisplayName = styled.div`
 font-weight: bold;
 margin-top: 10px;
 margin-bottom: 1px;
-text-align: center;
 `
-const NickName = styled.inpuit`
-width: 75%;
-padding: 1rem 2rem;
-border: 1px solid gray;
+const NickName = styled.input`
 border-radius: 4px;
+border: 1px solid #ccc;
+padding: 6px 8px;
+width: 75%;
 outline: none;
 &:focus {
-    border-color: blue;
-    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.5);
+    border-color: #90cdf4;
+    box-shadow: 0 0 0 2px #e2f2ff;
 }
 `
+const EmailTitle = styled.div`
+font-weight: bold;
+margin-top: 4px;
+margin-bottom: 1px;
+`
+const EmailInput = styled.input`
+border-radius: 4px;
+border: 1px solid #ccc;
+padding: 6px 8px;
+width: 75%;
+outline: none;
+&:focus {
+    border-color: #90cdf4;
+    box-shadow: 0 0 0 2px #e2f2ff;
+}
+`
+const PasswordTitle = styled.div`
+font-weight: bold;
+margin-top: 4px;
+margin-bottom: 1px;
+`
+const PasswordInput = styled.input`
+border-radius: 4px;
+border: 1px solid #ccc;
+padding: 6px 8px;
+width: 75%;
+outline: none;
+&:focus {
+    border-color: #90cdf4;
+    box-shadow: 0 0 0 2px #e2f2ff;
+}
+`
+const SubmitContainer = styled.div`
+margin-top: 10px;
+button {
+    & + button {
+      margin-left: 5px;
+    }
+  }
+`
+const SaveButton = styled.button`
+  border-radius: 5px;
+  background-color: #38b2ac;
+  color: #fff;
+  padding: 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #1d4ed8;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  }
+`;
+const CancelButton = styled.button`
+  border-radius: 5px;
+  background-color: #d1fae5;
+  color: #065f46;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #a7f3d0;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  }
+`;
 
 
 function MyPage() {
@@ -114,11 +188,25 @@ function MyPage() {
                                 <Form>
                                     {/** edit 자리  예정. */}
                                     <DisplayName>DisplayName</DisplayName>
-                                    <NickName type="name" defaultValue={userInfo?.DisplayName}/>
+                                    <NickName
+                                    type="name"
+                                    defaultValue={userInfo?.displayName}
+                                    />
+                                    <EmailTitle>Email</EmailTitle>
+                                    <EmailInput 
+                                    type="email"
+                                    defaultValue={userInfo?.email}
+                                    />
+                                    <PasswordTitle>PassWord</PasswordTitle>
+                                    <PasswordInput 
+                                    type="password"
+                                    />
+                                    <SubmitContainer>
+                                        <SaveButton type="submit">Save Profile</SaveButton>
+                                        <CancelButton type="button">Cancel</CancelButton>
 
+                                    </SubmitContainer>
                                 </Form>
-
-
                             </ContainerTwo>
                          </InfoContainer>
 

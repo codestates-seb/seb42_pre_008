@@ -81,7 +81,6 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/sign-in" element={<SignIn />} />
                         <Route path="/mypage" element={<MyPage />} />
-                        <Route path="/side" element={<LeftSide />} />
                     </Routes>
                 </Suspense>
             </BrowserRouter>

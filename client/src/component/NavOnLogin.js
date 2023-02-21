@@ -48,20 +48,6 @@ export const LoginButton = styled.button`
         background-color: #b9d2e8;
     }
 `;
-export const SignupButton = styled.button`
-    font-size: 13.5px;
-    height: 4.3vh;
-    padding: 0 1.3vh;
-    margin-left: 1vh;
-    border-radius: 0.3vh;
-    background-color: #0995ff;
-    color: white;
-    border: 0.9px solid #477199;
-    box-shadow: inset 0px 0px 0px 0px #54a3f7;
-    :hover {
-        background-color: #3172c6;
-    }
-`;
 export const SearchBox = styled.div`
     display: flex;
     align-items: center;
@@ -115,7 +101,6 @@ const NavOnLogin = () => {
             </SearchBox>
             <Menu id="mypage">My Page</Menu>
             <LoginButton>Log out</LoginButton>
-            <SignupButton>Sign up</SignupButton>
         </Nav>
     );
 };

@@ -1,14 +1,16 @@
 import NavOnLogin from "../component/NavOnLogin";
 import Footer from "../component/Footer";
 import styled from "styled-components";
+import TextEditor from "../component/TextEditor";
 
 export const QuestionFormWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    /* flex-direction: row; */
     justify-content: flex-start;
     align-items: center;
-    height: 200vh;
     background-color: #f8f9f9;
+    padding-bottom: 10vh;
 `;
 export const Head = styled.div`
     display: flex;
@@ -24,9 +26,14 @@ export const Head = styled.div`
 `;
 export const Robot = styled.img`
     height: 17vh;
-    margin-top: 1vh ;
-`
+    margin-top: 1vh;
+`;
 export const Main = styled.div`
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid red; */
+`;
+export const Side = styled.div`
     display: flex;
     flex-direction: column;
     /* border: 1px solid red; */
@@ -104,6 +111,7 @@ export const Title = styled.span`
     padding: 25px;
     background-color: white;
     border: 1px solid #e4e5e7;
+    /* margin-bottom: 2vh; */
 `;
 export const Problem = styled.span`
     display: flex;
@@ -112,6 +120,7 @@ export const Problem = styled.span`
     padding: 25px;
     background-color: white;
     border: 1px solid #e4e5e7;
+    /* margin-bottom: 2vh; */
 `;
 export const Expectation = styled.span`
     display: flex;
@@ -120,6 +129,7 @@ export const Expectation = styled.span`
     padding: 25px;
     background-color: white;
     border: 1px solid #e4e5e7;
+    /* margin-bottom: 2vh; */
 `;
 export const Tags = styled.span`
     display: flex;
@@ -128,6 +138,7 @@ export const Tags = styled.span`
     padding: 25px;
     background-color: white;
     border: 1px solid #e4e5e7;
+    /* margin-bottom: 2vh; */
 `;
 export const FormTitle = styled.span`
     display: flex;
@@ -156,15 +167,47 @@ export const FormInput = styled.input`
         box-shadow: 0px 0px 10px #ddeaf7;
     }
 `;
-//
+export const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 85vw;
+`;
+export const Discard = styled.button`
+    font-size: 13.5px;
+    height: 4.3vh;
+    padding: 0 1.3vh;
+    border-radius: 0.3vh;
+    color: #c22d32;
+    border: none;
+    background-color: transparent;
+    :hover {
+        background-color: #f8e1e0;
+    }
+`;
+export const SubmitButton = styled.button`
+    font-size: 13.5px;
+    height: 4.3vh;
+    padding: 0 1.3vh;
+    border-radius: 0.3vh;
+    background-color: #0995ff;
+    color: white;
+    border: 0.9px solid #477199;
+    box-shadow: inset 0px 0px 0px 0px #54a3f7;
+    :hover {
+        background-color: #3172c6;
+    }
+    margin-left: 1vw;
+`;
+
 const QuestionForm = () => {
     return (
         <>
             <NavOnLogin />
             <QuestionFormWrapper>
                 <Cover>
-                <Head>Ask a public question</Head>
-                <Robot src="robot.png"></Robot>
+                    <Head>Ask a public question</Head>
+                    <Robot src="robot.png"></Robot>
                 </Cover>
                 <Main>
                     <Cover>
@@ -202,7 +245,10 @@ const QuestionForm = () => {
                                 Be specific and imagine you’re asking a question
                                 to another person.
                             </FormInfo>
-                            <FormInput placeholder="e.g. Is there an R unction for finding the index of an element in a vector?"></FormInput>
+                            <FormInput
+                                className="titleInput"
+                                placeholder="e.g. Is there an R unction for finding the index of an element in a vector?"
+                            ></FormInput>
                         </Title>
                         <Helper>
                             <HelperHead>Writing a good title</HelperHead>
@@ -230,7 +276,7 @@ const QuestionForm = () => {
                                 Introduce the problem and expand on what you put
                                 in the title. Minimum 20 characters.
                             </FormInfo>
-                            <FormInput></FormInput>
+                            <TextEditor />
                         </Problem>
                         <Helper>
                             <HelperHead>Introduce the problem</HelperHead>
@@ -257,7 +303,7 @@ const QuestionForm = () => {
                                 happen, and what actually resulted. Minimum 20
                                 characters.
                             </FormInfo>
-                            <FormInput></FormInput>
+                            <TextEditor />
                         </Expectation>
                         <Helper>
                             <HelperHead>Expand on the problem</HelperHead>
@@ -317,6 +363,10 @@ const QuestionForm = () => {
                         </Helper>
                     </Cover>
                 </Main>
+                <ButtonContainer>
+                    <Discard>Discard draft</Discard>
+                    <SubmitButton>Submit yout question</SubmitButton>
+                </ButtonContainer>
             </QuestionFormWrapper>
             <Footer />
         </>
@@ -324,8 +374,11 @@ const QuestionForm = () => {
 };
 export default QuestionForm;
 
+//! 세로 정렬
 // eslint-disable-next-line
-{/* <Cover>
+{
+    /* 
+<Cover>
 <Head>Ask a public question</Head>
 <Robot src="robot.png"></Robot>
 </Cover>
@@ -473,4 +526,168 @@ export default QuestionForm;
         </HelperInfo>
     </Helper>
 </Side>
-</Cover> */}
+</Cover> 
+*/
+}
+
+//! 세로 정렬
+// eslint-disable-next-line
+{
+    /* 
+<Cover>
+<Head>Ask a public question</Head>
+<Robot src="robot.png"></Robot>
+</Cover>
+<Main>
+    <Cover>
+        <Information>
+            <InfoTitle>Writing a good question</InfoTitle>
+            <p>
+                You’re ready to ask a programming-related
+                question and this form will help guide you
+                through the process.
+            </p>
+            <p>
+                Looking to ask a non-programming question? See
+                the topics here to find a relevant site.
+            </p>
+            <strong>Steps</strong>
+            <li>Summarize your problem in a one-line title.</li>
+            <li>Describe your problem in more detail.</li>
+            <li>
+                Describe what you tried and what you expected to
+                happen.
+            </li>
+            <li>
+                Add “tags” which help surface your question to
+                members of the community.
+            </li>
+            <li>
+                Review your question and post it to the site.
+            </li>
+        </Information>
+    </Cover>
+    <Cover>
+        <Title>
+            <FormTitle>Title</FormTitle>
+            <FormInfo>
+                Be specific and imagine you’re asking a question
+                to another person.
+            </FormInfo>
+            <FormInput placeholder="e.g. Is there an R unction for finding the index of an element in a vector?"></FormInput>
+        </Title>
+        <Helper>
+            <HelperHead>Writing a good title</HelperHead>
+            <HelperInfo>
+                <Pen src="pen.png"></Pen>
+                <HelperContent>
+                    <p>
+                        Your title should summarize the problem.
+                    </p>
+                    <p>
+                        You might find that you have a better
+                        idea of your title after writing out the
+                        rest of the question.
+                    </p>
+                </HelperContent>
+            </HelperInfo>
+        </Helper>
+    </Cover>
+    <Cover>
+        <Problem>
+            <FormTitle>
+                What are the details of your problem?
+            </FormTitle>
+            <FormInfo>
+                Introduce the problem and expand on what you put
+                in the title. Minimum 20 characters.
+            </FormInfo>
+            <TextEditor/>
+        </Problem>
+        <Helper>
+            <HelperHead>Introduce the problem</HelperHead>
+            <HelperInfo>
+                <Pen src="pen.png"></Pen>
+                <HelperContent>
+                    <p>
+                        Explain how you encountered the problem
+                        you’re trying to solve, and any
+                        difficulties that have prevented you
+                        from solving it yourself.
+                    </p>
+                </HelperContent>
+            </HelperInfo>
+        </Helper>
+    </Cover>
+    <Cover>
+        <Expectation>
+            <FormTitle>
+                What did you try and what were you expecting?
+            </FormTitle>
+            <FormInfo>
+                Describe what you tried, what you expected to
+                happen, and what actually resulted. Minimum 20
+                characters.
+            </FormInfo>
+            <TextEditor/>
+        </Expectation>
+        <Helper>
+            <HelperHead>Expand on the problem</HelperHead>
+            <HelperInfo>
+                <Pen src="pen.png"></Pen>
+                <HelperContent>
+                    <p>
+                        Show what you’ve tried, tell us what
+                        happened, and why it didn’t meet your
+                        needs.
+                    </p>
+                    <p>
+                        Not all questions benefit from including
+                        code, but if your problem is better
+                        understood with code you’ve written, you
+                        should include a minimal, reproducible
+                        example.
+                    </p>
+                    <p>
+                        Please make sure to post code and errors
+                        as text directly to the question (and
+                        not as images), and format them
+                        appropriately.
+                    </p>
+                </HelperContent>
+            </HelperInfo>
+        </Helper>
+    </Cover>
+    <Cover>
+        <Tags>
+            <FormTitle>Tags</FormTitle>
+            <FormInfo>
+                Add up to 5 tags to describe what your question
+                is about. Start typing to see suggestions.
+            </FormInfo>
+            <FormInput placeholder="e.g. (ajax iphone string)"></FormInput>
+        </Tags>
+        <Helper>
+            <HelperHead>Adding tags</HelperHead>
+            <HelperInfo>
+                <Pen src="pen.png"></Pen>
+                <HelperContent>
+                    <p>
+                        Tags help ensure that your question will
+                        get attention from the right people.{" "}
+                    </p>
+                    <p>
+                        Tag things in more than one way so
+                        people can find them more easily. Add
+                        tags for product lines, projects, teams,
+                        and the specific technologies or
+                        languages used.{" "}
+                    </p>
+                    <p>Learn more about tagging</p>
+                </HelperContent>
+            </HelperInfo>
+        </Helper>
+    </Cover>
+</Main> 
+*/
+}

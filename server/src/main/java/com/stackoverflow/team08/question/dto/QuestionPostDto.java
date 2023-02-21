@@ -1,4 +1,4 @@
-package com.stackoverflow.team08.server.question.dto;
+package com.stackoverflow.team08.question.dto;
 
 import lombok.Getter;
 

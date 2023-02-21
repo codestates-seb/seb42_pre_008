@@ -1,7 +1,7 @@
-package com.stackoverflow.team08.server.advice;
+package com.stackoverflow.team08.advice;
 
-import com.stackoverflow.team08.server.exception.BusinessLogicException;
-import com.stackoverflow.team08.server.response.ErrorResponse;
+import com.stackoverflow.team08.exception.BusinessLogicException;
+import com.stackoverflow.team08.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

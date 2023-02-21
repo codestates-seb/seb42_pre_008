@@ -13,7 +13,6 @@ export const QuestionListWrapper = styled.main`
     justify-content: center;
     width: 100%;
     height: 120vh;
-    margin-top: 0vh;
 `;
 export const QuestionContainer = styled.main`
     display: flex;

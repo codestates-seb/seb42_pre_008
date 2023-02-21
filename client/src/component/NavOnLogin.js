@@ -14,6 +14,7 @@ export const Nav = styled.nav`
     padding: 0.5vh 5vw;
     border-top: 0.4vh solid #f48023;
     border-bottom: 0.2vh solid #e4e6e7;
+    box-shadow: 0 4px 4px -6.5px black;
     background-color: #f9f9f9;
     z-index: 2;
 `;

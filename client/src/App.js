@@ -32,6 +32,7 @@ function App() {
         setTimeout(() => {
             //여기서 endpoint를 수정해주면 됩니다
             fetch(process.env.REACT_APP_API_URL, {
+            // fetch("http://localhost:3001/questions", {
                 signal: abortCont.signal,
                 //인증정보를 포함하는 옵션입니다
                 credentials: "include",

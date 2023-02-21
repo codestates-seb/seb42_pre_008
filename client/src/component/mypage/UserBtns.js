@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import Actives from "./Actives";
+import { Routes, Route } from "react-router-dom";
+
 
 const Button = styled.button`
   padding: 0.5rem 1rem;
@@ -40,3 +43,9 @@ function UserBtns() {
 }
 
 export default UserBtns;
+
+<Routes>
+<Route exact path="/" element={<Actives/>} />
+<Route exact path="/actives" element={<Actives />} />
+<Route exact path="/settings/*" element={<Actives />} />
+</Routes>

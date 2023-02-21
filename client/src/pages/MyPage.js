@@ -4,6 +4,7 @@ import NavOnLogin from "../component/NavOnLogin"
 import LeftSide from "../component/mypage/LeftSide";
 import UserBtns from "../component/mypage/UserBtns";
 import UserButtons from "../component/mypage/UserButtons";
+import MypageHeader from "../component/mypage/MypageHeader";
 
 
 
@@ -170,13 +171,10 @@ function MyPage() {
     return (
         <>
         <NavOnLogin />
-            <Container>
+        <MypageHeader />
+
             {/* <LeftSide /> */}
                 <MainWrapper>
-                    <Hscreen>
-                        <ContainerFlex>
-                            <div>Edit Profile</div>
-                        </ContainerFlex>
                          <UserBtns />
 
                          <InfoContainer>
@@ -209,11 +207,8 @@ function MyPage() {
                                 </Form>
                             </ContainerTwo>
                          </InfoContainer>
-
-                    </Hscreen>  
                 </MainWrapper>
-            </Container>
-
+ 
         </>
     )
 }

@@ -8,6 +8,8 @@ import QuestionDetail from "./pages/QuestionDetail";
 import QuestionForm from "./pages/QuestionForm";
 import QuestionList from "./pages/QuestionList";
 import SignIn from "./pages/SignIn";
+import MyPage2 from "./pages/MyPage2";
+
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -80,7 +82,7 @@ function App() {
                         />
                         <Route path="/login" element={<Login />} />
                         <Route path="/sign-in" element={<SignIn />} />
-                        <Route path="/mypage" element={<MyPage />} />
+                        <Route path="/mypage" element={<MyPage2 />} />
                     </Routes>
                 </Suspense>
             </BrowserRouter>

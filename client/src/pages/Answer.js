@@ -10,9 +10,18 @@ const config = genConfig()
 const Button = styled.button`
 
 `
+const Input = styled.textarea`
+    display: block;
+    width: 100vw;
+`
 
 const Answer = ({el,check}) => {
     const [clicked, setClicked] = useState(false);
+    const [edit, setEdit] = useState(false);
+    const [body, setbody] = useState(el.body)
+    const date = new Date();
+    const today = date.toLocaleDateString().slice(0,10);
+
      const onHandleVoteUp = () => {
         if (clicked === false) {
             setClicked(!clicked);
@@ -32,6 +41,10 @@ const Answer = ({el,check}) => {
             }
             ,'/question-detail')
     }
+    const onHandleEdit = () => {
+        setEdit(!edit)
+        fetchPatch('Answer/'+ el.id,{"body":body , "update": today},)
+    }
 
     return (
         <>
@@ -45,9 +58,15 @@ const Answer = ({el,check}) => {
         {el.check ? 
         <Button onClick={ onHandleCheck }>채택취소</Button>
         :<Button onClick={ onHandleCheck }>채택하기</Button>}
-        <Button>수정</Button>
+        {edit?
+        <Button onClick={onHandleEdit}>수정완료</Button>
+        :<Button onClick={() => setEdit(!edit)}>수정</Button>
+        }
         <Button onClick={ onHandleDelete }>삭제</Button>
-        <p>{el.body}</p>
+        {edit ?  
+        <Input rows="4" cols="50" value={body} onChange={(e)=>setbody(e.target.value)}></Input>
+        :<p>{body}</p>}
+        
         </>
     )
 }

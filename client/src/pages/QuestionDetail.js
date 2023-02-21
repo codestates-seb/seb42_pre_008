@@ -1,8 +1,44 @@
-import { useState } from 'react'
-import { fetchCreate } from '../util/api'
-import QuestionRead from './QuestionRead'
-import AnswerList  from './AnswerList'
+import { useState } from 'react';
+import { fetchCreate } from '../util/api';
+import Question from './Question';
+import AnswerList  from './AnswerList';
 import useFetch from "../util/useFetch";
+import styled from "styled-components";
+
+const QuestionDetailWraper = styled.div`
+    margin:15vh 10vh;
+    position: relative;
+    label{
+        display: block;
+        font-size: 1.2rem;
+        padding-bottom: 3vh;
+    }
+    textarea{
+        width: 100%;
+        resize: none;
+        margin-bottom: 1vh;
+        font-size: 1rem;
+    }
+    >button{
+            cursor:pointer;
+            position: absolute;
+            right: 0;
+            margin-right: 0;
+            font-size: 16px;
+            height: 4vh;
+            padding: 0 1vh;
+            margin-left: 1vh;
+            border-radius: 0.3vh;
+            background-color: #0995ff;
+            color: white;
+            border: 1px solid #477199;
+            box-shadow: inset 0px 0px 0px 0px #54a3f7;
+            :hover {
+                color: #fff;
+                background-color: #3172c6;
+            }
+    }
+`
 
 
 const QuestionDetail = ({login,userInfo,endpoint}) => {
@@ -25,12 +61,13 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
     }
     
     return(
-        <div>
-            {data && <QuestionRead login={login} data={data[0]}/>}
+        <QuestionDetailWraper>
+            {data && <Question login={login} data={data[0]}/>}
             <AnswerList login={login}/>
-            <input onChange={ (e) => setbody(e.target.value)} value ={body} ></input>
-            <button onClick={ onHandleClick }>제출</button>
-        </div>
+            <label>Your Answer</label>
+            <textarea onChange={ (e) => setbody(e.target.value)} value ={body} rows="4" cols="50"  ></textarea>
+            <button onClick={ onHandleClick }>Post your Answer</button>
+        </QuestionDetailWraper>
     )
 }
 export default QuestionDetail

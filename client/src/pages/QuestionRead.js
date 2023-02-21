@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
+import useFetch from "../util/useFetch";
 
 const QuestionHeadWrap = styled.div`
 
@@ -20,15 +21,17 @@ const Button = styled.button`
 
 
 const QuestionRead = () => {
-
+    const [data, isPending, error ] = useFetch('http://localhost:3002/questions')
     return (
-        <QuestionReadWrap>
+        <>
+        { data && 
+            <QuestionReadWrap>
             <QuestionHeadWrap>
                 <div>
-                    <Title>제목</Title>
-                    <span>1개월전 작성</span> <span>조회수</span> 
+                    <Title>{data[0].title}</Title>
+                    <span>{data[0].createdAt}</span> <span>{data[0].view}</span> 
                     <Button><AiFillCaretUp/></Button>
-                    <span>좋아요개수</span>
+                    <span>{data[0].votes}</span>
                     <Button><AiFillCaretDown/></Button>
                     <Button>수정</Button>
                     <Button>삭제</Button>
@@ -36,10 +39,11 @@ const QuestionRead = () => {
                 </div>
             </QuestionHeadWrap>
             <QuestionBodyWrap>
-                <div>질문내용</div>
-                <div>taglist</div>
+                <div>{data[0].content}</div>
+                <div>{data[0].tag.join("")}</div>
             </QuestionBodyWrap>
-        </QuestionReadWrap>
+        </QuestionReadWrap>}
+        </>
     )
 }
 

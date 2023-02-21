@@ -179,7 +179,7 @@ export const Img = styled.img`
 
 const QuestionList = () => {
     // eslint-disable-next-line
-    const [questions, isPending, error] = useFetch("questions");
+    const [questions, isPending, error] = useFetch('http://localhost:3002/questions');
 
     return (
         <>

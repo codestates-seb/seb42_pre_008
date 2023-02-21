@@ -16,20 +16,37 @@ const Input = styled.textarea`
 `
 
 const Answer = ({el,check}) => {
-    const [clicked, setClicked] = useState(false);
+    const [upClicked, setUpClicked] = useState(false);
+    const [downClicked, setDownClicked] = useState(false);
+    //up,still,down
+    const [checked,setChecked] = useState('still');
+    const [votes, setVote] = useState(el.votes)
     const [edit, setEdit] = useState(false);
     const [body, setbody] = useState(el.body)
     const date = new Date();
     const today = date.toLocaleDateString().slice(0,10);
 
-     const onHandleVoteUp = () => {
-        if (clicked === false) {
-            setClicked(!clicked);
-            fetchPatch('Answer/'+ el.id, {"votes": el.votes + 1}, '/question-detail');
-            }
+    const onHandleVoteUp = () => {
+        if(checked === 'still'){
+            setChecked('up')
+            setUpClicked(true)
+            setVote(votes + 1)
+        }else if( checked === 'down'){
+            setChecked('still')
+            setDownClicked(false)
+            setVote(votes + 1)
+        }
     }
     const onHandleVoteDown = () => {
-        fetchPatch('Answer/'+ el.id,{"votes":el.votes - 1},'/question-detail')
+        if(checked === 'still'){
+            setChecked('down')
+            setDownClicked(true)
+            setVote(votes - 1)
+        }else if( checked === 'up'){
+            setChecked('still')
+            setUpClicked(false)
+            setVote(votes - 1)
+        }
     }
     const onHandleDelete = () => {
         fetchDelete('Answer/'+ el.id,'/question-detail')
@@ -48,13 +65,12 @@ const Answer = ({el,check}) => {
 
     return (
         <>
-        {console.log(clicked)}
         <Avatar style={{ width: '1.5rem', height: '1.5rem' }} {...config} />
         <span>{el.name}</span>
         <span>{el.update}</span>
-        <Button onClick={ onHandleVoteUp } ><AiFillCaretUp/></Button>
-            <span>{el.votes}</span>
-        <Button onClick={ onHandleVoteDown }><AiFillCaretDown/></Button>
+        <Button onClick={ onHandleVoteUp } disabled={upClicked}><AiFillCaretUp/></Button>
+            <span>{votes}</span>
+        <Button onClick={ onHandleVoteDown } disabled={downClicked}><AiFillCaretDown/></Button>
         {el.check ? 
         <Button onClick={ onHandleCheck }>채택취소</Button>
         :<Button onClick={ onHandleCheck }>채택하기</Button>}

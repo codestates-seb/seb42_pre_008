@@ -6,7 +6,7 @@ import useFetch from "../util/useFetch";
 
 
 const QuestionDetail = ({login,userInfo,endpoint}) => {
-    const [data, isPending, error ] = useFetch('http://localhost:3002/questions')
+    const [data, isPending, error ] = useFetch(process.env.REACT_APP_API_QUESTION)
     const [body,setbody] = useState('')
 
     //data update test완료

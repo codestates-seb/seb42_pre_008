@@ -2,8 +2,8 @@
 
 //Create api
 //fetchCreate(전송할 데이터,새로고침 후 돌아올 페이지, endpoint ex)question )
-export const fetchCreate = (endpoint = '',data,link,) => {
-    fetch(process.env.REACT_APP_API_URL + endpoint , {
+export const fetchCreate = (url,data,link,) => {
+    fetch(url , {
         method: "POST",
         headers: {"Content-Type" : "application/json"},
         body: JSON.stringify(data),
@@ -19,8 +19,8 @@ export const fetchCreate = (endpoint = '',data,link,) => {
 
 //Delete api
 //fetchDelete(endpoint,새로고침 후 돌아올 페이지)
-export const fetchDelete = (id,link) => {
-    fetch(`${process.env.REACT_APP_API_URL}/${id}`, {
+export const fetchDelete = (url,link) => {
+    fetch(url, {
       method: "DELETE",
       credentials: "include" 
     })
@@ -34,8 +34,8 @@ export const fetchDelete = (id,link) => {
 
 //Patch api
 //fetchDelete(endpoint,전송할 데이터, 새로고침후 돌아올 페이지)
-export const fetchPatch = (id, data,link) => {
-    fetch(`${process.env.REACT_APP_API_URL}/${id}`, {
+export const fetchPatch = (url, data,link) => {
+    fetch( url, {
       method : "PATCH",
       headers: {"Content-Type" : "Application/json"},
       body: JSON.stringify(data),

@@ -15,7 +15,7 @@ const Input = styled.textarea`
     width: 100vw;
 `
 
-const Answer = ({el,check}) => {
+const Answer = ({el,adopt}) => {
     //vote기능
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
@@ -23,9 +23,11 @@ const Answer = ({el,check}) => {
     const [votes, setVote] = useState(el.votes)
 
     const [edit, setEdit] = useState(false);
-    const [body, setbody] = useState(el.body)
+    const [content, setContent] = useState(el.content)
     const date = new Date();
     const today = date.toLocaleDateString().slice(0,10);
+    //fetch link
+    const url = process.env.REACT_APP_API_ANSWER + '/' + el.id
 
     const onHandleVoteUp = () => {
         if(checked === 'still'){
@@ -50,18 +52,18 @@ const Answer = ({el,check}) => {
         }
     }
     const onHandleDelete = () => {
-        fetchDelete('Answer/'+ el.id,'/question-detail')
+        fetchDelete(url,'/question-detail')
     }
-    const onHandleCheck = () => {
-        fetchPatch('Answer/'+ el.id,
+    const onHandleAdopt = () => {
+        fetchPatch(url,
             {
-                "check":!el.check
+                "adopt":!el.adopt
             }
             ,'/question-detail')
     }
     const onHandleEdit = () => {
         setEdit(!edit)
-        fetchPatch('Answer/'+ el.id,{"body":body , "update": today},)
+        fetchPatch(url,{"content":content , "update": today},)
     }
 
     return (
@@ -72,17 +74,17 @@ const Answer = ({el,check}) => {
         <Button onClick={ onHandleVoteUp } disabled={upClicked}><AiFillCaretUp/></Button>
             <span>{votes}</span>
         <Button onClick={ onHandleVoteDown } disabled={downClicked}><AiFillCaretDown/></Button>
-        {el.check ? 
-        <Button onClick={ onHandleCheck }>채택취소</Button>
-        :<Button onClick={ onHandleCheck }>채택하기</Button>}
+        {el.adopt ? 
+        <Button onClick={ onHandleAdopt }>채택취소</Button>
+        :<Button onClick={ onHandleAdopt }>채택하기</Button>}
         {edit?
         <Button onClick={onHandleEdit}>수정완료</Button>
         :<Button onClick={() => setEdit(!edit)}>수정</Button>
         }
         <Button onClick={ onHandleDelete }>삭제</Button>
         {edit ?  
-        <Input rows="4" cols="50" value={body} onChange={(e)=>setbody(e.target.value)}></Input>
-        :<p>{body}</p>}
+        <Input rows="4" cols="50" value={content} onChange={(e)=>setContent(e.target.value)}></Input>
+        :<p>{content}</p>}
         
         </>
     )

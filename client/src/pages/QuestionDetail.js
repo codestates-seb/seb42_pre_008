@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { fetchCreate } from '../util/api'
 import QuestionRead from './QuestionRead'
 import AnswerList  from './AnswerList'
+import useFetch from "../util/useFetch";
 
 
 const QuestionDetail = ({login,userInfo,endpoint}) => {
+    const [data, isPending, error ] = useFetch('http://localhost:3002/questions')
     const [body,setbody] = useState('')
 
     //data update test완료
@@ -24,7 +26,7 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
     
     return(
         <div>
-            <QuestionRead login={login}/>
+            {data && <QuestionRead login={login} data={data[0]}/>}
             <AnswerList login={login}/>
             <input onChange={ (e) => setbody(e.target.value)} value ={body} ></input>
             <button onClick={ onHandleClick }>제출</button>

@@ -16,11 +16,12 @@ const Input = styled.textarea`
 `
 
 const Answer = ({el,check}) => {
+    //vote기능
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
-    //up,still,down
     const [checked,setChecked] = useState('still');
     const [votes, setVote] = useState(el.votes)
+
     const [edit, setEdit] = useState(false);
     const [body, setbody] = useState(el.body)
     const date = new Date();

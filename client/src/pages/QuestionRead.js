@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
-import useFetch from "../util/useFetch";
+import { useState } from 'react'
 
 const QuestionHeadWrap = styled.div`
 
@@ -20,29 +20,55 @@ const Button = styled.button`
 `
 
 
-const QuestionRead = () => {
-    const [data, isPending, error ] = useFetch('http://localhost:3002/questions')
+const QuestionRead = ({login,data}) => {
+    
+    const [upClicked, setUpClicked] = useState(false);
+    const [downClicked, setDownClicked] = useState(false);
+    const [checked,setChecked] = useState('still');
+    const [votes, setVote] = useState(data && parseInt(data.votes))
+
+    const onHandleVoteUp = () => {
+        if(checked === 'still'){
+            setChecked('up')
+            setUpClicked(true)
+            setVote(votes + 1)
+        }else if( checked === 'down'){
+            setChecked('still')
+            setDownClicked(false)
+            setVote(votes + 1)
+        }
+    }
+    const onHandleVoteDown = () => {
+        if(checked === 'still'){
+            setChecked('down')
+            setDownClicked(true)
+            setVote(votes - 1)
+        }else if( checked === 'up'){
+            setChecked('still')
+            setUpClicked(false)
+            setVote(votes - 1)
+        }
+    }
     return (
         <>
-        { data && 
             <QuestionReadWrap>
             <QuestionHeadWrap>
                 <div>
-                    <Title>{data[0].title}</Title>
-                    <span>{data[0].createdAt}</span> <span>{data[0].view}</span> 
-                    <Button><AiFillCaretUp/></Button>
-                    <span>{data[0].votes}</span>
-                    <Button><AiFillCaretDown/></Button>
+                    <Title>{data.title}</Title>
+                    <span>{data.createdAt}</span> <span>{data.view}</span> 
+                    <Button onClick={ onHandleVoteUp } disabled={upClicked} ><AiFillCaretUp/></Button>
+                    <span>{votes}</span>
+                    <Button onClick={ onHandleVoteDown } disabled={downClicked}><AiFillCaretDown/></Button>
                     <Button>수정</Button>
                     <Button>삭제</Button>
                     <Button>질문하기</Button>
                 </div>
             </QuestionHeadWrap>
             <QuestionBodyWrap>
-                <div>{data[0].content}</div>
-                <div>{data[0].tag.join("")}</div>
+                <div>{data.content}</div>
+                <div>{data.tag.join("")}</div>
             </QuestionBodyWrap>
-        </QuestionReadWrap>}
+        </QuestionReadWrap>
         </>
     )
 }

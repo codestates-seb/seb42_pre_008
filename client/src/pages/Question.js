@@ -139,7 +139,6 @@ const Question = ({login,data,userInfo}) => {
     return (
         <>
             <QuestionWrap>
-                {console.log(userInfo.name !== data.autho)}
                 <header>
                     <div>
                         <h1>{data.title}</h1>

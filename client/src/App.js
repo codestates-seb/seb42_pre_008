@@ -27,7 +27,6 @@ function App() {
     const [error, setError] = useState(null);
     //QuestionList -> QuestionDetail로 엔드포인트를 전달합니다
     const [endpoint, setEndpoint] = useState(null);
-
     //로그인 여부를 확인해 회원정보를 저장합니다
     // useEffect(() => {
     //     const abortCont = new AbortController();

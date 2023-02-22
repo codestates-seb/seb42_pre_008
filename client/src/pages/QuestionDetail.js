@@ -4,6 +4,7 @@ import Question from './Question';
 import AnswerList  from './AnswerList';
 import useFetch from "../util/useFetch";
 import styled from "styled-components";
+import { fetchDelete } from '../util/api'
 
 const QuestionDetailWraper = styled.div`
     margin:15vh 10vh;
@@ -39,12 +40,17 @@ const QuestionDetailWraper = styled.div`
             }
     }
 `
+const Modal = styled.div`
+
+`
 
 
 const QuestionDetail = ({login,userInfo,endpoint}) => {
     const [data, isPending, error ] = useFetch(process.env.REACT_APP_API_QUESTION+'/'+'1')
     const [content,setContent] = useState('')
-   
+    /*** modal***/
+    const [open,setIsOpen] = useState(false)
+    const [deleteUrl, setDeleteUrl] = useState('')
 
     //data update test완료
     const onHandleClick = () => {
@@ -54,19 +60,42 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
         fetchCreate( process.env.REACT_APP_API_ANSWER, 
             {
                 "id": random,
-                "name": "임경아",
+                "author": userInfo.name,
                 "update": today,
                 "votes": 0,
                 "content": content,
                 "adopt": false
               }
            ,'/question-detail' )
-    }
+    }   
+        /*** modal ***/
+        const handleDelete = (url) => {
+            setIsOpen(true);
+            setDeleteUrl(url)
+        }
+        const handleConfirm = () => {
+            fetchDelete(deleteUrl,'/question-detail')
+            setIsOpen(false);
+        };
+        const handleCancel = () => {
+            setIsOpen(false);
+            setDeleteUrl('')
+        };
     
     return(
         <QuestionDetailWraper>
-            {data && <Question login={login} data={data} userInfo={userInfo}/>}
-            {data &&<AnswerList login={login} userInfo={userInfo} author={data.author}/>}
+            {open && 
+                <Modal>
+                    <h2>Delete</h2>
+                    <p>Are you sure you want delete this item</p>
+
+                    <button onClick={handleConfirm}>Confirm</button>
+                    <button onClick={handleCancel}>Cancel</button>
+                </Modal>}
+            {data && 
+                <Question login={login} data={data} userInfo={userInfo}  handleDelete={handleDelete}/>}
+            {data &&
+                <AnswerList login={login} userInfo={userInfo} author={data.author} handleDelete={handleDelete}/>}
             <label>Your Answer</label>
             {login?
             <>
@@ -75,7 +104,7 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
             </>
                 :<div>Please log in to write a reply</div>
             }
-
+            
         </QuestionDetailWraper>
     )
 }

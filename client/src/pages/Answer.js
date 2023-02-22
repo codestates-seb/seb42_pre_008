@@ -2,7 +2,6 @@ import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
 import Avatar, { genConfig } from 'react-nice-avatar'
 import styled from "styled-components";
-import { fetchDelete } from '../util/api'
 import { fetchPatch } from '../util/api'
 import { useState } from 'react'
 
@@ -85,26 +84,22 @@ const AnswerWrap = styled.article`
         }
     }
 `
-const Styledbutton = styled.button`
-    color: #fff;
-    background-color: #0995ff;
-`
 
-
-const Answer = ({el,adopt,login,userInfo,author}) => {
-    //vote기능
+const Answer = ({el,adopt,login,userInfo,author,handleDelete}) => {
+    /*** vote ***/
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
     const [checked,setChecked] = useState('still');
     const [votes, setVote] = useState(el.votes)
-
+    /*** edit ***/
     const [edit, setEdit] = useState(false);
     const [content, setContent] = useState(el.content)
-    const date = new Date();
-    const today = date.toLocaleDateString().slice(0,-1);
-    //fetch link
+    
+
+    /*** fetch link ***/
     const url = process.env.REACT_APP_API_ANSWER + '/' + el.id
 
+    /*** vote ***/
     const onHandleVoteUp = () => {
         if(checked === 'still'){
             setChecked('up')
@@ -127,9 +122,7 @@ const Answer = ({el,adopt,login,userInfo,author}) => {
             setVote(votes - 1)
         }
     }
-    const onHandleDelete = () => {
-        fetchDelete(url,'/question-detail')
-    }
+    /*** edit ***/
     const onHandleAdopt = () => {
         fetchPatch(url,
             {
@@ -138,45 +131,47 @@ const Answer = ({el,adopt,login,userInfo,author}) => {
             ,'/question-detail')
     }
     const onHandleEdit = () => {
+        const date = new Date();
+        const today = date.toLocaleDateString().slice(0,-1);
+
         setEdit(!edit)
         fetchPatch(url,{"content":content , "update": today},)
     }
 
+
+
     return (
         <AnswerWrap>
-            {console.log(userInfo.name === author)}
         <aside>
-        {login? <button onClick={ onHandleVoteUp } disabled={upClicked} ><AiFillCaretUp/></button>
-                :<button onClick={ onHandleVoteUp } disabled={true} ><AiFillCaretUp/></button>
-                }       
-                <span>{votes}</span>
-                {login? <button onClick={ onHandleVoteDown } disabled={downClicked} ><AiFillCaretDown/></button>
-                :<button onClick={ onHandleVoteDown } disabled={true} ><AiFillCaretDown/></button>
-                }    
-        </aside>
-        <section>
-            <div>
-            <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} />
-            <span>{el.author}</span>
-            <span>{el.update}</span>
-            </div>
-            {edit ?  
-            <textarea rows="4" cols="300" value={content} onChange={(e)=>setContent(e.target.value)}></textarea>
-            :<p>{content}</p>}
+            {login? <button onClick={ onHandleVoteUp } disabled={upClicked} ><AiFillCaretUp/></button>
+                    :<button onClick={ onHandleVoteUp } disabled={true} ><AiFillCaretUp/></button>
+                    }       
+                    <span>{votes}</span>
+                    {login? <button onClick={ onHandleVoteDown } disabled={downClicked} ><AiFillCaretDown/></button>
+                    :<button onClick={ onHandleVoteDown } disabled={true} ><AiFillCaretDown/></button>
+                    }    
+            </aside>
+            <section>
+                <div>
+                <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} />
+                <span>{el.author}</span>
+                <span>{el.update}</span>
+                </div>
+                {edit ?  
+                <textarea rows="4" cols="300" value={content} onChange={(e)=>setContent(e.target.value)}></textarea>
+                :<p>{content}</p>}
 
-            <div>
-                {edit?
-                <Styledbutton onClick={onHandleEdit}>submit</Styledbutton>
-                :<button onClick={() => setEdit(!edit)} disabled={ userInfo.name !== el.author }>edit</button>
-                }
-                <button onClick={ onHandleDelete } disabled={ userInfo.name !== el.author }>delete</button>
-                {el.adopt ? 
-                <button onClick={ onHandleAdopt } >cancle adopt</button>
-                :<button onClick={ onHandleAdopt } disabled={ userInfo.name === author ? adopt :true }>adopt</button>}
-                {/* adopt 버튼이 보임 = userinfo===author adopt===false 
-                    adopt 버튼이 안보임 = */}
-            </div>
-        </section>
+                <div>
+                    {edit?
+                    <button onClick={onHandleEdit}>submit</button>
+                    :<button onClick={() => setEdit(!edit)} disabled={ userInfo.name !== el.author }>edit</button>
+                    }
+                    <button onClick={ (e) => handleDelete(e.target.value) } disabled={ userInfo.name !== el.author } value = {url}>delete</button>
+                    {el.adopt ? 
+                    <button onClick={ onHandleAdopt } >cancle adopt</button>
+                    :<button onClick={ onHandleAdopt } disabled={ userInfo.name === author ? adopt :true }>adopt</button>}
+                </div>
+            </section>
         </AnswerWrap>
         
     )

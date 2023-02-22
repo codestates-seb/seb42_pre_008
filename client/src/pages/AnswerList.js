@@ -20,7 +20,7 @@ const AdoptedLi = styled.li`
     padding-top: 4vh;
 `
 
-const AnswerList = ({login,userInfo,author}) => {
+const AnswerList = ({login,userInfo,author, handleDelete}) => {
     const [answers, setAnswers] = useState(null);
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
@@ -67,14 +67,14 @@ const AnswerList = ({login,userInfo,author}) => {
             {answers && answers.filter((el) => el.adopt === true ).map((el) => {
                 return(
                     <AdoptedLi key={el.id}>
-                        <Answer el = {el} login={login} userInfo={userInfo} author={author}/>
+                        <Answer el = {el} login={login} userInfo={userInfo} author={author} handleDelete={handleDelete}/>
                     </AdoptedLi>
                 )
             })}
             {answers && answers.filter((el) => el.adopt === false ).map((el) => {
                 return(
                     <li key={el.id}>
-                        <Answer el = {el}  adopt={adopt} login={login} userInfo={userInfo} author={author}/>
+                        <Answer el = {el}  adopt={adopt} login={login} userInfo={userInfo} author={author}  handleDelete={handleDelete}/>
                     </li>
                 )
             })}

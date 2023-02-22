@@ -43,30 +43,39 @@ const QuestionDetailWraper = styled.div`
 
 const QuestionDetail = ({login,userInfo,endpoint}) => {
     const [data, isPending, error ] = useFetch(process.env.REACT_APP_API_QUESTION)
-    const [body,setbody] = useState('')
+    const [content,setContent] = useState('')
+   
 
     //data update test완료
     const onHandleClick = () => {
         const random = Math.round(Math.random()*100)+0
         const date = new Date();
-        const today = date.toLocaleDateString().slice(0,10);
-        fetchCreate( {
-            "id": random,
-            "name": "임경아",
-            "update": today,
-            "like": 0,
-            "body": body,
-            "check": false
-          } ,'/question-detail','/Answer' )
+        const today = date.toLocaleDateString().slice(0,-1);
+        fetchCreate( process.env.REACT_APP_API_ANSWER, 
+            {
+                "id": random,
+                "name": "임경아",
+                "update": today,
+                "votes": 0,
+                "content": content,
+                "adopt": false
+              }
+           ,'/question-detail' )
     }
     
     return(
         <QuestionDetailWraper>
-            {data && <Question login={login} data={data[0]}/>}
-            <AnswerList login={login}/>
+            {data && <Question login={login} data={data[0]} userInfo={userInfo}/>}
+            <AnswerList login={login} userInfo={userInfo}/>
             <label>Your Answer</label>
-            <textarea onChange={ (e) => setbody(e.target.value)} value ={body} rows="4" cols="50"  ></textarea>
-            <button onClick={ onHandleClick }>Post your Answer</button>
+            {login?
+            <>
+                <textarea onChange={ (e) => setContent(e.target.value)} value ={content} rows="4" cols="50"  ></textarea>
+                <button onClick={ onHandleClick }>Post your Answer</button>
+            </>
+                :<div>Please log in to write a reply</div>
+            }
+
         </QuestionDetailWraper>
     )
 }

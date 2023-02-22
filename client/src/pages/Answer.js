@@ -57,6 +57,9 @@ const AnswerWrap = styled.article`
                 :hover {
                     color: #3172c6;
                 }
+                :disabled{
+                    display: none;
+                }
             }
             p{
                 width: 100%;
@@ -83,7 +86,7 @@ const Styledbutton = styled.button`
 `
 
 
-const Answer = ({el}) => {
+const Answer = ({el,adopt,login,userInfo}) => {
     //vote기능
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
@@ -93,7 +96,7 @@ const Answer = ({el}) => {
     const [edit, setEdit] = useState(false);
     const [content, setContent] = useState(el.content)
     const date = new Date();
-    const today = date.toLocaleDateString().slice(0,10);
+    const today = date.toLocaleDateString().slice(0,-1);
     //fetch link
     const url = process.env.REACT_APP_API_ANSWER + '/' + el.id
 
@@ -137,9 +140,13 @@ const Answer = ({el}) => {
     return (
         <AnswerWrap>
         <aside>
-            <button onClick={ onHandleVoteUp } disabled={upClicked}><AiFillCaretUp/></button>
+        {login? <button onClick={ onHandleVoteUp } disabled={upClicked} ><AiFillCaretUp/></button>
+                :<button onClick={ onHandleVoteUp } disabled={true} ><AiFillCaretUp/></button>
+                }       
                 <span>{votes}</span>
-            <button onClick={ onHandleVoteDown } disabled={downClicked}><AiFillCaretDown/></button>
+                {login? <button onClick={ onHandleVoteDown } disabled={downClicked} ><AiFillCaretDown/></button>
+                :<button onClick={ onHandleVoteDown } disabled={true} ><AiFillCaretDown/></button>
+                }    
         </aside>
         <section>
             <div>
@@ -158,8 +165,8 @@ const Answer = ({el}) => {
                 }
                 <button onClick={ onHandleDelete }>delete</button>
                 {el.adopt ? 
-                <button onClick={ onHandleAdopt }>cancle adopt</button>
-                :<button onClick={ onHandleAdopt }>adopt</button>}
+                <button onClick={ onHandleAdopt } >cancle adopt</button>
+                :<button onClick={ onHandleAdopt } disabled={adopt}>adopt</button>}
                 
             </div>
         </section>

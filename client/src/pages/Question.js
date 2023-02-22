@@ -3,7 +3,9 @@ import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
 import { useState } from 'react'
 import { fetchDelete } from '../util/api'
+import Avatar, { genConfig } from 'react-nice-avatar'
 
+const config = genConfig()
 const QuestionWrap = styled.div`
     padding-bottom: 5vh;
     margin-bottom: 5vh;
@@ -22,6 +24,9 @@ const QuestionWrap = styled.div`
             margin-right: 1vw;
             :nth-child(2n){
                 color: #6a737c;
+            }
+            :first-child{
+                padding-left: 2vw;
             }
         }
         button{
@@ -50,6 +55,7 @@ const QuestionWrap = styled.div`
                 background-color: #3172c6;
             }
         }
+
     }
 `
 const QuestionBodyWrap = styled.div`
@@ -124,21 +130,30 @@ const Question = ({login,data}) => {
             <QuestionWrap>
                 <header>
                     <div>
-                    <h1>{data.title}</h1>
-                    <span>asked</span>
-                    <span>{data.createdAt}</span>
-                    <span>viewed</span> 
-                    <span>{data.view}</span>
-                    <button>edit</button>
-                    <button onClick={onHandleDelete}>delete</button>
+                        <h1>{data.title}</h1>
+                        <div>
+                        <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} />
+                        <span>author</span>
+                        <span>{data.author}</span>
+                        <span>asked</span>
+                        <span>{data.createdAt}</span>
+                        <span>viewed</span> 
+                        <span>{data.view}</span>
+                        <button>edit</button>
+                        <button onClick={onHandleDelete}>delete</button>
+                        </div>
                     </div>
                     <button>Ask Question</button>
                 </header>
             <QuestionBodyWrap>
-                <aside>                    
-                    <button onClick={ onHandleVoteUp } disabled={upClicked} ><AiFillCaretUp/></button>
+                <aside> 
+                    {login? <button onClick={ onHandleVoteUp } disabled={upClicked} ><AiFillCaretUp/></button>:
+                    <button onClick={ onHandleVoteUp } disabled={true} ><AiFillCaretUp/></button>
+                    }       
                     <span>{votes}</span>
-                    <button onClick={ onHandleVoteDown } disabled={downClicked}><AiFillCaretDown/></button>
+                    {login? <button onClick={ onHandleVoteDown } disabled={downClicked} ><AiFillCaretDown/></button>:
+                    <button onClick={ onHandleVoteDown } disabled={true} ><AiFillCaretDown/></button>
+                    }    
                 </aside>
                 <article>
                     {data.content}

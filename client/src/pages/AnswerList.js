@@ -18,6 +18,11 @@ const AnswerListWrap = styled.div`
 const AdoptedLi = styled.li`
     background-color: #F9F9F9;
     padding-top: 4vh;
+    >p{
+        margin-left: 2vw;
+        margin-bottom: 3vw;
+        color:gray;
+    }
 `
 
 const AnswerList = ({login,userInfo,author, handleDelete}) => {
@@ -66,6 +71,7 @@ const AnswerList = ({login,userInfo,author, handleDelete}) => {
             {answers && answers.filter((el) => el.adopt === true ).map((el) => {
                 return(
                     <AdoptedLi key={el.id}>
+                        <p>Adopted Answer</p>
                         <Answer el = {el} login={login} userInfo={userInfo} author={author} handleDelete={handleDelete}/>
                     </AdoptedLi>
                 )

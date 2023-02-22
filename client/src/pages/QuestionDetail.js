@@ -7,7 +7,8 @@ import styled from "styled-components";
 import { fetchDelete } from '../util/api'
 
 const QuestionDetailWraper = styled.div`
-    margin:15vh 10vh;
+    background-color: aliceblue;
+    padding:15vh 10vh;
     position: relative;
     label{
         display: block;
@@ -20,9 +21,72 @@ const QuestionDetailWraper = styled.div`
         margin-bottom: 1vh;
         font-size: 1rem;
     }
-    >button{
+`
+const Modal = styled.div`
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    h2{
+        border-bottom:  0.7px solid #d2d2d2;
+        padding-bottom: 2vh;
+        margin-bottom: 2vh;
+    }
+    p{
+        margin-bottom: 2vh;
+    }
+    div{
+        width: 100%;
+        text-align: right;
+        button{
+            :first-child{
+            font-size: 16px;
+            height: 4vh;
+            padding: 0 1vh;
+            margin-left: 1vh;
+            border-radius: 0.3vh;
+            background-color: #e3ecf3;
+            color: #477199;
+            border: 1px solid #477199;
+            box-shadow: inset 0px 0px 0px 0px #54a3f7;
+            :hover {
+                background-color: #b9d2e8;
+            }
+            }
+            :nth-child(2){
+                font-size: 16px;
+                height: 4vh;
+                padding: 0 1vh;
+                margin-left: 1vh;
+                border-radius: 0.3vh;
+                background-color: #0995ff;
+                color: white;
+                border: 1px solid #477199;
+                box-shadow: inset 0px 0px 0px 0px #54a3f7;
+                :hover {
+                    background-color: #3172c6;
+                }
+            }
+
+        }
+    }
+`
+const ModalWrap = styled.div`
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+`
+const AnsewerPostWrap = styled.div`
+    width: 100%;
+    text-align: right;
+    button{
             cursor:pointer;
-            position: absolute;
             right: 0;
             margin-right: 0;
             font-size: 16px;
@@ -40,10 +104,6 @@ const QuestionDetailWraper = styled.div`
             }
     }
 `
-const Modal = styled.div`
-
-`
-
 
 const QuestionDetail = ({login,userInfo,endpoint}) => {
     const [data, isPending, error ] = useFetch(process.env.REACT_APP_API_QUESTION+'/'+'1')
@@ -83,15 +143,20 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
         };
     
     return(
+        <>
         <QuestionDetailWraper>
-            {open && 
-                <Modal>
-                    <h2>Delete</h2>
-                    <p>Are you sure you want delete this item</p>
-
-                    <button onClick={handleConfirm}>Confirm</button>
-                    <button onClick={handleCancel}>Cancel</button>
-                </Modal>}
+        {open && 
+            <ModalWrap>
+            <Modal>
+                <h2>Delete</h2>
+                <p>Are you sure you want delete this answer?</p>
+                <div>
+                    <button onClick={handleConfirm}>Delete answer</button>
+                    <button onClick={handleCancel}>Close</button>
+                </div>
+            </Modal>
+            </ModalWrap>
+            }
             {data && 
                 <Question login={login} data={data} userInfo={userInfo}  handleDelete={handleDelete}/>}
             {data &&
@@ -100,12 +165,14 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
             {login?
             <>
                 <textarea onChange={ (e) => setContent(e.target.value)} value ={content} rows="4" cols="50"  ></textarea>
-                <button onClick={ onHandleClick }>Post your Answer</button>
+                <AnsewerPostWrap>
+                    <button onClick={ onHandleClick }>Post your Answer</button>
+                </AnsewerPostWrap>
             </>
                 :<div>Please log in to write a reply</div>
             }
-            
         </QuestionDetailWraper>
+        </>
     )
 }
 export default QuestionDetail

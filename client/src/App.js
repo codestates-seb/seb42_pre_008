@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+
 function App() {
     const [login, setLogin] = useState(true);
     const [userInfo, setUserInfo] = useState({

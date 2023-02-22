@@ -69,6 +69,11 @@ const AnswerWrap = styled.article`
                 justify-content: flex-end;
                 padding-top: 1vh;
                 padding-bottom: 2vh;
+                button{
+                    :disabled{
+                        display: none;
+                    }
+                }
             }
         }
         textarea{
@@ -86,7 +91,7 @@ const Styledbutton = styled.button`
 `
 
 
-const Answer = ({el,adopt,login,userInfo}) => {
+const Answer = ({el,adopt,login,userInfo,author}) => {
     //vote기능
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
@@ -139,6 +144,7 @@ const Answer = ({el,adopt,login,userInfo}) => {
 
     return (
         <AnswerWrap>
+            {console.log(userInfo.name === author)}
         <aside>
         {login? <button onClick={ onHandleVoteUp } disabled={upClicked} ><AiFillCaretUp/></button>
                 :<button onClick={ onHandleVoteUp } disabled={true} ><AiFillCaretUp/></button>
@@ -166,8 +172,9 @@ const Answer = ({el,adopt,login,userInfo}) => {
                 <button onClick={ onHandleDelete } disabled={ userInfo.name !== el.author }>delete</button>
                 {el.adopt ? 
                 <button onClick={ onHandleAdopt } >cancle adopt</button>
-                :<button onClick={ onHandleAdopt } disabled={adopt}>adopt</button>}
-                
+                :<button onClick={ onHandleAdopt } disabled={ userInfo.name === author ? adopt :true }>adopt</button>}
+                {/* adopt 버튼이 보임 = userinfo===author adopt===false 
+                    adopt 버튼이 안보임 = */}
             </div>
         </section>
         </AnswerWrap>

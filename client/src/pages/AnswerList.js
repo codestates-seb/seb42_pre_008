@@ -20,11 +20,11 @@ const AdoptedLi = styled.li`
     padding-top: 4vh;
 `
 
-const AnswerList = ({login,userInfo}) => {
+const AnswerList = ({login,userInfo,author}) => {
     const [answers, setAnswers] = useState(null);
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
-    const [adopt,setAdopt] = useState(null)
+    const [adopt,setAdopt] = useState(false)
 
     useEffect(() => {
         const abortCont = new AbortController();
@@ -67,14 +67,14 @@ const AnswerList = ({login,userInfo}) => {
             {answers && answers.filter((el) => el.adopt === true ).map((el) => {
                 return(
                     <AdoptedLi key={el.id}>
-                        <Answer el = {el} login={login} userInfo={userInfo}/>
+                        <Answer el = {el} login={login} userInfo={userInfo} author={author}/>
                     </AdoptedLi>
                 )
             })}
             {answers && answers.filter((el) => el.adopt === false ).map((el) => {
                 return(
                     <li key={el.id}>
-                        <Answer el = {el}  adopt={adopt} login={login} userInfo={userInfo}/>
+                        <Answer el = {el}  adopt={adopt} login={login} userInfo={userInfo} author={author}/>
                     </li>
                 )
             })}

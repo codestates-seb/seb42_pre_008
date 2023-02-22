@@ -66,7 +66,7 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
     return(
         <QuestionDetailWraper>
             {data && <Question login={login} data={data} userInfo={userInfo}/>}
-            <AnswerList login={login} userInfo={userInfo}/>
+            {data &&<AnswerList login={login} userInfo={userInfo} author={data.author}/>}
             <label>Your Answer</label>
             {login?
             <>

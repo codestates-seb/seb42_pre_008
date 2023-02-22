@@ -55,7 +55,6 @@ const AnswerList = ({login,userInfo,author, handleDelete}) => {
             
             })
     }, [])
-
     
     
  return(

@@ -3,7 +3,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 import Avatar, { genConfig } from 'react-nice-avatar'
 import styled from "styled-components";
 import { fetchPatch } from '../util/api'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const config = genConfig()
 const AnswerWrap = styled.article`
@@ -98,6 +98,9 @@ const Answer = ({el,adopt,login,userInfo,author,handleDelete}) => {
 
     /*** fetch link ***/
     const url = process.env.REACT_APP_API_ANSWER + '/' + el.id
+    /*** today ***/
+    const date = new Date();
+    const today = date.toLocaleDateString().slice(0,-1);
 
     /*** vote ***/
     const onHandleVoteUp = () => {
@@ -131,13 +134,23 @@ const Answer = ({el,adopt,login,userInfo,author,handleDelete}) => {
             ,'/question-detail')
     }
     const onHandleEdit = () => {
-        const date = new Date();
-        const today = date.toLocaleDateString().slice(0,-1);
 
         setEdit(!edit)
         fetchPatch(url,{"content":content , "update": today},)
     }
 
+    useEffect(() => {
+        function handleBeforeUnload() {
+            if(checked === 'up') fetchPatch(url,{"votes": el.votes + 1},)
+            if(checked === 'down') fetchPatch(url,{"votes": el.votes - 1 },)
+        }
+    
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+      }, [checked]);
 
 
     return (

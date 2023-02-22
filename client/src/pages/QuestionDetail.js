@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState ,useRef } from 'react';
 import { fetchCreate } from '../util/api';
 import Question from './Question';
 import AnswerList  from './AnswerList';
@@ -19,6 +19,9 @@ const QuestionDetailWraper = styled.div`
         resize: none;
         margin-bottom: 1vh;
         font-size: 1rem;
+        :focus{
+            color:#3172c6;
+        }
     }
 `
 const Modal = styled.div`
@@ -33,7 +36,7 @@ const Modal = styled.div`
         margin-bottom: 2vh;
     }
     p{
-        margin-bottom: 2vh;
+        margin-bottom: 4vh;
     }
     div{
         width: 100%;
@@ -102,18 +105,31 @@ const AnsewerPostWrap = styled.div`
                 background-color: #3172c6;
             }
     }
+    span{
+        color:#F23A51;
+    }
 `
 
 const QuestionDetail = ({login,userInfo,endpoint}) => {
     const [data, isPending, error ] = useFetch(process.env.REACT_APP_API_QUESTION+'/'+'1')
     const [content,setContent] = useState('')
+    const [blank, setBlank] = useState(false)
+    /*** 특정 focus로 이동***/
+    const inputRef = useRef(null);
+
     /*** modal***/
-    const [openAnswerDel,setOpenAnswerDel] = useState(false)
-    const [openQuestionDel,setOpenQuestionDel] = useState(false)
+    const [openModal,setOpenModal] = useState(false)
     const [deleteUrl, setDeleteUrl] = useState('')
 
     //data update test완료
     const onHandleClick = () => {
+        if(content.length === 0 ) {
+            return (
+                (()=>{
+                    inputRef.current.focus();
+                    setBlank(true);
+                })()
+                )};
         const random = Math.round(Math.random()*100)+0
         const date = new Date();
         const today = date.toLocaleDateString().slice(0,-1);
@@ -130,23 +146,22 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
     }   
         /*** Answer delete modal ***/
         const handleDelete = (url) => {
-            setOpenAnswerDel(true);
+            setOpenModal(true);
             setDeleteUrl(url)
         }
         const handleConfirm = () => {
             fetchDelete(deleteUrl,'/question-detail')
-            setOpenAnswerDel(false);
+            setOpenModal(false);
         };
         const handleCancel = () => {
-            setOpenAnswerDel(false);
+            setOpenModal(false);
             setDeleteUrl('')
         };
     
     return(
         <>
         <QuestionDetailWraper>
-
-            {openAnswerDel && 
+            {openModal && 
             <ModalWrap>
             <Modal>
                 <h2>Delete</h2>
@@ -158,20 +173,25 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
             </Modal>
             </ModalWrap>
             }
-            {
-                console.log(deleteUrl)
-            }
             {data && 
-                <Question login={login} data={data} userInfo={userInfo}  handleDelete={handleDelete}/>}
+                <Question login={login} data={data} userInfo={userInfo}  handleDelete={handleDelete} key={data.id}/>}
             {data &&
                 <AnswerList login={login} userInfo={userInfo} author={data.author} handleDelete={handleDelete}/>}
             <label>Your Answer</label>
             {login?
             <>
-                <textarea onChange={ (e) => setContent(e.target.value)} value ={content} rows="4" cols="50"  ></textarea>
+                <textarea 
+                onChange={ (e) => setContent(e.target.value)} 
+                value ={content} 
+                rows="4" cols="50"
+                autoFocus={true}
+                ref={inputRef}
+                ></textarea>
                 <AnsewerPostWrap>
+                    {blank && <span>Please write the answer in this field</span>}
                     <button onClick={ onHandleClick }>Post your Answer</button>
                 </AnsewerPostWrap>
+                
             </>
                 :<div>Please log in to write a reply</div>
             }

@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
-import { useState } from 'react'
-import { fetchDelete } from '../util/api'
+import { useState ,useEffect } from 'react'
+import { fetchPatch } from '../util/api'
 import Avatar, { genConfig } from 'react-nice-avatar'
 
 const config = genConfig()
@@ -133,6 +133,20 @@ const Question = ({login,data,userInfo,handleDelete}) => {
             window.location.href = '/login';
         }
     }
+
+    useEffect(() => {
+        function handleBeforeUnload() {
+            if(checked === 'up') fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${data.id}`,{"votes": data.votes + 1 },)
+            if(checked === 'down') fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${data.id}`,{"votes": data.votes - 1 },)
+        }
+    
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    
+        return () => {
+          window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+      }, [checked]);
+
     return (
         <>
             <QuestionWrap>
@@ -151,7 +165,7 @@ const Question = ({login,data,userInfo,handleDelete}) => {
                         <button 
                         onClick={(e)=>handleDelete(e.target.value)} 
                         disabled={ userInfo.name !== data.author}
-                        value={`http://localhost:3002/questions/${data.id}`}>delete</button>
+                        value={`${process.env.REACT_APP_API_QUESTION}/${data.id}`}>delete</button>
                         </div>
                     </div>
                     <button onClick={onHandleQuestion}>Ask Question</button>

@@ -96,7 +96,7 @@ const QuestionBodyWrap = styled.div`
         }
     }
 `
-const Question = ({login,data,userInfo}) => {
+const Question = ({login,data,userInfo,handleDelete}) => {
     
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
@@ -125,9 +125,6 @@ const Question = ({login,data,userInfo}) => {
             setVote(votes - 1)
         }
     }
-    const onHandleDelete = () => {
-        fetchDelete('questions/'+ 1,'/question-detail')
-    }
     const onHandleQuestion = () =>{
         if(login){
             window.location.href = '/question-form';
@@ -151,7 +148,10 @@ const Question = ({login,data,userInfo}) => {
                         <span>viewed</span> 
                         <span>{data.view}</span>
                         <button disabled={ userInfo.name !== data.author }>edit</button>
-                        <button onClick={onHandleDelete} disabled={ userInfo.name !== data.author}>delete</button>
+                        <button 
+                        onClick={(e)=>handleDelete(e.target.value)} 
+                        disabled={ userInfo.name !== data.author}
+                        value={`http://localhost:3002/questions/${data.id}`}>delete</button>
                         </div>
                     </div>
                     <button onClick={onHandleQuestion}>Ask Question</button>

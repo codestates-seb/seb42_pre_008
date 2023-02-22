@@ -166,7 +166,10 @@ const Answer = ({el,adopt,login,userInfo,author,handleDelete}) => {
                     <button onClick={onHandleEdit}>submit</button>
                     :<button onClick={() => setEdit(!edit)} disabled={ userInfo.name !== el.author }>edit</button>
                     }
-                    <button onClick={ (e) => handleDelete(e.target.value) } disabled={ userInfo.name !== el.author } value = {url}>delete</button>
+                    <button 
+                    onClick={ (e) => handleDelete(e.target.value) } 
+                    disabled={ userInfo.name !== el.author } 
+                    value = {url}>delete</button>
                     {el.adopt ? 
                     <button onClick={ onHandleAdopt } >cancle adopt</button>
                     :<button onClick={ onHandleAdopt } disabled={ userInfo.name === author ? adopt :true }>adopt</button>}

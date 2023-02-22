@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { fetchDelete } from '../util/api'
 
 const QuestionDetailWraper = styled.div`
-    background-color: aliceblue;
     padding:15vh 10vh;
     position: relative;
     label{
@@ -109,7 +108,8 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
     const [data, isPending, error ] = useFetch(process.env.REACT_APP_API_QUESTION+'/'+'1')
     const [content,setContent] = useState('')
     /*** modal***/
-    const [open,setIsOpen] = useState(false)
+    const [openAnswerDel,setOpenAnswerDel] = useState(false)
+    const [openQuestionDel,setOpenQuestionDel] = useState(false)
     const [deleteUrl, setDeleteUrl] = useState('')
 
     //data update test완료
@@ -128,34 +128,38 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
               }
            ,'/question-detail' )
     }   
-        /*** modal ***/
+        /*** Answer delete modal ***/
         const handleDelete = (url) => {
-            setIsOpen(true);
+            setOpenAnswerDel(true);
             setDeleteUrl(url)
         }
         const handleConfirm = () => {
             fetchDelete(deleteUrl,'/question-detail')
-            setIsOpen(false);
+            setOpenAnswerDel(false);
         };
         const handleCancel = () => {
-            setIsOpen(false);
+            setOpenAnswerDel(false);
             setDeleteUrl('')
         };
     
     return(
         <>
         <QuestionDetailWraper>
-        {open && 
+
+            {openAnswerDel && 
             <ModalWrap>
             <Modal>
                 <h2>Delete</h2>
-                <p>Are you sure you want delete this answer?</p>
+                <p>Are you sure you want delete this {deleteUrl.includes('answer') ? 'Answer' :'Question'}?</p>
                 <div>
-                    <button onClick={handleConfirm}>Delete answer</button>
+                    <button onClick={handleConfirm}>Delete {deleteUrl.includes('answer') ? 'Answer' :'Question'}</button>
                     <button onClick={handleCancel}>Close</button>
                 </div>
             </Modal>
             </ModalWrap>
+            }
+            {
+                console.log(deleteUrl)
             }
             {data && 
                 <Question login={login} data={data} userInfo={userInfo}  handleDelete={handleDelete}/>}

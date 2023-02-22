@@ -6,16 +6,16 @@ export const SidebarWrapper = styled.span`
     flex-direction: column;
     min-height: 80vh;
     padding-top: 50vh;
-    margin-right: 3vh;
-    width: 20vw;
+    /* margin-right: 3vh; */
+    width: 400px;
     border: 1px solid red;
 `;
 
-const Adds = () => {
+const Ads = () => {
     return (
         <SidebarWrapper>
         </SidebarWrapper>
     );
 };
 
-export default Adds;
+export default Ads;

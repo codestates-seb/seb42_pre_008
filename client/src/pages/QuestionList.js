@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Adds from "../component/Adds";
-import Footer from "../component/Footer";
-import NavOnLogout from "../component/NavOnLogout";
-import Sidebar from "../component/Sidebar";
+import Ads from "../component/list/Ads";
+import Footer from "../component/navNfooter/Footer";
+import NavOnLogout from "../component/navNfooter/NavOnLogout";
+import Sidebar from "../component/list/Sidebar";
 import useFetch from "../util/useFetch";
 // import NavOnLogin from "../component/NavOnLogin";
 
@@ -12,28 +12,33 @@ export const QuestionListWrapper = styled.main`
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    height: 120vh;
+`;
+export const QuestionListContainer = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 1400px;
 `;
 export const QuestionContainer = styled.main`
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: start;
+    width: 900px;
     border-left: 0.2vh solid #e4e6e7;
-    padding-right: 2vh;
 `;
 export const QuestionListHeader = styled.header`
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    width: 55vw;
+    width: 900px;
     border-bottom: 0.2vh solid #e4e6e7;
 `;
 export const InsideHeaderUpper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 2vh 2vh 0vh 3vh;
+    padding: 1vh 2vh 0vh 3vh;
 `;
 export const InsideHeaderLower = styled.div`
     display: flex;
@@ -81,7 +86,7 @@ export const QuestionUnit = styled.section`
     flex-direction: row;
     align-items: space-evenly;
     justify-content: space-evenly;
-    width: 55vw;
+    width: 900px;
     padding: 1vh 0 2vh 0;
     border-bottom: 0.7px solid #d2d2d2;
 `;
@@ -90,32 +95,32 @@ export const QuestionTitle = styled.p`
     align-items: flex-start;
     margin-bottom: 0.5vh;
     color: #0074cc;
-    width: 43vw;
+    width: 700px;
     font-size: 1.1rem;
 `;
 export const QuestionContent = styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    width: 43vw;
+    width: 700px;
     font-size: 0.9rem;
 `;
 export const Left = styled.span`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    padding-right: 1vw;
-    width: 10vw;
+    width: 150px;
 `;
 export const Right = styled.span`
-    width: 45vw;
+    /* width: 45vw; */
+    width: 700px;
 `;
 export const QuestionInfo = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 43vw;
+    width: 700px;
     padding-top: 1vh;
     font-size: 0.9rem;
 `;
@@ -158,7 +163,7 @@ export const Shorter = styled.div`
 export const Author = styled.span`
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     color: #6a737c;
     font-size: 0.8rem;
@@ -166,6 +171,7 @@ export const Author = styled.span`
         color: #1b7bcf;
         margin-right: 0.6vh;
     }
+    width: 400px;
 `;
 export const Img = styled.img`
     height: 2vh;
@@ -179,6 +185,8 @@ const QuestionList = () => {
     const [questions, isPending, error] = useFetch(
         "http://localhost:3001/questions"
     );
+
+
     return (
         <>
             {isPending || (
@@ -186,78 +194,89 @@ const QuestionList = () => {
                     <NavOnLogout />
                     {/* <NavOnLogin /> */}
                     <QuestionListWrapper>
-                    <Sidebar />
-                        <QuestionContainer>
-                            <QuestionListHeader>
-                                <InsideHeaderUpper>
-                                    <Title>All Questions</Title>
-                                    <AskQuestionButton>
-                                        Ask Question
-                                    </AskQuestionButton>
-                                </InsideHeaderUpper>
-                                <InsideHeaderLower>
-                                    <QuestionListCount>
-                                        {questions.length} questions
-                                    </QuestionListCount>
-                                    <FilterOptions>
-                                        <FilterButton value={"newest"}>
-                                            Newest
-                                        </FilterButton>
-                                        <FilterButton value={"unanswwered"}>
-                                            Unanswered
-                                        </FilterButton>
-                                        <FilterButton value={"answered"}>
-                                            Answered
-                                        </FilterButton>
-                                    </FilterOptions>
-                                </InsideHeaderLower>
-                            </QuestionListHeader>
-                            {questions.map((question, i) => (
-                                <QuestionUnit key={i}>
-                                    <Left>
-                                        <Shorter>
-                                            {question.votes} votes
-                                        </Shorter>
-                                        <Shorter>
-                                            <span
-                                                className={
-                                                    question.answers > 0
-                                                        ? "answered"
-                                                        : ""
-                                                }
-                                            >
-                                                {question.answers} answer
-                                                {question.answers !== 1
-                                                    ? "s"
-                                                    : ""}
-                                            </span>
-                                        </Shorter>
-                                        <Shorter>{question.view} views</Shorter>
-                                    </Left>
-                                    <Right>
-                                        <QuestionTitle>
-                                            {question.title}
-                                        </QuestionTitle>
-                                        <QuestionContent>
-                                            {question.content.slice(0, 150)}...
-                                        </QuestionContent>
-                                        <QuestionInfo>
-                                            <Tags>
-                                                {question.tag.map((t, i) => (
-                                                    <Tag key={i}>{t}</Tag>
-                                                ))}
-                                            </Tags>
-                                            <Author>
-                                                <Img src="icon.png" />
-                                                <span>{question.author}</span>
-                                                asked 1 min ago
-                                            </Author>
-                                        </QuestionInfo>
-                                    </Right>
-                                </QuestionUnit>
-                            ))}
-                        </QuestionContainer>
-                        <Adds/>
+                        <QuestionListContainer>
+                            <Sidebar />
+                            <QuestionContainer>
+                                <QuestionListHeader>
+                                    <InsideHeaderUpper>
+                                        <Title>All Questions</Title>
+                                        <AskQuestionButton>
+                                            Ask Question
+                                        </AskQuestionButton>
+                                    </InsideHeaderUpper>
+                                    <InsideHeaderLower>
+                                        <QuestionListCount>
+                                            {questions.length} questions
+                                        </QuestionListCount>
+                                        <FilterOptions>
+                                            <FilterButton value={"newest"}>
+                                                Newest
+                                            </FilterButton>
+                                            <FilterButton value={"unanswered"}>
+                                                Unanswered
+                                            </FilterButton>
+                                            <FilterButton value={"answered"}>
+                                                Answered
+                                            </FilterButton>
+                                        </FilterOptions>
+                                    </InsideHeaderLower>
+                                </QuestionListHeader>
+                                {questions.map((question, i) => (
+                                    <QuestionUnit key={i}>
+                                        <Left>
+                                            <Shorter>
+                                                {question.votes} votes
+                                            </Shorter>
+                                            <Shorter>
+                                                <span
+                                                    className={
+                                                        question.answers > 0
+                                                            ? "answered"
+                                                            : ""
+                                                    }
+                                                >
+                                                    {question.answers} answer
+                                                    {question.answers !== 1
+                                                        ? "s"
+                                                        : ""}
+                                                </span>
+                                            </Shorter>
+                                            <Shorter>
+                                                {question.view} views
+                                            </Shorter>
+                                        </Left>
+                                        <Right>
+                                            <QuestionTitle>
+                                                {question.title}
+                                            </QuestionTitle>
+                                            <QuestionContent>
+                                                {question.content.slice(0, 150)}
+                                                ...
+                                            </QuestionContent>
+                                            <QuestionInfo>
+                                                <Tags>
+                                                    {question.tag.map(
+                                                        (t, i) => (
+                                                            <Tag key={i}>
+                                                                {t}
+                                                            </Tag>
+                                                        )
+                                                    )}
+                                                </Tags>
+                                                <Author>
+                                                    <Img src="icon.png" />
+                                                    <span>
+                                                        {question.author}
+                                                    </span>
+                                                    asked 1 min ago
+                                                </Author>
+                                            </QuestionInfo>
+                                        </Right>
+                                    </QuestionUnit>
+                                ))}
+                            </QuestionContainer>
+                            <Ads />
+                        </QuestionListContainer>
                     </QuestionListWrapper>
                     <Footer />
                 </>

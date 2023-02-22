@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 export const Nav = styled.nav`
     position: sticky;
@@ -33,7 +34,7 @@ export const Menu = styled.button`
         color: black;
         border-radius: 5vh;
     }
-    `;
+`;
 export const LoginButton = styled.button`
     font-size: 13.5px;
     height: 4.3vh;
@@ -47,7 +48,7 @@ export const LoginButton = styled.button`
     :hover {
         background-color: #b9d2e8;
     }
-    `;
+`;
 export const SignupButton = styled.button`
     font-size: 13.5px;
     height: 4.3vh;
@@ -75,7 +76,7 @@ export const SearchBox = styled.div`
     font-weight: bold;
     color: #bcbbbc;
     #magnifyingGlass {
-        color: #838C95;
+        color: #838c95;
         font-size: 20.8px;
     }
 `;
@@ -98,23 +99,33 @@ export const None = styled.button`
     padding-top: 0.4vh;
     background-color: transparent;
     border: none;
-    color: #838C95;
+    color: #838c95;
 `;
 
 const NavOnLogout = () => {
     return (
         <Nav>
-            <Logo src="logo.png" />
-            <Menu>Home</Menu>
-            <Menu>Questions</Menu>
+            <Link to="/">
+                <Logo src="logo.png" />
+            </Link>
+            <Link to="/">
+                <Menu>Home</Menu>
+            </Link>
+            <Link to="/">
+                <Menu>Questions</Menu>
+            </Link>
             <SearchBox>
                 <None>
                     <GrSearch id="magnifyingGlass" />
                 </None>
                 <Input placeholder="Search..."></Input>
             </SearchBox>
-            <LoginButton>Log in</LoginButton>
-            <SignupButton>Sign up</SignupButton>
+            <Link to="/login">
+                <LoginButton>Log in</LoginButton>
+            </Link>
+            <Link to="/sign-in">
+                <SignupButton>Sign up</SignupButton>
+            </Link>
         </Nav>
     );
 };

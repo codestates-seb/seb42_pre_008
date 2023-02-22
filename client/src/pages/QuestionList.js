@@ -4,6 +4,7 @@ import Footer from "../component/navNfooter/Footer";
 import NavOnLogout from "../component/navNfooter/NavOnLogout";
 import Sidebar from "../component/list/Sidebar";
 import useFetch from "../util/useFetch";
+import { Link } from "react-router-dom";
 // import NavOnLogin from "../component/NavOnLogin";
 
 export const QuestionListWrapper = styled.main`
@@ -186,7 +187,6 @@ const QuestionList = () => {
         "http://localhost:3001/questions"
     );
 
-
     return (
         <>
             {isPending || (
@@ -200,9 +200,11 @@ const QuestionList = () => {
                                 <QuestionListHeader>
                                     <InsideHeaderUpper>
                                         <Title>All Questions</Title>
-                                        <AskQuestionButton>
-                                            Ask Question
-                                        </AskQuestionButton>
+                                        <Link to="/question-form">
+                                            <AskQuestionButton>
+                                                Ask Question
+                                            </AskQuestionButton>
+                                        </Link>
                                     </InsideHeaderUpper>
                                     <InsideHeaderLower>
                                         <QuestionListCount>

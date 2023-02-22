@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 export const Nav = styled.nav`
     position: sticky;
@@ -90,17 +91,27 @@ export const None = styled.button`
 const NavOnLogin = () => {
     return (
         <Nav>
-            <Logo src="logo.png" />
-            <Menu>Home</Menu>
-            <Menu>Questions</Menu>
+            <Link to="/">
+                <Logo src="logo.png" />
+            </Link>
+            <Link to="/">
+                <Menu>Home</Menu>
+            </Link>
+            <Link to="/question-form">
+                <Menu>Questions</Menu>
+            </Link>
             <SearchBox>
                 <None>
                     <GrSearch id="magnifyingGlass" />
                 </None>
                 <Input placeholder="Search..."></Input>
             </SearchBox>
-            <Menu id="mypage">My Page</Menu>
-            <LoginButton>Log out</LoginButton>
+            <Link to="/mypage">
+                <Menu id="mypage">My Page</Menu>
+            </Link>
+            <Link to="/login">
+                <LoginButton>Log out</LoginButton>
+            </Link>
         </Nav>
     );
 };

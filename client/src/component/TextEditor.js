@@ -32,6 +32,7 @@ export const TextEditor = ({ focus, blur, placeholder }) => {
                     ["table", "image", "link"],
                     ["code", "codeblock"],
                 ]}
+                autofocus={false}
                 hideModeSwitch={true}
             ></Editor>
         </EditorWrapper>

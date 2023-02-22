@@ -3,7 +3,6 @@ import Footer from "../component/navNfooter/Footer";
 import styled from "styled-components";
 import TextEditor from "../component/TextEditor";
 import { useState } from "react";
-import { Alert } from "bootstrap";
 
 export const QuestionFormWrapper = styled.div`
     display: flex;
@@ -53,6 +52,13 @@ export const Information = styled.span`
     li {
         font-size: 15px;
         padding-left: 20px;
+    }
+    a {
+        text-decoration-line: none;
+        color: #0074cc;
+        :hover {
+            color: #0a95ff;
+        }
     }
 `;
 export const InfoTitle = styled.p`
@@ -314,14 +320,12 @@ const QuestionForm = () => {
             submitTagItem();
         }
     };
-
     const submitTagItem = () => {
         let updatedTagList = [...tagList];
         updatedTagList.push(tagItem);
         setTagList(updatedTagList);
         setTagItem("");
     };
-
     const deleteTagItem = (e) => {
         const deleteTagItem = e.target.value;
         const filteredTagList = tagList.filter(
@@ -343,13 +347,23 @@ const QuestionForm = () => {
                         <Information>
                             <InfoTitle>Writing a good question</InfoTitle>
                             <p>
-                                You’re ready to ask a programming-related
-                                question and this form will help guide you
-                                through the process.
+                                You’re ready to{" "}
+                                <a href="https://stackoverflow.com/help/how-to-ask">
+                                    ask
+                                </a>{" "}
+                                a{" "}
+                                <a href="https://stackoverflow.com/help/on-topic">
+                                    programming-related question
+                                </a>{" "}
+                                and this form will help guide you through the
+                                process.
                             </p>
                             <p>
-                                Looking to ask a non-programming question? See
-                                the topics here to find a relevant site.
+                                Looking to ask a non-programming question? See{" "}
+                                <a href="https://stackexchange.com/sites#technology">
+                                    the topics here
+                                </a>{" "}
+                                to find a relevant site.
                             </p>
                             <strong>Steps</strong>
                             <li>Summarize your problem in a one-line title.</li>
@@ -490,7 +504,8 @@ const QuestionForm = () => {
                             <FormTitle>Tags</FormTitle>
                             <FormInfo>
                                 Add up to 5 tags to describe what your question
-                                is about. Start typing to see suggestions. Maximum 5 tags.
+                                is about. Start typing to see suggestions.
+                                Maximum 5 tags.
                             </FormInfo>
                             <TagBox>
                                 {tagList.map((tagItem, index) => {

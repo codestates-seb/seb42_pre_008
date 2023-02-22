@@ -38,6 +38,9 @@ const QuestionWrap = styled.div`
             :hover {
                 color: #3172c6;
             }
+            :disabled{
+                display: none;
+            }
         }
         >button{
             cursor:pointer;
@@ -93,7 +96,7 @@ const QuestionBodyWrap = styled.div`
         }
     }
 `
-const Question = ({login,data}) => {
+const Question = ({login,data,userInfo}) => {
     
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
@@ -125,9 +128,18 @@ const Question = ({login,data}) => {
     const onHandleDelete = () => {
         fetchDelete('questions/'+ 1,'/question-detail')
     }
+    const onHandleQuestion = () =>{
+        if(login){
+            window.location.href = '/question-form';
+        }
+        else{
+            window.location.href = '/login';
+        }
+    }
     return (
         <>
             <QuestionWrap>
+                {console.log(userInfo.name !== data.autho)}
                 <header>
                     <div>
                         <h1>{data.title}</h1>
@@ -139,11 +151,11 @@ const Question = ({login,data}) => {
                         <span>{data.createdAt}</span>
                         <span>viewed</span> 
                         <span>{data.view}</span>
-                        <button>edit</button>
-                        <button onClick={onHandleDelete}>delete</button>
+                        <button disabled={ userInfo.name !== data.author }>edit</button>
+                        <button onClick={onHandleDelete} disabled={ userInfo.name !== data.author}>delete</button>
                         </div>
                     </div>
-                    <button>Ask Question</button>
+                    <button onClick={onHandleQuestion}>Ask Question</button>
                 </header>
             <QuestionBodyWrap>
                 <aside> 

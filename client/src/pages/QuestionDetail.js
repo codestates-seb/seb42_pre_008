@@ -42,7 +42,7 @@ const QuestionDetailWraper = styled.div`
 
 
 const QuestionDetail = ({login,userInfo,endpoint}) => {
-    const [data, isPending, error ] = useFetch(process.env.REACT_APP_API_QUESTION)
+    const [data, isPending, error ] = useFetch(process.env.REACT_APP_API_QUESTION+'/'+'1')
     const [content,setContent] = useState('')
    
 
@@ -65,7 +65,7 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
     
     return(
         <QuestionDetailWraper>
-            {data && <Question login={login} data={data[0]} userInfo={userInfo}/>}
+            {data && <Question login={login} data={data} userInfo={userInfo}/>}
             <AnswerList login={login} userInfo={userInfo}/>
             <label>Your Answer</label>
             {login?

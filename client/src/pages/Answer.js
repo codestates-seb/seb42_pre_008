@@ -151,7 +151,7 @@ const Answer = ({el,adopt,login,userInfo}) => {
         <section>
             <div>
             <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} />
-            <span>{el.name}</span>
+            <span>{el.author}</span>
             <span>{el.update}</span>
             </div>
             {edit ?  
@@ -161,9 +161,9 @@ const Answer = ({el,adopt,login,userInfo}) => {
             <div>
                 {edit?
                 <Styledbutton onClick={onHandleEdit}>submit</Styledbutton>
-                :<button onClick={() => setEdit(!edit)}>edit</button>
+                :<button onClick={() => setEdit(!edit)} disabled={ userInfo.name !== el.author }>edit</button>
                 }
-                <button onClick={ onHandleDelete }>delete</button>
+                <button onClick={ onHandleDelete } disabled={ userInfo.name !== el.author }>delete</button>
                 {el.adopt ? 
                 <button onClick={ onHandleAdopt } >cancle adopt</button>
                 :<button onClick={ onHandleAdopt } disabled={adopt}>adopt</button>}

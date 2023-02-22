@@ -1,22 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import MypageHeader from "../component/mypage/MypageHeader";
-import UserBtns from "../component/mypage/UserBtns";
+import MyInfo from "../component/mypage/MyInfo/MyInfo";
 import NavOnLogin from "../component/NavOnLogin";
-
-const CotentContainer = styled.div`
-
-`
-
-
+import MyProfile from "../component/mypage/MyProfile/MyProfile"
+// import memberIdState from "../state/memberState";
+// import tokenState from "../state/tokenState";
+// import isLoginState from "../state/isLoginState";
 
 
-export default function MyPage2() {
+
+
+
+
+
+
+
+const MyPage2 = () => {
+    // const [memberId, setMemberId] = useRecoilState(memberIdState);
+    // const [isLoading, setIsLoaidng] = useState(false);
+    // const [user, setUser] = useState({ data: {} });
+    // const [token, setToken] = useRecoilState(tokenState);
+    // const [isLogin, setIsLogin] = useRecoilState(isLoginState); 
+
+    // useEffect(() => {
+    //     setIsLoaidng(true) ;
+    //     //api 적용해야함.   
+    // })
+
+
     return(
         <>
         <NavOnLogin />
-        <MypageHeader />
-        <UserBtns />
+        <MyInfo />
+        <MyProfile />
+
         </>
     )
 }
+
+export default MyPage2

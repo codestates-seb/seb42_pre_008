@@ -31,6 +31,7 @@ const Navigation = styled.div`
 
 function UserBtns() {
   return (
+    <>
     <Navigation>
       <div className="mx-7">
         <Button primary>Profile</Button>
@@ -39,13 +40,15 @@ function UserBtns() {
         <Button>Settings</Button>
       </div>
     </Navigation>
+
+      <Routes>
+        <Route exact path="/" element={<Actives/>} />  
+        <Route exact path="/actives" element={<Actives />} />
+        <Route exact path="/settings/*" element={<Actives />} />
+        </Routes>
+    </>
   );
 }
 
 export default UserBtns;
 
-<Routes>
-<Route exact path="/" element={<Actives/>} />
-<Route exact path="/actives" element={<Actives />} />
-<Route exact path="/settings/*" element={<Actives />} />
-</Routes>

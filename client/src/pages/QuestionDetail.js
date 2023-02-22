@@ -1,8 +1,6 @@
-import { useState ,useRef } from 'react';
-import { fetchCreate } from '../util/api';
+import { useState,useEffect } from 'react';
 import Question from './Question';
 import AnswerList  from './AnswerList';
-import useFetch from "../util/useFetch";
 import styled from "styled-components";
 import { fetchDelete } from '../util/api'
 
@@ -19,9 +17,6 @@ const QuestionDetailWraper = styled.div`
         resize: none;
         margin-bottom: 1vh;
         font-size: 1rem;
-        :focus{
-            color:#3172c6;
-        }
     }
 `
 const Modal = styled.div`
@@ -84,79 +79,33 @@ const ModalWrap = styled.div`
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
 `
-const AnsewerPostWrap = styled.div`
-    width: 100%;
-    text-align: right;
-    button{
-            cursor:pointer;
-            right: 0;
-            margin-right: 0;
-            font-size: 16px;
-            height: 4vh;
-            padding: 0 1vh;
-            margin-left: 1vh;
-            border-radius: 0.3vh;
-            background-color: #0995ff;
-            color: white;
-            border: 1px solid #477199;
-            box-shadow: inset 0px 0px 0px 0px #54a3f7;
-            :hover {
-                color: #fff;
-                background-color: #3172c6;
-            }
-    }
-    span{
-        color:#F23A51;
-    }
-`
+
 
 const QuestionDetail = ({login,userInfo,endpoint}) => {
-    const [data, isPending, error ] = useFetch(process.env.REACT_APP_API_QUESTION+'/'+'1')
-    const [content,setContent] = useState('')
-    const [blank, setBlank] = useState(false)
-    /*** 특정 focus로 이동***/
-    const inputRef = useRef(null);
+
+    const [author,setAuthor] = useState('') 
 
     /*** modal***/
     const [openModal,setOpenModal] = useState(false)
     const [deleteUrl, setDeleteUrl] = useState('')
 
-    //data update test완료
-    const onHandleClick = () => {
-        if(content.length === 0 ) {
-            return (
-                (()=>{
-                    inputRef.current.focus();
-                    setBlank(true);
-                })()
-                )};
-        const random = Math.round(Math.random()*100)+0
-        const date = new Date();
-        const today = date.toLocaleDateString().slice(0,-1);
-        fetchCreate( process.env.REACT_APP_API_ANSWER, 
-            {
-                "id": random,
-                "author": userInfo.name,
-                "update": today,
-                "votes": 0,
-                "content": content,
-                "adopt": false
-              }
-           ,'/question-detail' )
-    }   
-        /*** Answer delete modal ***/
-        const handleDelete = (url) => {
-            setOpenModal(true);
-            setDeleteUrl(url)
-        }
-        const handleConfirm = () => {
-            fetchDelete(deleteUrl,'/question-detail')
-            setOpenModal(false);
-        };
-        const handleCancel = () => {
-            setOpenModal(false);
-            setDeleteUrl('')
-        };
+    /*** Answer delete modal ***/
+    const handleDelete = (url) => {
+        setOpenModal(true);
+        setDeleteUrl(url)
+    }
+    const handleConfirm = () => {
+        fetchDelete(deleteUrl,'/question-detail')
+        setOpenModal(false);
+    };
+    const handleCancel = () => {
+        setOpenModal(false);
+        setDeleteUrl('')
+    };
+    /*** scrol top ***/
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
     
     return(
         <>
@@ -173,28 +122,16 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
             </Modal>
             </ModalWrap>
             }
-            {data && 
-                <Question login={login} data={data} userInfo={userInfo}  handleDelete={handleDelete} key={data.id}/>}
-            {data &&
-                <AnswerList login={login} userInfo={userInfo} author={data.author} handleDelete={handleDelete}/>}
-            <label>Your Answer</label>
-            {login?
-            <>
-                <textarea 
-                onChange={ (e) => setContent(e.target.value)} 
-                value ={content} 
-                rows="4" cols="50"
-                autoFocus={true}
-                ref={inputRef}
-                ></textarea>
-                <AnsewerPostWrap>
-                    {blank && <span>Please write the answer in this field</span>}
-                    <button onClick={ onHandleClick }>Post your Answer</button>
-                </AnsewerPostWrap>
-                
-            </>
-                :<div>Please log in to write a reply</div>
-            }
+            <Question 
+                login={login} 
+                userInfo={userInfo} 
+                handleDelete={handleDelete} 
+                setAuthor={setAuthor}/>
+
+            <AnswerList 
+                login={login} userInfo={userInfo} 
+                author={author} handleDelete={handleDelete}/>
+            
         </QuestionDetailWraper>
         </>
     )

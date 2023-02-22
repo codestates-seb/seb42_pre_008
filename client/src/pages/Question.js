@@ -4,6 +4,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { useState ,useEffect } from 'react'
 import { fetchPatch } from '../util/api'
 import Avatar, { genConfig } from 'react-nice-avatar'
+import useFetch from "../util/useFetch";
 
 const config = genConfig()
 const QuestionWrap = styled.div`
@@ -96,33 +97,37 @@ const QuestionBodyWrap = styled.div`
         }
     }
 `
-const Question = ({login,data,userInfo,handleDelete}) => {
-    
+const Question = ({login,userInfo,handleDelete,setAuthor}) => {
+    //fetchdata
+    const [data, setData] = useState(null);
+    const [isPending, setIsPending] = useState(true);
+    const [error, setError] = useState(null);
+
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
     const [checked,setChecked] = useState('still');
-    const [votes, setVote] = useState(data && parseInt(data.votes))
+    const [vote, setVote] = useState('')
 
     const onHandleVoteUp = () => {
         if(checked === 'still'){
             setChecked('up')
             setUpClicked(true)
-            setVote(votes + 1)
+            setVote(vote + 1)
         }else if( checked === 'down'){
             setChecked('still')
             setDownClicked(false)
-            setVote(votes + 1)
+            setVote(vote + 1)
         }
     }
     const onHandleVoteDown = () => {
         if(checked === 'still'){
             setChecked('down')
             setDownClicked(true)
-            setVote(votes - 1)
+            setVote(vote - 1)
         }else if( checked === 'up'){
             setChecked('still')
             setUpClicked(false)
-            setVote(votes - 1)
+            setVote(vote - 1)
         }
     }
     const onHandleQuestion = () =>{
@@ -134,12 +139,37 @@ const Question = ({login,data,userInfo,handleDelete}) => {
         }
     }
 
+
+    useEffect(() => {
+        const abortCont = new AbortController();
+
+        setTimeout(() => {
+        fetch(process.env.REACT_APP_API_QUESTION+'/'+'1', { signal: abortCont.signal })
+        .then(res => {
+            if (!res.ok) { 
+                throw Error('could not fetch the data for that resource');
+            } 
+            return res.json();
+        })
+        .then(data => {
+            setIsPending(false);
+            setData(data);
+            setError(null);
+            setVote(data.votes)
+            setAuthor(data.author)
+        })
+        .catch(err => {
+            setIsPending(false);
+            setError(err.message);
+        })
+        }, 1000);},[])
+
+
     useEffect(() => {
         function handleBeforeUnload() {
             if(checked === 'up') fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${data.id}`,{"votes": data.votes + 1 },)
             if(checked === 'down') fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${data.id}`,{"votes": data.votes - 1 },)
         }
-    
         window.addEventListener('beforeunload', handleBeforeUnload);
     
         return () => {
@@ -148,9 +178,10 @@ const Question = ({login,data,userInfo,handleDelete}) => {
       }, [checked]);
 
     return (
-        <>
+
             <QuestionWrap>
-                <header>
+                {data &&
+                    <header>
                     <div>
                         <h1>{data.title}</h1>
                         <div>
@@ -170,23 +201,28 @@ const Question = ({login,data,userInfo,handleDelete}) => {
                     </div>
                     <button onClick={onHandleQuestion}>Ask Question</button>
                 </header>
+                }
             <QuestionBodyWrap>
-                <aside> 
-                    {login? <button onClick={ onHandleVoteUp } disabled={upClicked} ><AiFillCaretUp/></button>:
-                    <button onClick={ onHandleVoteUp } disabled={true} ><AiFillCaretUp/></button>
-                    }       
-                    <span>{votes}</span>
-                    {login? <button onClick={ onHandleVoteDown } disabled={downClicked} ><AiFillCaretDown/></button>:
-                    <button onClick={ onHandleVoteDown } disabled={true} ><AiFillCaretDown/></button>
-                    }    
-                </aside>
-                <article>
-                    {data.content}
-                    <div>{data.tag.map((el) => <span>{el}</span>)}</div>
-                </article>
+                {data &&<>
+                        <aside> 
+                            {login? <button onClick={ onHandleVoteUp } disabled={upClicked} ><AiFillCaretUp/></button>:
+                            <button onClick={ onHandleVoteUp } disabled={true} ><AiFillCaretUp/></button>
+                            }       
+                            <span>{vote}</span>
+                            {login? <button onClick={ onHandleVoteDown } disabled={downClicked} ><AiFillCaretDown/></button>:
+                            <button onClick={ onHandleVoteDown } disabled={true} ><AiFillCaretDown/></button>
+                            }    
+                        </aside>
+                        <article>
+                            {data.content}
+                            <div>{data.tag.map((el) => <span>{el}</span>)}</div>
+                        </article>
+                        </>
+                }
+
             </QuestionBodyWrap>
         </QuestionWrap>
-        </>
+        
     )
 }
 

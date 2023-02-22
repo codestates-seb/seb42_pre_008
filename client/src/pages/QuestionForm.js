@@ -3,6 +3,7 @@ import Footer from "../component/navNfooter/Footer";
 import styled from "styled-components";
 import TextEditor from "../component/TextEditor";
 import { useState } from "react";
+import { Alert } from "bootstrap";
 
 export const QuestionFormWrapper = styled.div`
     display: flex;
@@ -71,6 +72,9 @@ export const Helper = styled.span`
     }
     &#expectationHelper {
         height: 275px;
+    }
+    &#tagHelper {
+        height: 230px;
     }
 `;
 export const HelperHead = styled.div`
@@ -224,31 +228,32 @@ export const TagItem = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 5px;
+    margin: 3px;
     padding: 5px;
     border-radius: 2px;
     background-color: #e1ecf4;
     color: #39739c;
     font-size: 13px;
 `;
-
-export const Text = styled.span``;
-
 export const Button = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 15px;
-    height: 15px;
     margin-left: 5px;
-    background-color: white;
-    border-radius: 50%;
-    color: tomato;
+    padding: 0 3px;
+    background-color: transparent;
+    border: none;
+    font-weight: bolder;
+    color: #39739c;
+    :hover {
+        background-color: #39739c;
+        color: #e1ecf4;
+        border-radius: 2px;
+    }
 `;
-
 export const TagInput = styled.input`
     display: inline-flex;
-    min-width: 150px;
+    flex-grow: 1;
     padding-left: 10px;
     background: transparent;
     border: none;
@@ -257,6 +262,16 @@ export const TagInput = styled.input`
     &::placeholder {
         font-size: 15px;
         color: #999999;
+    }
+`;
+export const TagAlert = styled.span`
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 5px;
+    color: #de4f54;
+    display: none;
+    &#english {
+        display: block;
     }
 `;
 
@@ -280,9 +295,22 @@ const QuestionForm = () => {
     //! 여기서부터 태그
     const [tagItem, setTagItem] = useState("");
     const [tagList, setTagList] = useState([]);
+    const [isInEnglish, setIsInEnglish] = useState(false);
 
     const onKeyPress = (e) => {
-        if (e.target.value.length !== 0 && !e.target.value.includes(" ") && e.key === "Enter") {
+        const isKorean = /[^A-Za-z]/g.test(e.target.value);
+        if (isKorean) {
+            setIsInEnglish(!isInEnglish);
+            e.preventDefault();
+            return;
+        }
+        if (
+            !isKorean &&
+            e.target.value.length &&
+            e.key === "Enter" &&
+            tagList.length < 5
+        ) {
+            setIsInEnglish(false);
             submitTagItem();
         }
     };
@@ -295,7 +323,7 @@ const QuestionForm = () => {
     };
 
     const deleteTagItem = (e) => {
-        const deleteTagItem = e.target.parentElement.firstChild.innerText;
+        const deleteTagItem = e.target.value;
         const filteredTagList = tagList.filter(
             (tagItem) => tagItem !== deleteTagItem
         );
@@ -462,36 +490,39 @@ const QuestionForm = () => {
                             <FormTitle>Tags</FormTitle>
                             <FormInfo>
                                 Add up to 5 tags to describe what your question
-                                is about. Start typing to see suggestions.
+                                is about. Start typing to see suggestions. Maximum 5 tags.
                             </FormInfo>
                             <TagBox>
                                 {tagList.map((tagItem, index) => {
                                     return (
                                         <TagItem key={index}>
-                                            <Text>{tagItem}</Text>
-                                            <Button onClick={deleteTagItem}>
-                                                X
+                                            <span>{tagItem}</span>
+                                            <Button
+                                                value={tagItem}
+                                                onClick={deleteTagItem}
+                                            >
+                                                ✕
                                             </Button>
                                         </TagItem>
                                     );
                                 })}
                                 <TagInput
                                     type="text"
-                                    placeholder="Press enter to add tags"
+                                    onFocus={tagFocusHandler}
+                                    onBlur={tagFocusHandler}
+                                    placeholder="e.g. (ajax iphone string)"
                                     tabIndex={2}
                                     onChange={(e) => setTagItem(e.target.value)}
                                     value={tagItem}
                                     onKeyPress={onKeyPress}
                                 />
                             </TagBox>
-                            {/* <FormInput
-                                onFocus={tagFocusHandler}
-                                onBlur={tagFocusHandler}
-                                placeholder="e.g. (ajax iphone string)"
-                            ></FormInput> */}
+                            <TagAlert id={isInEnglish ? "english" : ""}>
+                                Tags must be in English
+                            </TagAlert>
                         </Tags>
                         {isTagOnFocus ? (
-                            <Helper>
+                            <Helper id="tagHelper">
                                 <HelperHead>Adding tags</HelperHead>
                                 <HelperInfo>
                                     <Pen src="pen.png"></Pen>

@@ -23,7 +23,7 @@ function App() {
     const [login, setLogin] = useState(true);
     const [userInfo, setUserInfo] = useState({
         "id": 1,
-        "name": "kkte02"
+        "name": "JudiPARK0416"
       });
     const [error, setError] = useState(null);
     //QuestionList -> QuestionDetail로 엔드포인트를 전달합니다

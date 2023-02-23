@@ -223,8 +223,8 @@ const QuestionList = () => {
                                         </FilterOptions>
                                     </InsideHeaderLower>
                                 </QuestionListHeader>
-                                {questions.map((question, i) => (
-                                    <QuestionUnit key={i}>
+                                {questions.map((question) => (
+                                    <QuestionUnit key={question.id}>
                                         <Left>
                                             <Shorter>
                                                 {question.votes} votes
@@ -252,12 +252,11 @@ const QuestionList = () => {
                                                 {question.title}
                                             </QuestionTitle>
                                             <QuestionContent>
-                                                {question.content.slice(0, 150)}
-                                                ...
+                                                {question.problem}
                                             </QuestionContent>
                                             <QuestionInfo>
                                                 <Tags>
-                                                    {question.tag.map(
+                                                    {(question.tagList).map(
                                                         (t, i) => (
                                                             <Tag key={i}>
                                                                 {t}

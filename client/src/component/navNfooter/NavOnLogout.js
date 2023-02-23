@@ -17,7 +17,7 @@ export const Nav = styled.nav`
     border-bottom: 0.2vh solid #e4e6e7;
     box-shadow: 0 4px 4px -6.5px black;
     background-color: #f9f9f9;
-    z-index: 2;
+    z-index: 3;
 `;
 export const Menu = styled.button`
     display: flex;

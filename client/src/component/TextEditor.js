@@ -1,3 +1,5 @@
+
+import React, { useRef, useEffect, useState } from 'react'
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import styled from "styled-components";
@@ -15,10 +17,17 @@ export const EditorWrapper = styled.div`
 
 
 export const TextEditor = ({ focus, blur, placeholder }) => {
+    const textRef = React.createRef()
+    const [descriptions, setDescriptions] = useState("")
+    const handleChangeInput = () => {
+        setDescriptions(textRef.current.getInstance().getMarkdown()
+        )
+    }
+
     return (
         <EditorWrapper>
             <Editor
-                // initialValue={''} -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
+                initialValue={descriptions} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
                 onFocus={focus}
                 onBlur={blur}
                 placeholder={placeholder}
@@ -32,6 +41,8 @@ export const TextEditor = ({ focus, blur, placeholder }) => {
                     ["table", "image", "link"],
                     ["code", "codeblock"],
                 ]}
+                ref={textRef}
+                onChange={handleChangeInput}
                 autofocus={false}
                 hideModeSwitch={true}
             ></Editor>

@@ -2,7 +2,10 @@ import NavOnLogin from "../component/navNfooter/NavOnLogin";
 import Footer from "../component/navNfooter/Footer";
 import styled from "styled-components";
 import TextEditor from "../component/TextEditor";
-import { useState } from "react";
+import useFetch from "../util/useFetch";
+import React, { useEffect, useState } from "react";
+import { Editor } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
 export const QuestionFormWrapper = styled.div`
     display: flex;
@@ -25,10 +28,6 @@ export const Head = styled.div`
 export const Robot = styled.img`
     height: 17vh;
     margin-top: 1vh;
-`;
-export const Main = styled.div`
-    display: flex;
-    flex-direction: column;
 `;
 export const Cover = styled.div`
     display: flex;
@@ -116,6 +115,7 @@ export const Title = styled.span`
     display: flex;
     flex-direction: column;
     width: 836px;
+    height: 130px;
     padding: 25px;
     background-color: white;
     border: 1px solid #e4e5e7;
@@ -143,7 +143,7 @@ export const Tags = styled.span`
     flex-direction: column;
     width: 836px;
     padding: 25px;
-    margin-bottom: 100px;
+    margin-bottom: 70px;
     background-color: white;
     border: 1px solid #e4e5e7;
 `;
@@ -186,7 +186,8 @@ export const ButtonContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    width: 85vw;
+    width: 1300px;
+    margin: 1vh 0;
 `;
 export const Discard = styled.button`
     font-size: 13.5px;
@@ -214,7 +215,7 @@ export const SubmitButton = styled.button`
     }
     margin-left: 1vw;
 `;
-//! 여기부터 태그
+// ! 여기부터 태그
 export const TagBox = styled.div`
     display: flex;
     align-items: center;
@@ -275,9 +276,18 @@ export const TagAlert = styled.span`
     margin-top: 5px;
     margin-left: 5px;
     color: #de4f54;
-    display: none;
+    visibility: hidden;
     &#english {
-        display: block;
+        visibility: visible;
+    }
+`;
+export const EditorWrapper = styled.div`
+    margin-top: 10px;
+    border-radius: 3px;
+    &:focus-within {
+        outline: 1px solid #58a4de;
+        border-bottom: 2px solid #58a4de;
+        box-shadow: 0px 0px 10px #ddeaf7;
     }
 `;
 
@@ -302,7 +312,6 @@ const QuestionForm = () => {
     const [tagItem, setTagItem] = useState("");
     const [tagList, setTagList] = useState([]);
     const [isInEnglish, setIsInEnglish] = useState(false);
-
     const onKeyPress = (e) => {
         const isKorean = /[^A-Za-z]/g.test(e.target.value);
         if (isKorean) {
@@ -333,6 +342,62 @@ const QuestionForm = () => {
         );
         setTagList(filteredTagList);
     };
+    //! 여기서부터 discard
+    const [title, setTitle] = useState("");
+    // const [descriptions, setDescriptions] = useState("")
+    const [problem, setProblem] = useState("");
+    const [expectation, setExpectation] = useState("");
+    const onDiscard = (e) => {
+        setTitle("");
+        setProblem("");
+        setExpectation("");
+        setTagList([]);
+    };
+
+    //! 여기서부터 submit
+    const [data, isPending, error] = useFetch(
+        "http://localhost:3001/questions"
+    );
+    const handleTitle = (e) => setTitle(e.target.value);
+
+    //todo 여기서부터 에디터랑 기싸움중
+    const textRef = React.createRef();
+    // const handleChangeInput = () => {
+    //     setDescriptions(textRef.current.getInstance().getMarkdown()
+    //     )
+    // }
+    const handleProblem = (e) =>
+        setProblem(textRef.current.getInstance().getMarkdown());
+    const handleExpectation = (e) =>
+        setExpectation(textRef.current.getInstance().getMarkdown());
+
+    // console.log("이거는??");
+    // console.log(handleProbelem);
+    // console.log("됐아? 됐어? 안됐지?");
+    // console.log("안된거 다알아");
+
+    const handleTag = (e) => setTagItem(e.target.value);
+    const onSubmit = (e) => {
+        let newQuestion = {
+            id: data.length + 1,
+            title,
+            problem,
+            expectation,
+            tagList,
+            author: "kkte02",
+            createdAt: "date",
+            view: 0,
+            votes: 0,
+            answers: 0,
+        };
+        fetch("http://localhost:3001/questions/", {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(newQuestion),
+        })
+            // .then(() => window.location)
+            .catch((err) => console.log("Error: ", err));
+    };
 
     return (
         <>
@@ -342,228 +407,264 @@ const QuestionForm = () => {
                     <Head>Ask a public question</Head>
                     <Robot src="robot.png"></Robot>
                 </Cover>
-                <Main>
-                    <Cover>
-                        <Information>
-                            <InfoTitle>Writing a good question</InfoTitle>
-                            <p>
-                                You’re ready to{" "}
-                                <a href="https://stackoverflow.com/help/how-to-ask">
-                                    ask
-                                </a>{" "}
-                                a{" "}
-                                <a href="https://stackoverflow.com/help/on-topic">
-                                    programming-related question
-                                </a>{" "}
-                                and this form will help guide you through the
-                                process.
-                            </p>
-                            <p>
-                                Looking to ask a non-programming question? See{" "}
-                                <a href="https://stackexchange.com/sites#technology">
-                                    the topics here
-                                </a>{" "}
-                                to find a relevant site.
-                            </p>
-                            <strong>Steps</strong>
-                            <li>Summarize your problem in a one-line title.</li>
-                            <li>Describe your problem in more detail.</li>
-                            <li>
-                                Describe what you tried and what you expected to
-                                happen.
-                            </li>
-                            <li>
-                                Add “tags” which help surface your question to
-                                members of the community.
-                            </li>
-                            <li>
-                                Review your question and post it to the site.
-                            </li>
-                        </Information>
-                    </Cover>
-                    <Cover>
-                        <Title>
-                            <FormTitle id="title">Title</FormTitle>
-                            <FormInfo>
-                                Be specific and imagine you’re asking a question
-                                to another person.
-                            </FormInfo>
-                            <FormInput
-                                id="titleInput"
-                                onFocus={titleFocusHandler}
-                                onBlur={titleFocusHandler}
-                                placeholder="e.g. Is there an R unction for finding the index of an element in a vector?"
-                            ></FormInput>
-                        </Title>
-                        {isTitleOnFocus ? (
-                            <Helper>
-                                <HelperHead>Writing a good title</HelperHead>
-                                <HelperInfo>
-                                    <Pen src="pen.png"></Pen>
-                                    <HelperContent>
-                                        <p>
-                                            Your title should summarize the
-                                            problem.
-                                        </p>
-                                        <p>
-                                            You might find that you have a
-                                            better idea of your title after
-                                            writing out the rest of the
-                                            question.
-                                        </p>
-                                    </HelperContent>
-                                </HelperInfo>
-                            </Helper>
-                        ) : null}
-                    </Cover>
-                    <Cover>
-                        <Problem>
-                            <FormTitle>
-                                What are the details of your problem?
-                            </FormTitle>
-                            <FormInfo>
-                                Introduce the problem and expand on what you put
-                                in the title. Minimum 20 characters.
-                            </FormInfo>
-                            <TextEditor
-                                className={isProblemOnFocus ? "focus" : ""}
-                                focus={problemFocusHandler}
-                                blur={problemFocusHandler}
+                <Cover>
+                    <Information>
+                        <InfoTitle>Writing a good question</InfoTitle>
+                        <p>
+                            You’re ready to{" "}
+                            <a href="https://stackoverflow.com/help/how-to-ask">
+                                ask
+                            </a>{" "}
+                            a{" "}
+                            <a href="https://stackoverflow.com/help/on-topic">
+                                programming-related question
+                            </a>{" "}
+                            and this form will help guide you through the
+                            process.
+                        </p>
+                        <p>
+                            Looking to ask a non-programming question? See{" "}
+                            <a href="https://stackexchange.com/sites#technology">
+                                the topics here
+                            </a>{" "}
+                            to find a relevant site.
+                        </p>
+                        <strong>Steps</strong>
+                        <li>Summarize your problem in a one-line title.</li>
+                        <li>Describe your problem in more detail.</li>
+                        <li>
+                            Describe what you tried and what you expected to
+                            happen.
+                        </li>
+                        <li>
+                            Add “tags” which help surface your question to
+                            members of the community.
+                        </li>
+                        <li>Review your question and post it to the site.</li>
+                    </Information>
+                </Cover>
+                <Cover>
+                    <Title>
+                        <FormTitle id="title">Title</FormTitle>
+                        <FormInfo>
+                            Be specific and imagine you’re asking a question to
+                            another person.
+                        </FormInfo>
+                        <FormInput
+                            id="titleInput"
+                            onChange={handleTitle}
+                            onFocus={titleFocusHandler}
+                            onBlur={titleFocusHandler}
+                            placeholder="e.g. Is there an R unction for finding the index of an element in a vector?"
+                        ></FormInput>
+                    </Title>
+                    {isTitleOnFocus ? (
+                        <Helper>
+                            <HelperHead>Writing a good title</HelperHead>
+                            <HelperInfo>
+                                <Pen src="pen.png"></Pen>
+                                <HelperContent>
+                                    <p>
+                                        Your title should summarize the problem.
+                                    </p>
+                                    <p>
+                                        You might find that you have a better
+                                        idea of your title after writing out the
+                                        rest of the question.
+                                    </p>
+                                </HelperContent>
+                            </HelperInfo>
+                        </Helper>
+                    ) : null}
+                </Cover>
+                <Cover>
+                    <Problem>
+                        <FormTitle>
+                            What are the details of your problem?
+                        </FormTitle>
+                        <FormInfo>
+                            Introduce the problem and expand on what you put in
+                            the title. Minimum 20 characters.
+                        </FormInfo>
+                        <EditorWrapper>
+                            <Editor
+                                initialValue={problem} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
+                                onFocus={problemFocusHandler}
+                                onBlur={problemFocusHandler}
                                 placeholder={
                                     "Click to enter details of your problem."
                                 }
-                            />
-                        </Problem>
-                        {isProblemOnFocus ? (
-                            <Helper id="problemHelper">
-                                <HelperHead>Introduce the problem</HelperHead>
-                                <HelperInfo>
-                                    <Pen src="pen.png"></Pen>
-                                    <HelperContent>
-                                        <p>
-                                            Explain how you encountered the
-                                            problem you’re trying to solve, and
-                                            any difficulties that have prevented
-                                            you from solving it yourself.
-                                        </p>
-                                    </HelperContent>
-                                </HelperInfo>
-                            </Helper>
-                        ) : null}
-                    </Cover>
-                    <Cover>
-                        <Expectation>
-                            <FormTitle>
-                                What did you try and what were you expecting?
-                            </FormTitle>
-                            <FormInfo>
-                                Describe what you tried, what you expected to
-                                happen, and what actually resulted. Minimum 20
-                                characters.
-                            </FormInfo>
-                            <TextEditor
-                                className={isProblemOnFocus ? "focus" : ""}
-                                focus={expectationFocusHandler}
-                                blur={expectationFocusHandler}
+                                previewStyle="vertical"
+                                height="300px"
+                                initialEditType="wysiwyg"
+                                toolbarItems={[
+                                    ["heading", "bold", "italic", "strike"],
+                                    ["hr", "quote"],
+                                    ["ul", "ol", "task", "indent", "outdent"],
+                                    ["table", "image", "link"],
+                                    ["code", "codeblock"],
+                                ]}
+                                ref={textRef}
+                                onChange={handleProblem}
+                                autofocus={false}
+                                hideModeSwitch={true}
+                            ></Editor>
+                        </EditorWrapper>
+                    </Problem>
+                    {isProblemOnFocus ? (
+                        <Helper id="problemHelper">
+                            <HelperHead>Introduce the problem</HelperHead>
+                            <HelperInfo>
+                                <Pen src="pen.png"></Pen>
+                                <HelperContent>
+                                    <p>
+                                        Explain how you encountered the problem
+                                        you’re trying to solve, and any
+                                        difficulties that have prevented you
+                                        from solving it yourself.
+                                    </p>
+                                </HelperContent>
+                            </HelperInfo>
+                        </Helper>
+                    ) : null}
+                </Cover>
+                <Cover>
+                    <Expectation>
+                        <FormTitle>
+                            What did you try and what were you expecting?
+                        </FormTitle>
+                        <FormInfo>
+                            Describe what you tried, what you expected to
+                            happen, and what actually resulted. Minimum 20
+                            characters.
+                        </FormInfo>
+                        {/* <TextEditor
+                            className={isProblemOnFocus ? "focus" : ""}
+                            onChange={handleExpectation}
+                            focus={expectationFocusHandler}
+                            blur={expectationFocusHandler}
+                            placeholder={
+                                "Click to enter details of your trial and expectation."
+                            }
+                        /> */}
+                        <Editor
+                                initialValue={expectation} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
+                                onFocus={expectationFocusHandler}
+                                onBlur={expectationFocusHandler}
                                 placeholder={
-                                    "Click to enter details of your trial and expectation."
+                                    "Click to enter details of your problem."
                                 }
+                                previewStyle="vertical"
+                                height="300px"
+                                initialEditType="wysiwyg"
+                                toolbarItems={[
+                                    ["heading", "bold", "italic", "strike"],
+                                    ["hr", "quote"],
+                                    ["ul", "ol", "task", "indent", "outdent"],
+                                    ["table", "image", "link"],
+                                    ["code", "codeblock"],
+                                ]}
+                                ref={textRef}
+                                onChange={handleExpectation}
+                                autofocus={false}
+                                hideModeSwitch={true}
+                            ></Editor>
+                    </Expectation>
+                    {isExpectationOnFocus ? (
+                        <Helper id="expectationHelper">
+                            <HelperHead>Expand on the problem</HelperHead>
+                            <HelperInfo>
+                                <Pen src="pen.png"></Pen>
+                                <HelperContent>
+                                    <p>
+                                        Show what you’ve tried, tell us what
+                                        happened, and why it didn’t meet your
+                                        needs.
+                                    </p>
+                                    <p>
+                                        Not all questions benefit from including
+                                        code, but if your problem is better
+                                        understood with code you’ve written, you
+                                        should include a minimal, reproducible
+                                        example.
+                                    </p>
+                                    <p>
+                                        Please make sure to post code and errors
+                                        as text directly to the question (and
+                                        not as images), and format them
+                                        appropriately.
+                                    </p>
+                                </HelperContent>
+                            </HelperInfo>
+                        </Helper>
+                    ) : null}
+                </Cover>
+                <Cover>
+                    <Tags>
+                        <FormTitle>Tags</FormTitle>
+                        <FormInfo>
+                            Add up to 5 tags to describe what your question is
+                            about. Start typing to see suggestions. Maximum 5
+                            tags.
+                        </FormInfo>
+                        <TagBox>
+                            {tagList.map((tagItem, index) => {
+                                return (
+                                    <TagItem key={index}>
+                                        <span>{tagItem}</span>
+                                        <Button
+                                            value={tagItem}
+                                            onClick={deleteTagItem}
+                                        >
+                                            ✕
+                                        </Button>
+                                    </TagItem>
+                                );
+                            })}
+                            <TagInput
+                                type="text"
+                                onFocus={tagFocusHandler}
+                                onBlur={tagFocusHandler}
+                                placeholder="e.g. (ajax iphone string)"
+                                tabIndex={2}
+                                // onChange={(e) => setTagItem(e.target.value)}
+                                onChange={handleTag}
+                                value={tagItem}
+                                onKeyPress={onKeyPress}
                             />
-                        </Expectation>
-                        {isExpectationOnFocus ? (
-                            <Helper id="expectationHelper">
-                                <HelperHead>Expand on the problem</HelperHead>
-                                <HelperInfo>
-                                    <Pen src="pen.png"></Pen>
-                                    <HelperContent>
-                                        <p>
-                                            Show what you’ve tried, tell us what
-                                            happened, and why it didn’t meet
-                                            your needs.
-                                        </p>
-                                        <p>
-                                            Not all questions benefit from
-                                            including code, but if your problem
-                                            is better understood with code
-                                            you’ve written, you should include a
-                                            minimal, reproducible example.
-                                        </p>
-                                        <p>
-                                            Please make sure to post code and
-                                            errors as text directly to the
-                                            question (and not as images), and
-                                            format them appropriately.
-                                        </p>
-                                    </HelperContent>
-                                </HelperInfo>
-                            </Helper>
-                        ) : null}
-                    </Cover>
-                    <Cover>
-                        <Tags>
-                            <FormTitle>Tags</FormTitle>
-                            <FormInfo>
-                                Add up to 5 tags to describe what your question
-                                is about. Start typing to see suggestions.
-                                Maximum 5 tags.
-                            </FormInfo>
-                            <TagBox>
-                                {tagList.map((tagItem, index) => {
-                                    return (
-                                        <TagItem key={index}>
-                                            <span>{tagItem}</span>
-                                            <Button
-                                                value={tagItem}
-                                                onClick={deleteTagItem}
-                                            >
-                                                ✕
-                                            </Button>
-                                        </TagItem>
-                                    );
-                                })}
-                                <TagInput
-                                    type="text"
-                                    onFocus={tagFocusHandler}
-                                    onBlur={tagFocusHandler}
-                                    placeholder="e.g. (ajax iphone string)"
-                                    tabIndex={2}
-                                    onChange={(e) => setTagItem(e.target.value)}
-                                    value={tagItem}
-                                    onKeyPress={onKeyPress}
-                                />
-                            </TagBox>
-                            <TagAlert id={isInEnglish ? "english" : ""}>
-                                Tags must be in English
-                            </TagAlert>
-                        </Tags>
-                        {isTagOnFocus ? (
-                            <Helper id="tagHelper">
-                                <HelperHead>Adding tags</HelperHead>
-                                <HelperInfo>
-                                    <Pen src="pen.png"></Pen>
-                                    <HelperContent>
-                                        <p>
-                                            Tags help ensure that your question
-                                            will get attention from the right
-                                            people.{" "}
-                                        </p>
-                                        <p>
-                                            Tag things in more than one way so
-                                            people can find them more easily.
-                                            Add tags for product lines,
-                                            projects, teams, and the specific
-                                            technologies or languages used.{" "}
-                                        </p>
-                                        <p>Learn more about tagging</p>
-                                    </HelperContent>
-                                </HelperInfo>
-                            </Helper>
-                        ) : null}
-                    </Cover>
-                </Main>
+                        </TagBox>
+                        <TagAlert id={isInEnglish ? "english" : ""}>
+                            Tags must be in English
+                        </TagAlert>
+                    </Tags>
+                    {isTagOnFocus ? (
+                        <Helper id="tagHelper">
+                            <HelperHead>Adding tags</HelperHead>
+                            <HelperInfo>
+                                <Pen src="pen.png"></Pen>
+                                <HelperContent>
+                                    <p>
+                                        Tags help ensure that your question will
+                                        get attention from the right people.{" "}
+                                    </p>
+                                    <p>
+                                        Tag things in more than one way so
+                                        people can find them more easily. Add
+                                        tags for product lines, projects, teams,
+                                        and the specific technologies or
+                                        languages used.{" "}
+                                    </p>
+                                    <p>Learn more about tagging</p>
+                                </HelperContent>
+                            </HelperInfo>
+                        </Helper>
+                    ) : null}
+                </Cover>
                 <ButtonContainer>
-                    <Discard>Discard draft</Discard>
-                    <SubmitButton>Submit yout question</SubmitButton>
+                    <Discard onClick={onDiscard}>Discard draft</Discard>
+                    <SubmitButton onClick={onSubmit}>
+                        Submit your question
+                    </SubmitButton>
                 </ButtonContainer>
             </QuestionFormWrapper>
             <Footer />

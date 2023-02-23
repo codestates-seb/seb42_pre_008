@@ -17,12 +17,11 @@ const AnswerListWrap = styled.div`
     }
 `
 const AdoptedLi = styled.li`
-    background-color: #F9F9F9;
+    background-color: #F1F2F3;
     padding-top: 4vh;
     >p{
         margin-left: 2vw;
         margin-bottom: 3vw;
-        color:gray;
     }
 `
 const AnsewerPostWrap = styled.div`

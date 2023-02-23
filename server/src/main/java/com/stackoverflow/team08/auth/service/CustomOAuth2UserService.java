@@ -2,6 +2,7 @@ package com.stackoverflow.team08.auth.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.stackoverflow.team08.auth.attribute.OAuth2Attribute;
+import com.stackoverflow.team08.member.role.MemberRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,12 +31,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2Attribute attributes = null;
         
         try {
+
             attributes = OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+
         } catch (JsonProcessingException e) {
+
             throw new RuntimeException(e);
+
         }
 
-        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
+        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(MemberRole.USER.getRole())),
                 attributes.getAttributes(), attributes.getNameAttributeKey());
         
     }

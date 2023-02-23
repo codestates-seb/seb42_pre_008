@@ -39,12 +39,16 @@ public class OAuth2Attribute {
 
         if("naver".equals(lowerCaseId)){
 
-            return ofNaver(userNameAttributeName, attributes);
+            log.info("naver OAuth2 Login");
+
+            return ofNaver("id", attributes);
 
         }else if("github".equals(lowerCaseId)){
+
+            log.info("github OAuth2 Login");
             return ofGithub(userNameAttributeName, attributes);
         }
-
+        log.info("google OAuth2 Login");
         return ofGoogle(userNameAttributeName, attributes);
     }
 
@@ -69,9 +73,11 @@ public class OAuth2Attribute {
                 .build();
     }
 
-    private static OAuth2Attribute ofNaver(String userNameAtrributeName, Map<String, Object> attributes) {
+    private static OAuth2Attribute ofNaver(String userNameAtrributeName, Map<String, Object> attributes) throws JsonProcessingException {
 
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        log.info("response = {}", new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(response));
 
         return OAuth2Attribute.builder()
                 .username(response.get("name").toString())

@@ -6,7 +6,7 @@ import { BiBookmarkPlus } from "react-icons/bi";
 import { BiCool } from "react-icons/bi";
 import {FcGoogle} from 'react-icons/fc';
 import {AiFillGithub} from 'react-icons/ai'
-import {AiFillFacebook} from 'react-icons/ai'
+import {SiNaver} from 'react-icons/si'
 
 
 
@@ -90,10 +90,10 @@ const OauthWrap = styled.div`
             }
         }
         :nth-child(3){
-            background-color: #314A86;
+            background-color: #03CF5D;
             color: #FFFFFF;
             :hover{
-                background-color: #2a427a;
+                background-color: #01ba51;
             }
         }
     }
@@ -291,7 +291,7 @@ function SignUp() {
             <OauthWrap>
                 <Button type="submit"><FcGoogle/><span>Sign Up with Google</span></Button>
                 <Button type="submit"><AiFillGithub/><span>Sign Up with GitHub</span></Button>
-                <Button type="submit"><AiFillFacebook/><span>Sign Up with Facebook</span></Button>
+                <Button type="submit"><SiNaver/><span>Sign Up with Naver</span></Button>
             </OauthWrap>
 
             <Form onSubmit={handleSubmit}>

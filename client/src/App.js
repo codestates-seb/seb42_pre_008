@@ -10,6 +10,7 @@ import SignUp from "./pages/SignUp";
 import NavOnLogin from "./component/NavOnLogout";
 import Footer from "./component/Footer";
 import Welcome from "./pages/Welcome";
+import UserInfoEdit from "./pages/UserInfoEdit";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -88,6 +89,7 @@ function App() {
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/mypage" element={<MyPage />} />
                         <Route path="/welcome" element={<Welcome/>} />
+                        <Route path="/userinfo-edit" element={<UserInfoEdit/>} />
                     </Routes>
                 </Suspense>
             </BrowserRouter>

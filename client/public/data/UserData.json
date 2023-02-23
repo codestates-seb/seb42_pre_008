@@ -1,20 +1,26 @@
 {
-    "users": [
-      {
-        "id": 1,
-        "name": "kkte02"
-      },
-      {
-        "id": 3,
-        "name": "Eom0j"
-      },
-      {
-        "id": 4,
-        "name": "JudiPARK0416"
-      },
-      {
-        "id": 94,
-        "name": "myongdol"
-      }
-    ]
-  }
+  "users": [
+    {
+      "id": 1,
+      "name": "kkte02"
+    },
+    {
+      "id": 3,
+      "name": "Eom0j"
+    },
+    {
+      "id": 4,
+      "name": "JudiPARK0416"
+    },
+    {
+      "id": 94,
+      "name": "myongdol"
+    },
+    {
+      "id": 10,
+      "name": "경아",
+      "email": "avocado@gmail.com",
+      "password": "aaaa1111"
+    }
+  ]
+}

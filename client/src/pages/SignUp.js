@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { BiMessageSquareError } from "react-icons/bi";
 import { BiArchiveOut } from "react-icons/bi";
@@ -7,6 +7,8 @@ import { BiCool } from "react-icons/bi";
 import {FcGoogle} from 'react-icons/fc';
 import {AiFillGithub} from 'react-icons/ai'
 import {AiFillFacebook} from 'react-icons/ai'
+
+
 
 const SignUpWrap = styled.main`
     background-color: #F1F2F3;
@@ -116,10 +118,13 @@ const Form = styled.form`
             margin-top: 0;
         }
     }
-    span{
+    p{
         margin-top: 0.4rem;
-        color: #6A737c;
         font-size: 14px;
+        color: #6A737c;
+        :first-child{
+            color: red;
+        }
     }
 `;
 
@@ -153,6 +158,7 @@ const SignupButton = styled.button`
     border: 1px solid #477199;
     box-shadow: inset 0px 0px 0px 0px #54a3f7;
     margin-top: 1.8rem;
+    cursor: pointer;
     :hover {
         background-color: #3172c6;
     }
@@ -161,16 +167,113 @@ const SignupButton = styled.button`
 
 
 
-function SignUp() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    // code to handle form submission
-  }
+function SignUp() {
+    const [name, setName] = useState("");
+    const [nameError, setNameError] = useState("")
+
+    const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState("")
+
+    const [password, setPassword] = useState("");
+    const [isValidPassword, setIsValidPassword] = useState(false);
+
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [error, setError] = useState("")
+
+    /*** 특정 focus로 이동***/
+    const nameRef = useRef(null);
+    const mailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const conformRef = useRef(null)
+
+    const handleSubmit = (event) => {
+
+    if(!name.length){
+        nameRef.current.focus();
+    }
+    else if(!email.length){
+        mailRef.current.focus();
+    }
+    else if(!password.length){
+        passwordRef.current.focus()
+    }
+    else if( !validatePassword(password) ){
+        passwordRef.current.focus()
+    }
+    else if(!confirmPassword.length || confirmPassword !== password){
+        conformRef.current.focus()
+    }
+    else if( !email.includes("@") ){
+        mailRef.current.focus();
+    }
+    else
+    {   
+        const random = Math.round(Math.random()*100)+0
+        const data = {
+            "id" : random,
+            "name" : name,
+            "email" : email,
+            "password" : password
+        }
+        fetch(process.env.REACT_APP_API_USER, {
+            method: "POST",
+            headers: {"Content-Type" : "application/json"},
+            body: JSON.stringify(data),
+            credentials: "include" 
+        })
+        .then(() => {
+            window.location.href = '/login';
+        })
+        .catch((error) => {
+            setError(error);
+        })
+    }
+    // event.preventDefault();
+    }
+
+    const handleNameBlur = (event) => {
+    const value = event.target.value;
+    if (!value.length) {
+        setNameError("Please enter a name");
+    } else {
+        setNameError("");
+    }}
+
+    const handleEmailBlur = (event) => {
+    const value = event.target.value;
+    if (!value.includes("@")) {
+        setEmailError("Please enter a valid email address");
+    } else {
+        setEmailError("");
+    }}
+
+    const validatePassword = (password) => {
+        if (password.length < 8) {
+            return false;
+        }
+        const letterRegex = /[a-zA-Z]/;
+        const numberRegex = /[0-9]/;
+        if (!letterRegex.test(password) || !numberRegex.test(password)) {
+            return false;
+        }
+        return true;
+        }
+
+    const handlePasswordChange = (event) => {
+        const newValue = event.target.value;
+        setPassword(newValue);
+        setIsValidPassword(validatePassword(newValue));
+    }
+
+    const handlePasswordBlur = (event) => {
+        const value = event.target.value;
+        if (value !== password) {
+        setPasswordError("Password are not matching");
+        } else {
+        setPasswordError("");
+    }}
 
   return (
     <SignUpWrap>
@@ -192,36 +295,50 @@ function SignUp() {
             </OauthWrap>
 
             <Form onSubmit={handleSubmit}>
-            <label htmlFor="name">Display name</label>
-            <Input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-            />
-            <label htmlFor="email">Email</label>
-            <Input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-            />
-            <label htmlFor="password">Password</label>
-            <Input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-            />
-            <span>Passwords must contain at least eight characters, including at least 1 letter and 1 number.</span>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <Input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={(event) => setConfirmPassword(event.target.value)}
-            />
-            <SignupButton type="submit">Sign Up</SignupButton>
+                <label htmlFor="name">Display name</label>
+                <Input
+                    type="text"
+                    id="name"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                    onBlur={handleNameBlur}
+                    ref={nameRef}
+                    autoFocus={true}
+                />
+                {nameError && <p>{nameError}</p>}
+                <label htmlFor="email">Email</label>
+                <Input
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    onBlur={handleEmailBlur}
+                    ref={mailRef}
+                />
+                {emailError && <p>{emailError}</p>}
+                <label htmlFor="password">Password</label>
+                <Input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    ref={passwordRef}
+                />
+                {!isValidPassword && (
+                <p>Password must contain at least 8 characters, including at least 1 letter and 1 number.</p>
+                )}
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <Input
+                    type="password"
+                    id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(event) => setConfirmPassword(event.target.value)}
+                    onBlur={handlePasswordBlur}
+                    ref={conformRef}
+                />
+                {passwordError && <p>{passwordError}</p>}
+                <SignupButton type="submit">Sign Up</SignupButton>
+                {error && <p>{error}</p>}
             </Form>
         </div>
         </div>

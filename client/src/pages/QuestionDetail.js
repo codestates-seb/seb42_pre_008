@@ -4,7 +4,7 @@ import AnswerList  from './AnswerList';
 import styled from "styled-components";
 import { fetchDelete } from '../util/api'
 
-const QuestionDetailWraper = styled.div`
+const QuestionDetailWraper = styled.main`
     padding:15vh 10vh;
     position: relative;
     label{

@@ -50,6 +50,11 @@ const AnsewerPostWrap = styled.div`
         color:#F23A51;
     }
 `
+const Input = styled.textarea`
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border-radius: 0.25rem;
+`
 
 const AnswerList = ({login,userInfo,author, handleDelete}) => {
     const [answers, setAnswers] = useState(null);
@@ -147,13 +152,13 @@ const AnswerList = ({login,userInfo,author, handleDelete}) => {
     {login?
         <>
         <label>Your Answer</label>
-            <textarea 
+            <Input 
             onChange={ (e) => setContent(e.target.value)} 
             value ={content} 
             rows="4" cols="50"
             autoFocus={true}
             ref={inputRef}
-            ></textarea>
+            ></Input>
             <AnsewerPostWrap>
                 {blank && <span>Please write the answer in this field</span>}
                 <button onClick={ onHandleClick }>Post your Answer</button>

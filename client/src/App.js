@@ -6,7 +6,7 @@ import MyPage from "./pages/MyPage";
 import QuestionDetail from "./pages/QuestionDetail";
 import QuestionForm from "./pages/QuestionForm";
 import QuestionList from "./pages/QuestionList";
-import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import NavOnLogin from "./component/NavOnLogout";
 import Footer from "./component/Footer";
 
@@ -23,7 +23,7 @@ function App() {
     const [login, setLogin] = useState(true);
     const [userInfo, setUserInfo] = useState({
         "id": 1,
-        "name": "JudiPARK0416"
+        "name": "kkte02"
       });
     const [error, setError] = useState(null);
     //QuestionList -> QuestionDetail로 엔드포인트를 전달합니다
@@ -84,7 +84,7 @@ function App() {
                             }
                         />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/sign-in" element={<SignIn />} />
+                        <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/mypage" element={<MyPage />} />
                     </Routes>
                 </Suspense>

@@ -1,3 +1,10 @@
+import { atom } from "recoil";
+
+const api = atom({
+   key: 'api',
+   default: 'server url/',
+});
+export default api;
 
 
 //Create api

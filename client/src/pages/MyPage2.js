@@ -4,9 +4,9 @@ import styled from "styled-components";
 import MyInfo from "../component/mypage/MyInfo/MyInfo";
 import NavOnLogin from "../component/NavOnLogin";
 import MyProfile from "../component/mypage/MyProfile/MyProfile"
-// import memberIdState from "../state/memberState";
-// import tokenState from "../state/tokenState";
-// import isLoginState from "../state/isLoginState";
+import memberIdState from "../state/memberState";
+import tokenState from "../state/tokenState";
+import isLoginState from "../state/isLoginState";
 
 
 

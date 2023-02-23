@@ -19,7 +19,7 @@ import { useEffect } from 'react';
 const MyProfile = ({ user }) => {
   const [isAbout, setIsAbout] = useState(false);
   const [isPost, setIsPost] = useState(false);
-
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   // useEffect(() => {
   //   if (user.data.questionList?.length >= 1) {
   //     setIsPost(true);
@@ -47,6 +47,7 @@ const MyProfile = ({ user }) => {
               <StatDiv>
                 <StatNum>
                   {/* {user.data.answerCount ? user.data.answerCount : 0} */}
+                  {userInfo?.answerCount ? userInfo.answerCount : 0}
                 </StatNum>
                 <StatMsg>answers</StatMsg>
               </StatDiv>
@@ -54,6 +55,7 @@ const MyProfile = ({ user }) => {
               <StatDiv>
                 <StatNum>
                   {/* {user.data.questionList ? user.data.questionList.length : 0} */}
+                  {userInfo?.questionList ? userInfo.questionList.length : 0}
                 </StatNum>
                 <StatMsg>questions</StatMsg>
               </StatDiv>

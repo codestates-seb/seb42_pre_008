@@ -9,14 +9,18 @@ import {
 import React from 'react';
 
 const MyInfo = ({ user }) => {
+
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+
   return (
     <LayoutContainer>
       <Container>
         <div className="profile-name">
           <ProfileImg />
           <ProfileInfo>
-            <div className="nickname"> nick name </div>
-            {/* {user.data.nickname}  nick name자리에 넣을거 */}
+            <div className="nickname"> nickname </div>
+            {userInfo?.nickname}
             <ProfileDay>
               <div className="since">
                 <svg

@@ -4,8 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import {MdOutlineOpenInNew} from 'react-icons/md'
 // import {SiNaver} from 'react-icons/si'
 import {AiOutlineGithub, AiOutlineFacebook} from 'react-icons/ai'
-import { fetchLogin } from "../util/fetchLogin";
+// import { fetchLogin } from "../util/fetchLogin";
 import styled from 'styled-components';
+import useUserActions from "../component/oauth/useUserAction";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import authAtom from "../component/oauth/auth";
+import axios from "axios";
+import userAtom from "../component/oauth/userAuth";
 
 const DivWrapper = styled.div`
 justify-content: center;
@@ -236,6 +241,10 @@ export default function Login (props) {
     const navigate = useNavigate();
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
+    const userActions = useUserActions();
+    const auth = useRecoilValue(authAtom);
+    const setAuth = useSetRecoilState(authAtom);
+    const setUserAuth = useSetRecoilState(userAtom);
 
 
     const onEmailChange = (e) => {
@@ -245,26 +254,42 @@ export default function Login (props) {
         setUserPassword(e.target.value);
     };
 
-   function onSubmit(e) {
-    e.preventDefault();
-    onLogin()
-    };
+    const onSubmit = (e) => {
+      e.preventDefault();
+      axios
+          .post(
+              `url`,
+              { email: userEmail, password: userPassword },
+          )
+          .then((response) => {
+              alert('로그인 되었습니다');
+              const { data } = response;
+              localStorage.setItem('user', JSON.stringify(data.accessToken));
+              localStorage.setItem('userInfo', JSON.stringify(data));
+              setAuth(data.accessToken);
+              setUserAuth(data);
+          })
+          .then(() => navigate('/'))
+          .catch((error) => {
+              alert(error);
+          });
+  };
 
-    const onLogin = async (callback) => {
-        const loginData = JSON.stringify({
-            email: userEmail,
-            password: userPassword,
-        });
-        const toHome = () => {
-            navigate('/');
-        }
-        let login = await fetchLogin(loginData).then((data) => {
-            if(data.status === 200) {
-                toHome();
-                window.location.reload();
-            }
-        })
-    }
+    // const onLogin = async (callback) => {
+    //     const loginData = JSON.stringify({
+    //         email: userEmail,
+    //         password: userPassword,
+    //     });
+    //     const toHome = () => {
+    //         navigate('/');
+    //     }
+    //     let login = await fetchLogin(loginData).then((data) => {
+    //         if(data.status === 200) {
+    //             toHome();
+    //             window.location.reload();
+    //         }
+    //     })
+    // }
         
 
 
@@ -289,17 +314,26 @@ export default function Login (props) {
 								</SvgIcon>  
 							</IconWrapper>
 
-							<GoogleBtn>
+							<GoogleBtn
+              type="button"
+              onClick={userActions.googleLogin}
+              >
 								<GoogleLogo />
 								Log in with Google
 							</GoogleBtn>
 
-							<GithubBtn>
+							<GithubBtn
+              type="button"
+              onClick={userActions.githubLogin}
+              >
                 <GithubLogo/>
 								Log in with GitHub
 							</GithubBtn>
 
-							<FacebookBtn>
+							<FacebookBtn
+              type="button"
+              onClick={userActions.naverLogin}
+              >
 								<FacebookLogo/>
 								Log in with Facebook
 							</FacebookBtn>

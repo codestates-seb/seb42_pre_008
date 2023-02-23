@@ -21,6 +21,30 @@
       "name": "경아",
       "email": "avocado@gmail.com",
       "password": "aaaa1111"
+    },
+    {
+      "id": 17,
+      "name": "가입함",
+      "email": "email@email",
+      "password": "aaaa1111"
+    },
+    {
+      "id": 93,
+      "name": "임경아",
+      "email": "ligh@gmaial",
+      "password": "aaaa1111"
+    },
+    {
+      "id": 80,
+      "name": "rkdl",
+      "email": "ddd@dddd",
+      "password": "aaaa1111"
+    },
+    {
+      "id": 56,
+      "name": "ddddd",
+      "email": "ddd@dddd",
+      "password": "ssss1111"
     }
   ]
 }

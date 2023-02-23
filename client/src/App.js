@@ -9,6 +9,7 @@ import QuestionList from "./pages/QuestionList";
 import SignUp from "./pages/SignUp";
 import NavOnLogin from "./component/NavOnLogout";
 import Footer from "./component/Footer";
+import Welcome from "./pages/Welcome";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -86,6 +87,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/mypage" element={<MyPage />} />
+                        <Route path="/welcome" element={<Welcome/>} />
                     </Routes>
                 </Suspense>
             </BrowserRouter>

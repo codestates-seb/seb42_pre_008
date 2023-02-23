@@ -224,13 +224,13 @@ function SignUp() {
             credentials: "include" 
         })
         .then(() => {
-            window.location.href = '/login';
+            window.location.href = '/welcome';
         })
         .catch((error) => {
             setError(error);
         })
     }
-    // event.preventDefault();
+    event.preventDefault();
     }
 
     const handleNameBlur = (event) => {

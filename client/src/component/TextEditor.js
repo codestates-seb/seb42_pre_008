@@ -1,5 +1,4 @@
-
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import styled from "styled-components";
@@ -14,16 +13,12 @@ export const EditorWrapper = styled.div`
     }
 `;
 
-
-
 export const TextEditor = ({ focus, blur, placeholder }) => {
-    const textRef = React.createRef()
-    const [descriptions, setDescriptions] = useState("")
+    const textRef = React.createRef();
+    const [descriptions, setDescriptions] = useState("");
     const handleChangeInput = () => {
-        setDescriptions(textRef.current.getInstance().getMarkdown()
-        )
-    }
-
+        setDescriptions(textRef.current.getInstance().getMarkdown());
+    };
     return (
         <EditorWrapper>
             <Editor

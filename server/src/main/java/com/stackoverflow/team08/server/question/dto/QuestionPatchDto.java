@@ -17,7 +17,7 @@ public class QuestionPatchDto {
     private String tryAndExpecting;
 
     @Pattern(regexp = "^[a-zA-Z]*$", message = "태그는 영문으로 입력해주세요.")
-    private List<String> tags;
+    private String tags;
 
     public void setQuestionId(long questionId) {
         this.questionId = questionId;

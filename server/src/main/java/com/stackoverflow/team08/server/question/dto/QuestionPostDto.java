@@ -18,5 +18,5 @@ public class QuestionPostDto {
     private String tryAndExpecting;
 
     @Pattern(regexp = "^[a-zA-Z]*$", message = "태그는 영문으로 입력해주세요.")
-    private List<String> tags;
+    private String tags;
 }

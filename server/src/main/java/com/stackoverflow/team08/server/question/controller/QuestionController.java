@@ -2,7 +2,7 @@ package com.stackoverflow.team08.server.question.controller;
 
 import com.stackoverflow.team08.server.dto.MultiResponseDto;
 import com.stackoverflow.team08.server.dto.SingleResponseDto;
-import com.stackoverflow.team08.server.member.entity.Member;
+//import com.stackoverflow.team08.server.member.entity.Member;
 import com.stackoverflow.team08.server.question.dto.QuestionPatchDto;
 import com.stackoverflow.team08.server.question.dto.QuestionPostDto;
 import com.stackoverflow.team08.server.question.dto.QuestionResponseDto;
@@ -94,12 +94,12 @@ public class QuestionController {
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponse(question)), HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<?> getQuestions(QuestionPageRequest pageRequest) {
-        Page<Question> pageQuestions = questionService.findAll(pageRequest);
-        List<Question> questions = pageQuestions.getContent();
-        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions), HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity<?> getQuestions(QuestionPageRequest pageRequest) {
+//        Page<Question> pageQuestions = questionService.findAll(pageRequest);
+//        List<Question> questions = pageQuestions.getContent();
+//        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions), HttpStatus.OK);
+//    }
 
 
 //    public ResponseEntity getQuestions(@Positive @RequestParam int page, //pageable
@@ -124,13 +124,13 @@ public class QuestionController {
 //        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions), HttpStatus.OK);
 //        return null;
 
-    @GetMapping("/search")
-    public ResponseEntity<?> searchQuestions(@RequestParam(name = "query") String query,
-                                             QuestionPageRequest pageRequest) {
-        Page<Question> pageQuestions = questionService.search(query, pageRequest);
-        List<Question> questions = pageQuestions.getContent();
-        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions), HttpStatus.OK);
-    }
+//    @GetMapping("/search")
+//    public ResponseEntity<?> searchQuestions(@RequestParam(name = "query") String query,
+//                                             QuestionPageRequest pageRequest) {
+//        Page<Question> pageQuestions = questionService.search(query, pageRequest);
+//        List<Question> questions = pageQuestions.getContent();
+//        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions), HttpStatus.OK);
+//    }
 
 
 

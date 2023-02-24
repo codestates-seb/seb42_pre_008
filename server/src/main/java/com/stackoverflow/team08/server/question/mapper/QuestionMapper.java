@@ -16,11 +16,11 @@ public interface QuestionMapper {
     QuestionResponseDto questionToQuestionResponse(Question question);
     List<QuestionResponseDto> questionsToQuestionResponses(List<Question> questions);
 
-    default QuestionVoteResponseDto questionToQuestionVoteResponse(Question question) {
-
-        return QuestionVoteResponseDto.builder()
-                .questionId(question.getQuestionId())
-                .questionVoteCount(question.getQuestionVoteCount())
-                .build();
-    }
+//    default QuestionVoteResponseDto questionToQuestionVoteResponse(Question question) {
+//
+//        return QuestionVoteResponseDto.builder()
+//                .questionId(question.getQuestionId())
+//                .questionVoteCount(question.getQuestionVoteCount())
+//                .build();
+//    }
 }

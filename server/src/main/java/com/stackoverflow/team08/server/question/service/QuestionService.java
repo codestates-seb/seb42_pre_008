@@ -49,31 +49,31 @@ public class QuestionService {
         return findVerifiedQuestion(questionId);
     }
 
-    public Page<Question> findAll(CustomPageRequest<QuestionSortingType> pageRequest) {
-        switch (pageRequest.getSortType()) {
-            case NEWEST:
-                return questionRepository.findAll(pageRequest.of());
-            case ANSWERED:
-                return questionRepository.findAllByAnswersExistQuestion(pageRequest.of());
-            case UNANSWERED:
-                return questionRepository.findAllByAnswersEmpty(pageRequest.of());
-            default:
-                throw new RuntimeException("Unexpected exception occurred.");
-        }
-    }
+//    public Page<Question> findAll(CustomPageRequest<QuestionSortingType> pageRequest) {
+//        switch (pageRequest.getSortType()) {
+//            case NEWEST:
+//                return questionRepository.findAll(pageRequest.of());
+//            case ANSWERED:
+//                return questionRepository.findAllByAnswersExistQuestion(pageRequest.of());
+//            case UNANSWERED:
+//                return questionRepository.findAllByAnswersEmpty(pageRequest.of());
+//            default:
+//                throw new RuntimeException("Unexpected exception occurred.");
+//        }
+//    }
 
-    public Page<Question> search(String query, QuestionPageRequest pageRequest) {
-        switch (pageRequest.getSortType()) {
-            case NEWEST:
-                return questionRepository.findAllByTitleOrContentLike(query, pageRequest.of());
-            case ANSWERED:
-                return questionRepository.findAllByAnswersIsExistAndTitleOrContentLike(query, pageRequest.of());
-            case UNANSWERED:
-                return questionRepository.findAllByAnswersIsEmptyAndTitleOrContentLike(query, pageRequest.of());
-            default:
-                throw new RuntimeException("Unexpected exception occurred.");
-        }
-    }
+//    public Page<Question> search(String query, QuestionPageRequest pageRequest) {
+//        switch (pageRequest.getSortType()) {
+//            case NEWEST:
+//                return questionRepository.findAllByTitleOrContentLike(query, pageRequest.of());
+//            case ANSWERED:
+//                return questionRepository.findAllByAnswersIsExistAndTitleOrContentLike(query, pageRequest.of());
+//            case UNANSWERED:
+//                return questionRepository.findAllByAnswersIsEmptyAndTitleOrContentLike(query, pageRequest.of());
+//            default:
+//                throw new RuntimeException("Unexpected exception occurred.");
+//        }
+//    }
 
 //    public Page<Question> findQuestions(int page, int size) {
 //        return questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));

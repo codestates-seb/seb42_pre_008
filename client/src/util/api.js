@@ -1,3 +1,11 @@
+import { atom } from "recoil";
+import axios from "axios";
+
+const api = atom({
+   key: 'api',
+   default: 'server url/',
+});
+export default api;
 //Create api
 //fetchCreate(전송할 데이터,새로고침 후 돌아올 페이지, endpoint ex)question )
 export const fetchCreate = (url,data,link,) => {
@@ -39,10 +47,10 @@ export const fetchPatch = (url, data, link) => {
         body: JSON.stringify(data),
         credentials: "include",
     })
-        // .then(() => {
-        //  window.location.href = link;
-        // })
-        .catch((error) => {
-            console.error("Error", error);
-        });
-};
+    .then(() => {
+      window.location.href = link;
+    })
+    .catch((error) => {
+      console.error('Error', error);
+    })
+}

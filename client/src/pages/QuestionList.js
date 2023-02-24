@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Ads from "../component/QuestionList/Ads";
-import Sidebar from "../component/QuestionList/Sidebar";
+import Ads from "../component/questionList/Ads";
+import Sidebar from "../component/questionList/Sidebar";
 import useFetch from "../util/useFetch";
 
 const QuestionList = () => {

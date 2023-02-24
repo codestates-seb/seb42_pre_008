@@ -3,17 +3,20 @@ package com.stackoverflow.team08.question.dto;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Getter
 public class QuestionPostDto {
     @NotBlank(message = "제목을 입력해주세요.")
-    private String Title;
+    private String title;
 
     @NotBlank(message = "본문을 입력해주세요.")
-    private String Content;
+    private String content;
 
     @NotBlank(message = "내용을 입력해주세요.")
-    private String TryAndExpecting;
+    private String tryAndExpecting;
 
-    private String Tag;
+    @Pattern(regexp = "^[a-zA-Z]*$", message = "태그는 영문으로 입력해주세요.")
+    private String tags;
+
 }

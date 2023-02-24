@@ -7,10 +7,11 @@ import QuestionDetail from "./pages/QuestionDetail";
 import QuestionForm from "./pages/QuestionForm";
 import QuestionList from "./pages/QuestionList";
 import SignUp from "./pages/SignUp";
-import NavOnLogin from "./component/NavOnLogout";
-import Footer from "./component/Footer";
+import NavOnLogin from "./component/navNfooter/NavOnLogin";
+import Footer from "./component/navNfooter/Footer";
 import Welcome from "./pages/Welcome";
 import UserInfoEdit from "./pages/UserInfoEdit";
+import NavOnLogout from "./component/navNfooter/NavOnLogout";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -20,13 +21,12 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
 function App() {
     const [login, setLogin] = useState(true);
     const [userInfo, setUserInfo] = useState({
-        "id": 1,
-        "name": "kkte02"
-      });
+        id: 1,
+        name: "kkte02",
+    });
     const [error, setError] = useState(null);
     //로그인 여부를 확인해 회원정보를 저장합니다
     // useEffect(() => {
@@ -64,36 +64,31 @@ function App() {
     return (
         <>
             <GlobalStyle />
-            <NavOnLogin/>
-            <BrowserRouter>
-                <Suspense>
-                    <Routes>
-                        <Route exact path="/" element={<QuestionList />} />
-                        <Route
-                            path="/question-form"
-                            element={<QuestionForm />}
-                        />
-                        <Route
-                            path="/question-detail"
-                            element={
-                                <QuestionDetail
-                                    login={login}
-                                    userInfo={userInfo}
-                                />
-                            }
-                        />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/sign-up" element={<SignUp />} />
-                        <Route path="/mypage" element={<MyPage />} />
-                        <Route path="/welcome" element={<Welcome/>} />
-                        <Route path="/userinfo-edit" element={
-                                <UserInfoEdit
-                                    userInfo={userInfo}
-                                />} />
-                    </Routes>
-                </Suspense>
-            </BrowserRouter>
-            <Footer/>
+            {/* <NavOnLogout/> */}
+            <NavOnLogin />
+            {/* <BrowserRouter> */}
+            <Suspense>
+                <Routes>
+                    <Route exact path="/" element={<QuestionList />} />
+                    <Route path="/question-form" element={<QuestionForm />} />
+                    <Route
+                        path="/question-detail"
+                        element={
+                            <QuestionDetail login={login} userInfo={userInfo} />
+                        }
+                    />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/sign-up" element={<SignUp />} />
+                    <Route path="/mypage" element={<MyPage />} />
+                    <Route path="/welcome" element={<Welcome />} />
+                    <Route
+                        path="/userinfo-edit"
+                        element={<UserInfoEdit userInfo={userInfo} />}
+                    />
+                </Routes>
+            </Suspense>
+            {/* </BrowserRouter> */}
+            <Footer />
         </>
     );
 }

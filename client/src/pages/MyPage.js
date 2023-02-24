@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import MyInfo from "../component/mypage/MyInfo/MyInfo";
-import NavOnLogin from "../component/NavOnLogin";
+// import NavOnLogin from "../component/navNfooter/NavOnLogin";
 import MyProfile from "../component/mypage/MyProfile/MyProfile"
 import memberIdState from "../state/memberState";
 import tokenState from "../state/tokenState";
@@ -34,7 +34,7 @@ const MyPage = () => {
 
     return(
         <>
-        <NavOnLogin />
+        {/* <NavOnLogin /> */}
         <MyInfo 
         memberId={memberId}
         user={user}

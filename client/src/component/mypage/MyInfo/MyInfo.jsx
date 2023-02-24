@@ -1,4 +1,4 @@
-import LayoutContainer from '../../../LayoutContainer/LayoutContainer';
+import LayoutContainer from '../../../component/LayoutContainer/LayoutContainer';
 import {
   Container,
   ProfileImg,

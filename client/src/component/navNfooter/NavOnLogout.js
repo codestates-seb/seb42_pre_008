@@ -2,6 +2,38 @@ import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
+const NavOnLogout = () => {
+    //! 페이지 본문
+    return (
+        <Nav>
+            <Link to="/">
+                <Logo src="logo.png" />
+            </Link>
+            <Link to="/">
+                <Menu>Home</Menu>
+            </Link>
+            <Link to="/">
+                <Menu>Questions</Menu>
+            </Link>
+            <SearchBox>
+                {/*!!!!!! 검색기능 및 onFocus 효과 구현 필요 !!!!!!*/}
+                <None>
+                    <GrSearch id="magnifyingGlass" />
+                </None>
+                <Input placeholder="Search..."></Input>
+            </SearchBox>
+            <Link to="/login">
+                <LoginButton>Log in</LoginButton>
+            </Link>
+            <Link to="/sign-in">
+                <SignupButton>Sign up</SignupButton>
+            </Link>
+        </Nav>
+    );
+};
+export default NavOnLogout;
+
+//! styled components
 export const Nav = styled.nav`
     position: sticky;
     top: 0;
@@ -101,32 +133,3 @@ export const None = styled.button`
     border: none;
     color: #838c95;
 `;
-
-const NavOnLogout = () => {
-    return (
-        <Nav>
-            <Link to="/">
-                <Logo src="logo.png" />
-            </Link>
-            <Link to="/">
-                <Menu>Home</Menu>
-            </Link>
-            <Link to="/">
-                <Menu>Questions</Menu>
-            </Link>
-            <SearchBox>
-                <None>
-                    <GrSearch id="magnifyingGlass" />
-                </None>
-                <Input placeholder="Search..."></Input>
-            </SearchBox>
-            <Link to="/login">
-                <LoginButton>Log in</LoginButton>
-            </Link>
-            <Link to="/sign-in">
-                <SignupButton>Sign up</SignupButton>
-            </Link>
-        </Nav>
-    );
-};
-export default NavOnLogout;

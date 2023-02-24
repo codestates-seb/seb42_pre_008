@@ -1,12 +1,121 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Ads from "../component/list/Ads";
-import Footer from "../component/navNfooter/Footer";
-import NavOnLogout from "../component/navNfooter/NavOnLogout";
 import Sidebar from "../component/list/Sidebar";
 import useFetch from "../util/useFetch";
-import { Link } from "react-router-dom";
-// import NavOnLogin from "../component/NavOnLogin";
 
+const QuestionList = () => {
+    //! GET DATA
+    // eslint-disable-next-line
+    const [questions, isPending, error] = useFetch(
+        "http://localhost:3001/questions"
+    );
+
+    //! 기능 구현
+
+    //! 페이지 본문
+    return (
+        <>
+            {isPending || (
+                <>
+                    <QuestionListWrapper>
+                        <QuestionListContainer>
+                            <Sidebar />
+                            <QuestionContainer>
+                                <QuestionListHeader>
+                                    <InsideHeaderUpper>
+                                        <Title>All Questions</Title>
+                                        {/*!!!!!! 질문하기 버튼 자리 : 로그인 상태에 따라 QuestionForm, 또는 Login 화면으로 안내하는 기능구현 필요 !!!!!!*/}
+                                        <Link to="/question-form">
+                                            <AskQuestionButton>
+                                                Ask Question
+                                            </AskQuestionButton>
+                                        </Link>
+                                    </InsideHeaderUpper>
+                                    <InsideHeaderLower>
+                                        <QuestionListCount>
+                                            {questions.length} questions
+                                        </QuestionListCount>
+                                        {/*!!!!!! filter 메뉴박스가 들어갈 자리 : 기능구현 필요 !!!!!!*/}
+                                        <FilterOptions>
+                                            <FilterButton value={"newest"}>
+                                                Newest
+                                            </FilterButton>
+                                            <FilterButton value={"unanswered"}>
+                                                Unanswered
+                                            </FilterButton>
+                                            <FilterButton value={"answered"}>
+                                                Answered
+                                            </FilterButton>
+                                        </FilterOptions>
+                                    </InsideHeaderLower>
+                                </QuestionListHeader>
+                                {/*!!!!!! 데이터 맵핑해서 질문 리스트 꾸리는 자리 : 질문을 클릭해서 QuestionDetail 화면으로 안내하는 기능구현 필요 !!!!!!*/}
+                                {questions.map((question) => (
+                                    <QuestionUnit key={question.id}>
+                                        <Left>
+                                            <Shorter>
+                                                {question.votes} votes
+                                            </Shorter>
+                                            <Shorter>
+                                                <span
+                                                    className={
+                                                        question.answers > 0
+                                                            ? "answered"
+                                                            : ""
+                                                    }
+                                                >
+                                                    {question.answers} answer
+                                                    {question.answers !== 1
+                                                        ? "s"
+                                                        : ""}
+                                                </span>
+                                            </Shorter>
+                                            <Shorter>
+                                                {question.view} views
+                                            </Shorter>
+                                        </Left>
+                                        <Right>
+                                            <QuestionTitle>
+                                                {question.title}
+                                            </QuestionTitle>
+                                            <QuestionContent>
+                                                {question.problem}
+                                            </QuestionContent>
+                                            <QuestionInfo>
+                                                <Tags>
+                                                    {question.tagList.map(
+                                                        (t, i) => (
+                                                            <Tag key={i}>
+                                                                {t}
+                                                            </Tag>
+                                                        )
+                                                    )}
+                                                </Tags>
+                                                <Author>
+                                                    <Img src="icon.png" />
+                                                    <span>
+                                                        {question.author}
+                                                    </span>
+                                                    {/*!!!!!! 얼마전 입력한 질문인지 보여주는 자리 : 현재시간 - 질문시간 차 구하는 로직 구현 필요 !!!!!!*/}
+                                                    asked 1 min ago
+                                                </Author>
+                                            </QuestionInfo>
+                                        </Right>
+                                    </QuestionUnit>
+                                ))}
+                            </QuestionContainer>
+                            <Ads />
+                        </QuestionListContainer>
+                    </QuestionListWrapper>
+                </>
+            )}
+        </>
+    );
+};
+export default QuestionList;
+
+//! styled components
 export const QuestionListWrapper = styled.main`
     position: relative;
     display: flex;
@@ -180,106 +289,3 @@ export const Img = styled.img`
     border: 2px solid orange;
     margin: 0 0.5vh 0.6vh 0;
 `;
-
-const QuestionList = () => {
-    // eslint-disable-next-line
-    const [questions, isPending, error] = useFetch(
-        "http://localhost:3001/questions"
-    );
-
-    return (
-        <>
-            {isPending || (
-                <>
-                    <QuestionListWrapper>
-                        <QuestionListContainer>
-                            <Sidebar />
-                            <QuestionContainer>
-                                <QuestionListHeader>
-                                    <InsideHeaderUpper>
-                                        <Title>All Questions</Title>
-                                        <Link to="/question-form">
-                                            <AskQuestionButton>
-                                                Ask Question
-                                            </AskQuestionButton>
-                                        </Link>
-                                    </InsideHeaderUpper>
-                                    <InsideHeaderLower>
-                                        <QuestionListCount>
-                                            {questions.length} questions
-                                        </QuestionListCount>
-                                        <FilterOptions>
-                                            <FilterButton value={"newest"}>
-                                                Newest
-                                            </FilterButton>
-                                            <FilterButton value={"unanswered"}>
-                                                Unanswered
-                                            </FilterButton>
-                                            <FilterButton value={"answered"}>
-                                                Answered
-                                            </FilterButton>
-                                        </FilterOptions>
-                                    </InsideHeaderLower>
-                                </QuestionListHeader>
-                                {questions.map((question) => (
-                                    <QuestionUnit key={question.id}>
-                                        <Left>
-                                            <Shorter>
-                                                {question.votes} votes
-                                            </Shorter>
-                                            <Shorter>
-                                                <span
-                                                    className={
-                                                        question.answers > 0
-                                                            ? "answered"
-                                                            : ""
-                                                    }
-                                                >
-                                                    {question.answers} answer
-                                                    {question.answers !== 1
-                                                        ? "s"
-                                                        : ""}
-                                                </span>
-                                            </Shorter>
-                                            <Shorter>
-                                                {question.view} views
-                                            </Shorter>
-                                        </Left>
-                                        <Right>
-                                            <QuestionTitle>
-                                                {question.title}
-                                            </QuestionTitle>
-                                            <QuestionContent>
-                                                {question.problem}
-                                            </QuestionContent>
-                                            <QuestionInfo>
-                                                <Tags>
-                                                    {(question.tagList).map(
-                                                        (t, i) => (
-                                                            <Tag key={i}>
-                                                                {t}
-                                                            </Tag>
-                                                        )
-                                                    )}
-                                                </Tags>
-                                                <Author>
-                                                    <Img src="icon.png" />
-                                                    <span>
-                                                        {question.author}
-                                                    </span>
-                                                    asked 1 min ago
-                                                </Author>
-                                            </QuestionInfo>
-                                        </Right>
-                                    </QuestionUnit>
-                                ))}
-                            </QuestionContainer>
-                            <Ads />
-                        </QuestionListContainer>
-                    </QuestionListWrapper>
-                </>
-            )}
-        </>
-    );
-};
-export default QuestionList;

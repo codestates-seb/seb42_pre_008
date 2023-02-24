@@ -91,6 +91,7 @@ export const None = styled.button`
 const NavOnLogin = () => {
     return (
         <Nav>
+<<<<<<< HEAD:client/src/component/navNfooter/NavOnLogin.js
             <Link to="/">
                 <Logo src="logo.png" />
             </Link>
@@ -100,6 +101,11 @@ const NavOnLogin = () => {
             <Link to="/">
                 <Menu>Questions</Menu>
             </Link>
+=======
+            <Logo src="/logo.png" />
+            <Menu>Home</Menu>
+            <Menu>Questions</Menu>
+>>>>>>> dev:client/src/component/NavOnLogin.js
             <SearchBox>
                 <None>
                     <GrSearch id="magnifyingGlass" />

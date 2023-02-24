@@ -1,11 +1,11 @@
 import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
-import Avatar, { genConfig } from 'react-nice-avatar'
+// import Avatar, { genConfig } from 'react-nice-avatar'
 import styled from "styled-components";
 import { fetchPatch } from '../util/api'
 import { useEffect, useState } from 'react'
 
-const config = genConfig()
+// const config = genConfig()
 const AnswerWrap = styled.article`
     margin-bottom: 5vh;
     border-bottom: 0.7px solid #d2d2d2;
@@ -166,7 +166,7 @@ const Answer = ({el,adopt,login,userInfo,author,handleDelete}) => {
             </aside>
             <section>
                 <div>
-                <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} />
+                {/* <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} /> */}
                 <span>{el.author}</span>
                 <span>{el.update}</span>
                 </div>

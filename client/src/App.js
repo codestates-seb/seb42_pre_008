@@ -20,13 +20,12 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
 function App() {
     const [login, setLogin] = useState(true);
     const [userInfo, setUserInfo] = useState({
-        "id": 1,
-        "name": "kkte02"
-      });
+        id: 1,
+        name: "kkte02",
+    });
     const [error, setError] = useState(null);
     //로그인 여부를 확인해 회원정보를 저장합니다
     // useEffect(() => {
@@ -64,7 +63,7 @@ function App() {
     return (
         <>
             <GlobalStyle />
-            <NavOnLogin/>
+            <NavOnLogin />
             <BrowserRouter>
                 <Suspense>
                     <Routes>
@@ -85,15 +84,15 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/mypage" element={<MyPage />} />
-                        <Route path="/welcome" element={<Welcome/>} />
-                        <Route path="/userinfo-edit" element={
-                                <UserInfoEdit
-                                    userInfo={userInfo}
-                                />} />
+                        <Route path="/welcome" element={<Welcome />} />
+                        <Route
+                            path="/userinfo-edit"
+                            element={<UserInfoEdit userInfo={userInfo} />}
+                        />
                     </Routes>
                 </Suspense>
             </BrowserRouter>
-            <Footer/>
+            <Footer />
         </>
     );
 }

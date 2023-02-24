@@ -102,7 +102,7 @@ export const None = styled.button`
 const NavOnLogin = () => {
     return (
         <Nav>
-            <Logo src="/logo.png" />
+            <Logo src="logo.png" />
             <Menu>Home</Menu>
             <Menu>Questions</Menu>
             <SearchBox>

@@ -1,4 +1,4 @@
-import { useEffect, Suspense, useState } from "react";
+import { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Login from "./pages/Login";
@@ -6,11 +6,7 @@ import MyPage from "./pages/MyPage";
 import QuestionDetail from "./pages/QuestionDetail";
 import QuestionForm from "./pages/QuestionForm";
 import QuestionList from "./pages/QuestionList";
-import SignUp from "./pages/SignUp";
-import NavOnLogin from "./component/NavOnLogout";
-import Footer from "./component/Footer";
-import Welcome from "./pages/Welcome";
-import UserInfoEdit from "./pages/UserInfoEdit";
+import SignIn from "./pages/SignIn";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -20,52 +16,12 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
 function App() {
-    const [login, setLogin] = useState(true);
-    const [userInfo, setUserInfo] = useState({
-        "id": 1,
-        "name": "kkte02"
-      });
-    const [error, setError] = useState(null);
-    //로그인 여부를 확인해 회원정보를 저장합니다
-    // useEffect(() => {
-    //     const abortCont = new AbortController();
-
-    //     setTimeout(() => {
-    //         //여기서 endpoint를 수정해주면 됩니다
-    //         fetch(`${process.env.REACT_APP_API_URL$}/loginIfon`, {
-    //             signal: abortCont.signal,
-    //             //인증정보를 포함하는 옵션입니다
-    //             credentials: "include",
-    //         })
-    //             .then((res) => {
-    //                 if (!res.ok) {
-    //                     throw Error(
-    //                         "could not fetch the data for that resource"
-    //                     );
-    //                 }
-    //                 return res.json();
-    //             })
-    //             .then((data) => {
-    //                 setLogin(true);
-    //                 setUserInfo(data);
-    //                 setError(null);
-    //             })
-    //             .catch((err) => {
-    //                 setLogin(false);
-    //                 setError(err.message);
-    //             });
-    //     }, 1000);
-
-    //     return () => abortCont.abort();
-    // }, []);
-
     return (
         <>
             <GlobalStyle />
-            <NavOnLogin/>
             <BrowserRouter>
+                {/* { error && <div>{ error }</div> } */}
                 <Suspense>
                     <Routes>
                         <Route exact path="/" element={<QuestionList />} />
@@ -75,25 +31,14 @@ function App() {
                         />
                         <Route
                             path="/question-detail"
-                            element={
-                                <QuestionDetail
-                                    login={login}
-                                    userInfo={userInfo}
-                                />
-                            }
+                            element={<QuestionDetail />}
                         />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/sign-up" element={<SignUp />} />
+                        <Route path="/sign-in" element={<SignIn />} />
                         <Route path="/mypage" element={<MyPage />} />
-                        <Route path="/welcome" element={<Welcome/>} />
-                        <Route path="/userinfo-edit" element={
-                                <UserInfoEdit
-                                    userInfo={userInfo}
-                                />} />
                     </Routes>
                 </Suspense>
             </BrowserRouter>
-            <Footer/>
         </>
     );
 }

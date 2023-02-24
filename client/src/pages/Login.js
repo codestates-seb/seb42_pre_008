@@ -258,7 +258,7 @@ export default function Login (props) {
       e.preventDefault();
       axios
           .post(
-              `url`,
+              `url/users/lgoin`,
               { email: userEmail, password: userPassword },
           )
           .then((response) => {
@@ -335,7 +335,7 @@ export default function Login (props) {
               onClick={userActions.naverLogin}
               >
 								<FacebookLogo/>
-								Log in with Facebook
+								Log in with Naver
 							</FacebookBtn>
 
 							<FormContainer>

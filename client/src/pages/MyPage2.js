@@ -7,33 +7,42 @@ import MyProfile from "../component/mypage/MyProfile/MyProfile"
 import memberIdState from "../state/memberState";
 import tokenState from "../state/tokenState";
 import isLoginState from "../state/isLoginState";
-
-
-
-
-
-
+import { UserinfoAPI } from "../util/UserinfoAPI";
 
 
 
 const MyPage2 = () => {
-    // const [memberId, setMemberId] = useRecoilState(memberIdState);
+    const [memberId, setMemberId] = useRecoilState(memberIdState);
     // const [isLoading, setIsLoaidng] = useState(false);
-    // const [user, setUser] = useState({ data: {} });
-    // const [token, setToken] = useRecoilState(tokenState);
-    // const [isLogin, setIsLogin] = useRecoilState(isLoginState); 
+    const [user, setUser] = useState({ data: {} });
+    const [token, setToken] = useRecoilState(tokenState);
+    const [isLogin, setIsLogin] = useRecoilState(isLoginState); 
 
     // useEffect(() => {
-    //     setIsLoaidng(true) ;
-    //     //api 적용해야함.   
-    // })
+    //     UserinfoAPI(memberId, token).then((res) => {
+    //         if (res.status === 404) {
+    //         alert('로그인을 해주세요.');
+    //         setIsLogin(false);
+    //         setToken(null);
+    //         setMemberId(null);
+    //         window.location.href = window.location.href = 'login';
+    //         };
+    //         setUser(res.data);
+    //     })
+    // }, []);
 
 
     return(
         <>
         <NavOnLogin />
-        <MyInfo />
-        <MyProfile />
+        <MyInfo 
+        memberId={memberId}
+        user={user}
+        />
+        <MyProfile 
+         memberId={memberId}
+         user={user}
+        />
 
         </>
     )

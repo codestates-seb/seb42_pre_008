@@ -19,8 +19,8 @@ const MyInfo = ({ user }) => {
         <div className="profile-name">
           <ProfileImg />
           <ProfileInfo>
-            <div className="nickname"> nickname </div>
-            {userInfo?.nickname}
+            <div className="nickname">NickName   {user.data.nickname} {userInfo?.nickname} </div>
+
             <ProfileDay>
               <div className="since">
                 <svg

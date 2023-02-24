@@ -14,17 +14,43 @@ import {
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import axios from 'axios';
+import useFetch from '../../../util/useFetch';
+
+// export const getContents = async () => {
+//   const response = await axios.get('http://localhost:3030/questions');
+//   return response.data
+// }  
+// export const getContentId = async id => {
+//   const response = await axios.get(`http://localhost:3030/questions/${id}`);
+//   return response.data
+// }
 
 
 const MyProfile = ({ user }) => {
-  const [isAbout, setIsAbout] = useState(false);
-  const [isPost, setIsPost] = useState(false);
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const [isAbout, setIsAbout] = useState(true);
+  const [isPost, setIsPost] = useState(true);
+  // const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   // useEffect(() => {
   //   if (user.data.questionList?.length >= 1) {
   //     setIsPost(true);
   //   }
   // }, []);
+  // const [data, setData] = useState(null);
+
+    // useEffect(() => {
+    //    fetch("http://localhost:3030/questions")
+    //    .then(res => {
+    //     return res.json();
+    //    })
+    //    .then(res => {
+    //     setData(res);
+    //     setIsPost(true)
+    //    })
+    // }, [])
+
+   const [data, isPending, error] = useFetch("http://localhost:3030/questions");
+
 
   return (
     <Container>
@@ -32,30 +58,23 @@ const MyProfile = ({ user }) => {
         <Stats>
           <div className="title">Stats</div>
           <StatContainer>
-            <StatTop>
-              <StatDiv>
-                <StatNum>1</StatNum>
-                <StatMsg>reputation</StatMsg>
-              </StatDiv>
 
-              <StatDiv>
-                <StatNum>0</StatNum>
-                <StatMsg>reached</StatMsg>
-              </StatDiv>
-            </StatTop>
             <StatBottom>
               <StatDiv>
                 <StatNum>
-                  {/* {user.data.answerCount ? user.data.answerCount : 0} */}
-                  {userInfo?.answerCount ? userInfo.answerCount : 0}
+                  {/* {user.data.answerCount ? user.data.answerCount : 0}
+                  {userInfo?.answerCount ? userInfo.answerCount : 0} */}
+                  {data && data.length}
+                  {/* {console.log(data)} */}
                 </StatNum>
                 <StatMsg>answers</StatMsg>
               </StatDiv>
 
               <StatDiv>
                 <StatNum>
-                  {/* {user.data.questionList ? user.data.questionList.length : 0} */}
-                  {userInfo?.questionList ? userInfo.questionList.length : 0}
+                  {/* {user.data.questionList ? user.data.questionList.length : 0}
+                  {userInfo?.questionList ? userInfo.questionList.length : 0} */}
+                  {data && data.length}
                 </StatNum>
                 <StatMsg>questions</StatMsg>
               </StatDiv>
@@ -68,7 +87,10 @@ const MyProfile = ({ user }) => {
           <div className="title">About</div>
           <div className="about-content">
             {isAbout ? (
-              <div>{user.data.about}</div>
+              <div>
+                {/* {user.data.about} */}
+            
+              </div>
             ) : (
               <>
                 <div className="about-txt">
@@ -86,8 +108,10 @@ const MyProfile = ({ user }) => {
         <div className="posts-container">
           <div className="title">Posts</div>
           <div className="posts-content">
+            {/* {console.log(questions)} */}
             {isPost ? (
-              user.data.questionList.map((question, idx) => {
+              // user.data.questionList.map
+              data && data.map((question, idx) => {
                 return (
                   <div className="post-item" key={idx}>
                     <div className="post-idx">{idx + 1} .</div>
@@ -98,8 +122,11 @@ const MyProfile = ({ user }) => {
                       >
                         {question.title}
                       </Link>
+                      
                     </div>
-                    <div className="post-date">{question.createdAt}</div>
+                    <div className="post-date">
+                      {question.createdAt}
+                    </div>
                   </div>
                 );
               })
@@ -126,10 +153,12 @@ const MyProfile = ({ user }) => {
                   <div className="posts-txt">
                     <p className="posts-txt-top">
                       Just getting started? Try answering a question!
+                     
                     </p>
-                    Your most helpful questions, answers and tags will appear
+                    {/* Your most helpful questions, answers and tags will appear
                     here. Start by answering a question or selecting tags that
-                    match topics you’re interested in.
+                    match topics you’re interested in. */}
+                     {/* {content && content[0].content} */}
                   </div>
                 </PostContainer>
               </>

@@ -1,0 +1,3 @@
+server/src/main/resources/application.yml
+*.yml
+.idea

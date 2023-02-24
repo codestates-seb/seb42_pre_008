@@ -1,61 +1,50 @@
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import Actives from '../component/mypage/Actives'
-import { Routes, Route } from "react-router-dom";
+import MyInfo from "../component/mypage/MyInfo/MyInfo";
+import NavOnLogin from "../component/NavOnLogin";
+import MyProfile from "../component/mypage/MyProfile/MyProfile"
+import memberIdState from "../state/memberState";
+import tokenState from "../state/tokenState";
+import isLoginState from "../state/isLoginState";
+import { UserinfoAPI } from "../util/UserinfoAPI";
 
 
-const MainWrapper = styled.div`
 
-`
-const Container = styled.div`
-display: flex;
-justify-content: center;
-max-width: auto;
-max-height: auto;
-`
-const Nav = styled.nav`
-position: sticky;
-top: 60px;
-width: 164px;
-max-height: calc(100vh - 180px);
-flex-grow: 0;
-flex-shrink: 0;
-flex-basis: 164px;
-`
-const MainContent = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-margin: 0 auto;
-max-width: 1024px;
-padding: 0 1rem;
+const MyPage = () => {
+    const [memberId, setMemberId] = useRecoilState(memberIdState);
+    // const [isLoading, setIsLoaidng] = useState(false);
+    const [user, setUser] = useState({ data: {} });
+    const [token, setToken] = useRecoilState(tokenState);
+    const [isLogin, setIsLogin] = useRecoilState(isLoginState); 
 
-&.so-with-one-side {
-  margin-top: 60px;
-  padding-left: 250px;
-}
-`
+    // useEffect(() => {
+    //     UserinfoAPI(memberId, token).then((res) => {
+    //         if (res.status === 404) {
+    //         alert('로그인을 해주세요.');
+    //         setIsLogin(false);
+    //         setToken(null);
+    //         setMemberId(null);
+    //         window.location.href = window.location.href = 'login';
+    //         };
+    //         setUser(res.data);
+    //     })
+    // }, []);
 
 
-function MyPage() {
-    return (
-        <MainWrapper>
-            <Container>
-                <Nav>
-                    {/* sidebar */}
-                </Nav>
+    return(
+        <>
+        <NavOnLogin />
+        <MyInfo 
+        memberId={memberId}
+        user={user}
+        />
+        <MyProfile 
+         memberId={memberId}
+         user={user}
+        />
 
-                <MainContent className="so-main-content so-with-one-side">
-                    <div className="p-6 w-[1100px]">
-                        <Routes>
-                            <Route exact path="/" element={<Actives/>} />
-                            <Route exact path="/actives" element={<Actives />} />
-                            <Route exact path="/settings/*" element={<Actives />} />
-                        </Routes>
-                    </div>
-                </MainContent>
-            </Container>
-        </MainWrapper>
-
+        </>
     )
 }
 

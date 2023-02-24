@@ -85,7 +85,7 @@ const AnswerWrap = styled.article`
     }
 `
 
-const Answer = ({el,adopt,login,userInfo,author,handleDelete}) => {
+const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete}) => {
     /*** vote ***/
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
@@ -185,7 +185,7 @@ const Answer = ({el,adopt,login,userInfo,author,handleDelete}) => {
                     value = {url}>delete</button>
                     {el.adopt ? 
                     <button onClick={ onHandleAdopt } >cancle adopt</button>
-                    :<button onClick={ onHandleAdopt } disabled={ userInfo.name === author ? adopt :true }>adopt</button>}
+                    :<button onClick={ onHandleAdopt } disabled={ userInfo.name === questionAuthor && el.author !== questionAuthor ? adopt :true }>adopt</button>}
                 </div>
             </section>
         </AnswerWrap>

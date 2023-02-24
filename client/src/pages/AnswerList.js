@@ -55,7 +55,7 @@ const Input = styled.textarea`
     border-radius: 0.25rem;
 `
 
-const AnswerList = ({login,userInfo,author, handleDelete}) => {
+const AnswerList = ({login,userInfo,questionAuthor, handleDelete}) => {
     const [answers, setAnswers] = useState(null);
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
@@ -135,14 +135,14 @@ const AnswerList = ({login,userInfo,author, handleDelete}) => {
                 return(
                     <AdoptedLi key={el.id}>
                         <p>Adopted Answer</p>
-                        <Answer el = {el} login={login} userInfo={userInfo} author={author} handleDelete={handleDelete}/>
+                        <Answer el = {el} login={login} userInfo={userInfo} questionAuthor={questionAuthor} handleDelete={handleDelete}/>
                     </AdoptedLi>
                 )
             })}
             {answers && answers.filter((el) => el.adopt === false ).map((el) => {
                 return(
                     <li key={el.id}>
-                        <Answer el = {el}  adopt={adopt} login={login} userInfo={userInfo} author={author}  handleDelete={handleDelete}/>
+                        <Answer el = {el}  adopt={adopt} login={login} userInfo={userInfo} questionAuthor={questionAuthor}  handleDelete={handleDelete}/>
                     </li>
                 )
             })}

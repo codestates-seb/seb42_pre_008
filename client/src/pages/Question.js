@@ -97,16 +97,11 @@ const QuestionBodyWrap = styled.div`
         }
     }
 `
-const Question = ({login,userInfo,handleDelete,setAuthor}) => {
-    //fetchdata
-    const [data, setData] = useState(null);
-    const [isPending, setIsPending] = useState(true);
-    const [error, setError] = useState(null);
-
+const Question = ({login,userInfo,handleDelete,setVote,vote,data}) => {
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
     const [checked,setChecked] = useState('still');
-    const [vote, setVote] = useState('')
+    
 
     const onHandleVoteUp = () => {
         if(checked === 'still'){
@@ -140,29 +135,6 @@ const Question = ({login,userInfo,handleDelete,setAuthor}) => {
     }
 
 
-    useEffect(() => {
-        const abortCont = new AbortController();
-
-        setTimeout(() => {
-        fetch(process.env.REACT_APP_API_QUESTION+'/'+'1', { signal: abortCont.signal })
-        .then(res => {
-            if (!res.ok) { 
-                throw Error('could not fetch the data for that resource');
-            } 
-            return res.json();
-        })
-        .then(data => {
-            setIsPending(false);
-            setData(data);
-            setError(null);
-            setVote(data.votes)
-            setAuthor(data.author)
-        })
-        .catch(err => {
-            setIsPending(false);
-            setError(err.message);
-        })
-        }, 1000);},[])
 
 
     useEffect(() => {

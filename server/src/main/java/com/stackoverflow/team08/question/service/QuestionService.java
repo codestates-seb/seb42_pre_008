@@ -1,7 +1,7 @@
 package com.stackoverflow.team08.question.service;
 
-import com.stackoverflow.team08.BusinessLogicException;
-import com.stackoverflow.team08.ExceptionCode;
+import com.stackoverflow.team08.exception.BusinessLogicException;
+import com.stackoverflow.team08.exception.ExceptionCode;
 import com.stackoverflow.team08.question.entity.Question;
 import com.stackoverflow.team08.question.repository.QuestionRepository;
 import org.springframework.stereotype.Service;

@@ -4,14 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum MemberStatus {
-    MEMBER_ACTIVE("MEMBER_ACTIVE", "활동중"),
-    MEMBER_SECESSION("MEMBER_SECESSION", "탈퇴된 회원");
+    MEMBER_ACTIVE("MEMBER_ACTIVE"),
+    MEMBER_SECESSION("MEMBER_SECESSION");
 
-    private String key;
     private String message;
 
-    MemberStatus(String key, String message) {
-        this.key = key;
+    MemberStatus(String message) {
+
         this.message = message;
     }
 }

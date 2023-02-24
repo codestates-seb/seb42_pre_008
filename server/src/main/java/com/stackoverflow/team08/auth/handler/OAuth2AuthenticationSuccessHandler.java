@@ -2,6 +2,7 @@ package com.stackoverflow.team08.auth.handler;
 
 import com.google.gson.Gson;
 import com.stackoverflow.team08.auth.entity.GithubEmailEntity;
+import com.stackoverflow.team08.member.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -37,7 +38,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
     private final RestTemplate restTemplate;
 
-    public OAuth2AuthenticationSuccessHandler(Gson gson, OAuth2AuthorizedClientService authorizedClientService, RestTemplateBuilder restTemplateBuilder) {
+    public OAuth2AuthenticationSuccessHandler(Gson gson, OAuth2AuthorizedClientService authorizedClientService, RestTemplateBuilder restTemplateBuilder, MemberService memberService) {
         this.gson = gson;
         this.authorizedClientService = authorizedClientService;
         this.restTemplate = restTemplateBuilder.build();
@@ -81,10 +82,9 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
             email = userEmail;
         }
-        // 여기서 분기를 통해 회원가입을 했을 경우 메인 페이지로
-        // 없을 경우 가입하는 화면으로 이동을 해줘야 할듯
-        // 문제는 로그인 유저의 값을 어떻게 넘겨줘야 하는가
-        // Dto를 JSON으로 바꿔서 줘야 할 것 같기는 하다.
+
+        // 해당 이메일을 통해 해당 유저가 있을 경우 원래 가려던 페이지로 이동
+        // 없을 경우 기본적으로 정보를 저장 추가 정보를 받기위한 페이지로 이동
 
         String uri = UriComponentsBuilder.fromUriString("http://localhost:8080/test/user")
                 .queryParam("userEmail", email)

@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -33,6 +36,7 @@ public class SecurityConfiguration {
                 .and()
                 // 접근 권한 설정
                 .authorizeRequests(auth -> auth
+                        .antMatchers("/members/**").permitAll()
                         .antMatchers("/h2/**").permitAll()
                         .antMatchers("/test/**").permitAll()
                         .anyRequest().authenticated()
@@ -48,5 +52,11 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
+    // password encoding 을 위해 선언
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();  // (1-1)
+//    }
 
 }

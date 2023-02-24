@@ -19,5 +19,5 @@ public abstract class StandardTime {
     @Column(updatable = false)
     private LocalDateTime createdAt;
     @LastModifiedDate
-    private LocalDateTime ModifiedAt;
+    private LocalDateTime modifiedAt;
 }

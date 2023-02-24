@@ -1,19 +1,12 @@
-package com.stackoverflow.team08.server.question.service;
+package com.stackoverflow.team08.question.service;
 
-import com.stackoverflow.team08.server.config.pageable.CustomPageRequest;
-import com.stackoverflow.team08.server.exception.BusinessLogicException;
-import com.stackoverflow.team08.server.exception.ExceptionCode;
-import com.stackoverflow.team08.server.question.entity.Question;
-import com.stackoverflow.team08.server.question.page.QuestionPageRequest;
-import com.stackoverflow.team08.server.question.page.QuestionSortingType;
-import com.stackoverflow.team08.server.question.repository.QuestionRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import com.stackoverflow.team08.BusinessLogicException;
+import com.stackoverflow.team08.ExceptionCode;
+import com.stackoverflow.team08.question.entity.Question;
+import com.stackoverflow.team08.question.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Transactional

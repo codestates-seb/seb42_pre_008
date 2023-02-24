@@ -1,4 +1,4 @@
-package com.stackoverflow.team08.server.utils;
+package com.stackoverflow.team08.utils;
 
 import org.springframework.web.util.UriComponentsBuilder;
 

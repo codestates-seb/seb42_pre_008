@@ -1,4 +1,4 @@
-package com.stackoverflow.team08.server.config.pageable;
+package com.stackoverflow.team08.config.pageable;
 
 import lombok.Getter;
 import org.springframework.data.domain.PageRequest;

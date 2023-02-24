@@ -1,9 +1,8 @@
-package com.stackoverflow.team08.server.vote.entity;
+package com.stackoverflow.team08.vote.entity;
 
-import com.stackoverflow.team08.server.audit.Auditable;
-import com.stackoverflow.team08.server.enums.VoteStatus;
-import com.stackoverflow.team08.server.member.entity.Member;
-import com.stackoverflow.team08.server.question.entity.Question;
+import com.stackoverflow.team08.audit.Auditable;
+import com.stackoverflow.team08.enums.VoteStatus;
+import com.stackoverflow.team08.question.entity.Question;
 import lombok.*;
 
 import javax.persistence.*;

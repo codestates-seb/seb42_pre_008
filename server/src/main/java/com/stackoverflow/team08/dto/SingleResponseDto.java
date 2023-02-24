@@ -1,4 +1,4 @@
-package com.stackoverflow.team08.server.dto;
+package com.stackoverflow.team08.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

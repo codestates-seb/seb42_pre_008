@@ -1,4 +1,4 @@
-package com.stackoverflow.team08.server.audit;
+package com.stackoverflow.team08.audit;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

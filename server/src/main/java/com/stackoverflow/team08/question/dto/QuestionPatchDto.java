@@ -1,10 +1,8 @@
-package com.stackoverflow.team08.server.question.dto;
+package com.stackoverflow.team08.question.dto;
 
 import lombok.Getter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 @Getter
 public class QuestionPatchDto {

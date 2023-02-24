@@ -1,6 +1,6 @@
-//package com.stackoverflow.team08.server.tag.entity;
+//package com.stackoverflow.team08.tag.entity;
 //
-//import com.stackoverflow.team08.server.question.entity.QuestionTag;
+//import com.stackoverflow.team08.question.entity.QuestionTag;
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
 //import lombok.Setter;

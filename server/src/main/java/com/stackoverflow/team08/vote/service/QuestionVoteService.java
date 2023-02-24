@@ -1,17 +1,8 @@
-package com.stackoverflow.team08.server.vote.service;
+package com.stackoverflow.team08.vote.service;
 
-import com.stackoverflow.team08.server.enums.VoteStatus;
-import com.stackoverflow.team08.server.exception.BusinessLogicException;
-import com.stackoverflow.team08.server.exception.ExceptionCode;
-import com.stackoverflow.team08.server.member.entity.Member;
-import com.stackoverflow.team08.server.question.entity.Question;
-import com.stackoverflow.team08.server.vote.entity.QuestionVote;
-import com.stackoverflow.team08.server.vote.repository.QuestionVoteRepository;
-import lombok.RequiredArgsConstructor;
+import com.stackoverflow.team08.vote.repository.QuestionVoteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Transactional
 @Service

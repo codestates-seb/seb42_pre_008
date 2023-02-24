@@ -1,6 +1,6 @@
-package com.stackoverflow.team08.server.response;
+package com.stackoverflow.team08.response;
 
-import com.stackoverflow.team08.server.exception.ExceptionCode;
+import com.stackoverflow.team08.ExceptionCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;

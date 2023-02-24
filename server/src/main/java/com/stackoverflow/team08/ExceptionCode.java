@@ -1,4 +1,4 @@
-package com.stackoverflow.team08.server.exception;
+package com.stackoverflow.team08;
 
 import lombok.Getter;
 

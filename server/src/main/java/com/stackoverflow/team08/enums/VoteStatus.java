@@ -1,4 +1,4 @@
-package com.stackoverflow.team08.server.enums;
+package com.stackoverflow.team08.enums;
 
 public enum VoteStatus {
     UP,

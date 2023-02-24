@@ -1,16 +1,12 @@
-package com.stackoverflow.team08.server.question.entity;
+package com.stackoverflow.team08.question.entity;
 
-import com.stackoverflow.team08.server.audit.Auditable;
-//import com.stackoverflow.team08.server.member.entity.Member;
-import com.stackoverflow.team08.server.vote.entity.QuestionVote;
+import com.stackoverflow.team08.audit.Auditable;
+//import com.stackoverflow.team08.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @Getter

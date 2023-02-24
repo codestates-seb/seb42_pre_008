@@ -1,24 +1,18 @@
-package com.stackoverflow.team08.server.question.controller;
+package com.stackoverflow.team08.question.controller;
 
-import com.stackoverflow.team08.server.dto.MultiResponseDto;
-import com.stackoverflow.team08.server.dto.SingleResponseDto;
-//import com.stackoverflow.team08.server.member.entity.Member;
-import com.stackoverflow.team08.server.question.dto.QuestionPatchDto;
-import com.stackoverflow.team08.server.question.dto.QuestionPostDto;
-import com.stackoverflow.team08.server.question.dto.QuestionResponseDto;
-import com.stackoverflow.team08.server.question.entity.Question;
-import com.stackoverflow.team08.server.question.mapper.QuestionMapper;
-import com.stackoverflow.team08.server.question.page.QuestionPageRequest;
-import com.stackoverflow.team08.server.question.service.QuestionService;
-import com.stackoverflow.team08.server.utils.UriCreator;
-import com.stackoverflow.team08.server.vote.service.QuestionVoteService;
+import com.stackoverflow.team08.dto.SingleResponseDto;
+//import com.stackoverflow.team08.member.entity.Member;
+import com.stackoverflow.team08.question.dto.QuestionPatchDto;
+import com.stackoverflow.team08.question.dto.QuestionPostDto;
+import com.stackoverflow.team08.question.entity.Question;
+import com.stackoverflow.team08.question.mapper.QuestionMapper;
+import com.stackoverflow.team08.question.service.QuestionService;
+import com.stackoverflow.team08.utils.UriCreator;
+import com.stackoverflow.team08.vote.service.QuestionVoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/questions")

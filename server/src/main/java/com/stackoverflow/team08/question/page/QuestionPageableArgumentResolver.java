@@ -1,7 +1,6 @@
-package com.stackoverflow.team08.server.question.page;
+package com.stackoverflow.team08.question.page;
 
-import com.stackoverflow.team08.server.config.pageable.PageableHandlerMethodArgumentResolver;
-import org.springframework.core.MethodParameter;
+import com.stackoverflow.team08.config.pageable.PageableHandlerMethodArgumentResolver;
 
 
 public class QuestionPageableArgumentResolver extends PageableHandlerMethodArgumentResolver<QuestionPageRequest> {

@@ -1,10 +1,9 @@
-package com.stackoverflow.team08.server.config.pageable;
+package com.stackoverflow.team08.config.pageable;
 
-import com.stackoverflow.team08.server.question.page.QuestionPageRequest;
+import com.stackoverflow.team08.question.page.QuestionPageRequest;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.core.MethodParameter;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

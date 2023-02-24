@@ -1,6 +1,6 @@
-package com.stackoverflow.team08.server.question.page;
+package com.stackoverflow.team08.question.page;
 
-import com.stackoverflow.team08.server.config.pageable.CustomPageRequest;
+import com.stackoverflow.team08.config.pageable.CustomPageRequest;
 
 public class QuestionPageRequest extends CustomPageRequest<QuestionSortingType> {
     public QuestionPageRequest(int page, int size, QuestionSortingType sortType) {

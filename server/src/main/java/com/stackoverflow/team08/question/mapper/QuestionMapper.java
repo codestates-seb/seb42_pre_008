@@ -1,10 +1,9 @@
-package com.stackoverflow.team08.server.question.mapper;
+package com.stackoverflow.team08.question.mapper;
 
-import com.stackoverflow.team08.server.question.dto.QuestionPatchDto;
-import com.stackoverflow.team08.server.question.dto.QuestionPostDto;
-import com.stackoverflow.team08.server.question.dto.QuestionResponseDto;
-import com.stackoverflow.team08.server.question.dto.QuestionVoteResponseDto;
-import com.stackoverflow.team08.server.question.entity.Question;
+import com.stackoverflow.team08.question.dto.QuestionPatchDto;
+import com.stackoverflow.team08.question.dto.QuestionPostDto;
+import com.stackoverflow.team08.question.dto.QuestionResponseDto;
+import com.stackoverflow.team08.question.entity.Question;
 import org.mapstruct.Mapper;
 
 import java.util.List;

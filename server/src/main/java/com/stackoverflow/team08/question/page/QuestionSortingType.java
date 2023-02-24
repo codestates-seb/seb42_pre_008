@@ -1,4 +1,4 @@
-package com.stackoverflow.team08.server.question.page;
+package com.stackoverflow.team08.question.page;
 
 public enum QuestionSortingType {
     NEWEST,UNANSWERED, ANSWERED;

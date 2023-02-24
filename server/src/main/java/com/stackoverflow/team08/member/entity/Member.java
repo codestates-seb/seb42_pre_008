@@ -1,4 +1,4 @@
-package com.stackoverflow.team08.server.member.entity;
+package com.stackoverflow.team08.member.entity;
 
 public class Member {
 }

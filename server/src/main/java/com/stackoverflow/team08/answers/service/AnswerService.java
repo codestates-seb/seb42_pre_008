@@ -30,7 +30,6 @@ public class AnswerService {
 
         Optional.ofNullable(answer.getContent())
                 .ifPresent(comment -> findAnswer.setContent(comment));
-        findAnswer.setModifiedAt(LocalDateTime.now());
 
         return answerRepository.save(findAnswer);
     }

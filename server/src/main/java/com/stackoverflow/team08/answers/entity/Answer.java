@@ -1,5 +1,6 @@
 package com.stackoverflow.team08.answers.entity;
 
+import com.stackoverflow.team08.answers.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Answer {
+public class Answer extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long answerId;
@@ -21,12 +22,6 @@ public class Answer {
 
     @Column(nullable = false, name = "CONTENT")
     private String content;
-
-    @Column(nullable = false, name = "CREATE_AT")
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(nullable = false, name = "LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt = LocalDateTime.now();
 
 //    @ManyToOne
 //    @JoinColumn(name = "QUESTION_ID")

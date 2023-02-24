@@ -3,10 +3,10 @@ import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
 import { useState ,useEffect } from 'react'
 import { fetchPatch } from '../util/api'
-// import Avatar, { genConfig } from 'react-nice-avatar'
+import Avatar, { genConfig } from 'react-nice-avatar'
 import useFetch from "../util/useFetch";
 
-// const config = genConfig()
+const config = genConfig()
 const QuestionWrap = styled.div`
     padding-bottom: 5vh;
     margin-bottom: 5vh;
@@ -185,7 +185,7 @@ const Question = ({login,userInfo,handleDelete,setAuthor}) => {
                     <div>
                         <h1>{data.title}</h1>
                         <div>
-                        {/* <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} /> */}
+                        <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} />
                         <span>author</span>
                         <span>{data.author}</span>
                         <span>asked</span>
@@ -214,8 +214,8 @@ const Question = ({login,userInfo,handleDelete,setAuthor}) => {
                             }    
                         </aside>
                         <article>
-                            {data.content}
-                            <div>{data.tag.map((el) => <span>{el}</span>)}</div>
+                            {data.problem}
+                            <div>{data.tagList.map((el) => <span>{el}</span>)}</div>
                         </article>
                         </>
                 }

@@ -28,8 +28,6 @@ function App() {
         "name": "kkte02"
       });
     const [error, setError] = useState(null);
-    //QuestionList -> QuestionDetail로 엔드포인트를 전달합니다
-    const [endpoint, setEndpoint] = useState(null);
     //로그인 여부를 확인해 회원정보를 저장합니다
     // useEffect(() => {
     //     const abortCont = new AbortController();
@@ -81,7 +79,6 @@ function App() {
                                 <QuestionDetail
                                     login={login}
                                     userInfo={userInfo}
-                                    endpoint={endpoint}
                                 />
                             }
                         />
@@ -89,7 +86,10 @@ function App() {
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/mypage" element={<MyPage />} />
                         <Route path="/welcome" element={<Welcome/>} />
-                        <Route path="/userinfo-edit" element={<UserInfoEdit/>} />
+                        <Route path="/userinfo-edit" element={
+                                <UserInfoEdit
+                                    userInfo={userInfo}
+                                />} />
                     </Routes>
                 </Suspense>
             </BrowserRouter>

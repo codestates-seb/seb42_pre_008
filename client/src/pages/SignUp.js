@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 import { BiMessageSquareError } from "react-icons/bi";
 import { BiArchiveOut } from "react-icons/bi";
@@ -158,6 +158,7 @@ const SignupButton = styled.button`
     border: 1px solid #477199;
     box-shadow: inset 0px 0px 0px 0px #54a3f7;
     margin-top: 1.8rem;
+    font-size: 1rem;
     cursor: pointer;
     :hover {
         background-color: #3172c6;

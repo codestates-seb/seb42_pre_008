@@ -191,8 +191,6 @@ const QuestionList = () => {
         <>
             {isPending || (
                 <>
-                    <NavOnLogout />
-                    {/* <NavOnLogin /> */}
                     <QuestionListWrapper>
                         <QuestionListContainer>
                             <Sidebar />
@@ -279,7 +277,6 @@ const QuestionList = () => {
                             <Ads />
                         </QuestionListContainer>
                     </QuestionListWrapper>
-                    <Footer />
                 </>
             )}
         </>

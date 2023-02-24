@@ -392,7 +392,6 @@ const QuestionForm = () => {
 
     return (
         <>
-            <NavOnLogin />
             <QuestionFormWrapper>
                 <Cover>
                     <Head>Ask a public question</Head>
@@ -651,7 +650,6 @@ const QuestionForm = () => {
                     </SubmitButton>
                 </ButtonContainer>
             </QuestionFormWrapper>
-            <Footer />
         </>
     );
 };

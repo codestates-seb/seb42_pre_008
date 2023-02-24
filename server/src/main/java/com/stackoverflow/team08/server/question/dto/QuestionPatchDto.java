@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Getter
 public class QuestionPatchDto {
@@ -16,7 +17,7 @@ public class QuestionPatchDto {
     private String tryAndExpecting;
 
     @Pattern(regexp = "^[a-zA-Z]*$", message = "태그는 영문으로 입력해주세요.")
-    private String tag;
+    private List<String> tags;
 
     public void setQuestionId(long questionId) {
         this.questionId = questionId;

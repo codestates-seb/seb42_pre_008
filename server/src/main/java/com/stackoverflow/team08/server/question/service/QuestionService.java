@@ -1,17 +1,22 @@
 package com.stackoverflow.team08.server.question.service;
 
+import com.stackoverflow.team08.server.config.pageable.CustomPageRequest;
 import com.stackoverflow.team08.server.exception.BusinessLogicException;
 import com.stackoverflow.team08.server.exception.ExceptionCode;
 import com.stackoverflow.team08.server.question.entity.Question;
+import com.stackoverflow.team08.server.question.page.QuestionPageRequest;
+import com.stackoverflow.team08.server.question.page.QuestionSortingType;
 import com.stackoverflow.team08.server.question.repository.QuestionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Transactional
 @Service
 public class QuestionService {
     private final QuestionRepository questionRepository;
@@ -34,20 +39,64 @@ public class QuestionService {
                 .ifPresent(content -> findQuestion.setContent(content));
         Optional.ofNullable(question.getTryAndExpecting())
                 .ifPresent(tryAndExpecting -> findQuestion.setTryAndExpecting(tryAndExpecting));
-        Optional.ofNullable(question.getTag())
-                .ifPresent(tag -> findQuestion.setTag(tag));
 
-        findQuestion.setModifiedAt(LocalDateTime.now());
 
         return questionRepository.save(findQuestion);
     }
 
+    @Transactional(readOnly = true)
     public Question findQuestion(long questionId) {
         return findVerifiedQuestion(questionId);
     }
 
-    public Page<Question> findQuestions(int page, int size) {
-        return questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
+    public Page<Question> findAll(CustomPageRequest<QuestionSortingType> pageRequest) {
+        switch (pageRequest.getSortType()) {
+            case NEWEST:
+                return questionRepository.findAll(pageRequest.of());
+            case ANSWERED:
+                return questionRepository.findAllByAnswersExistQuestion(pageRequest.of());
+            case UNANSWERED:
+                return questionRepository.findAllByAnswersEmpty(pageRequest.of());
+            default:
+                throw new RuntimeException("Unexpected exception occurred.");
+        }
+    }
+
+    public Page<Question> search(String query, QuestionPageRequest pageRequest) {
+        switch (pageRequest.getSortType()) {
+            case NEWEST:
+                return questionRepository.findAllByTitleOrContentLike(query, pageRequest.of());
+            case ANSWERED:
+                return questionRepository.findAllByAnswersIsExistAndTitleOrContentLike(query, pageRequest.of());
+            case UNANSWERED:
+                return questionRepository.findAllByAnswersIsEmptyAndTitleOrContentLike(query, pageRequest.of());
+            default:
+                throw new RuntimeException("Unexpected exception occurred.");
+        }
+    }
+
+//    public Page<Question> findQuestions(int page, int size) {
+//        return questionRepository.findAll(PageRequest.of(page, size, Sort.by("questionId").descending()));
+//    }
+//
+//    public Page<Question> findUnansweredQuestions(int page, int size) {
+//        return questionRepository.findAllByNoAnswerQuestion(PageRequest.of(page, size, Sort.by("questionId").descending()));
+//    }
+//
+//    public Page<Question> findAnsweredQuestions(int page, int size) {
+//        return questionRepository.findAllByAnswerExistQuestion(PageRequest.of(page, size, Sort.by("questionId").descending()));
+//    }
+//
+//    @Transactional
+//    public int viewCountUp(Long questionId) {
+//        return questionRepository.updateView(questionId);
+//    }
+    //this. 생략
+
+    @Transactional
+    public void viewCountUp(Long questionId) {
+        Question question = findQuestion(questionId);
+        question.viewCount(question);
     }
 
     public void deleteQuestion(long questionId) {

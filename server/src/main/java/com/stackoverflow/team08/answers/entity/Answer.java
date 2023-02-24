@@ -1,6 +1,6 @@
 package com.stackoverflow.team08.answers.entity;
 
-import com.stackoverflow.team08.answers.audit.Auditable;
+import com.stackoverflow.team08.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

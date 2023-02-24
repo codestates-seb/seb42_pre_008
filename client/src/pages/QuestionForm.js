@@ -1,7 +1,6 @@
 import NavOnLogin from "../component/navNfooter/NavOnLogin";
 import Footer from "../component/navNfooter/Footer";
 import styled from "styled-components";
-import TextEditor from "../component/TextEditor";
 import useFetch from "../util/useFetch";
 import React, { useEffect, useState } from "react";
 import { Editor } from "@toast-ui/react-editor";
@@ -361,20 +360,12 @@ const QuestionForm = () => {
     const handleTitle = (e) => setTitle(e.target.value);
 
     //todo 여기서부터 에디터랑 기싸움중
-    const textRef = React.createRef();
-    // const handleChangeInput = () => {
-    //     setDescriptions(textRef.current.getInstance().getMarkdown()
-    //     )
-    // }
+    const problemRef = React.createRef();
+    const expectationRef = React.createRef();
     const handleProblem = (e) =>
-        setProblem(textRef.current.getInstance().getMarkdown());
+        setProblem(problemRef.current.getInstance().getMarkdown());
     const handleExpectation = (e) =>
-        setExpectation(textRef.current.getInstance().getMarkdown());
-
-    // console.log("이거는??");
-    // console.log(handleProbelem);
-    // console.log("됐아? 됐어? 안됐지?");
-    // console.log("안된거 다알아");
+        setExpectation(expectationRef.current.getInstance().getMarkdown());
 
     const handleTag = (e) => setTagItem(e.target.value);
     const onSubmit = (e) => {
@@ -395,7 +386,7 @@ const QuestionForm = () => {
             headers: { "Content-type": "application/json" },
             body: JSON.stringify(newQuestion),
         })
-            // .then(() => window.location)
+            .then(() => (window.location.href = "http://localhost:3000/"))
             .catch((err) => console.log("Error: ", err));
     };
 
@@ -504,7 +495,7 @@ const QuestionForm = () => {
                                     ["table", "image", "link"],
                                     ["code", "codeblock"],
                                 ]}
-                                ref={textRef}
+                                ref={problemRef}
                                 onChange={handleProblem}
                                 autofocus={false}
                                 hideModeSwitch={true}
@@ -538,16 +529,8 @@ const QuestionForm = () => {
                             happen, and what actually resulted. Minimum 20
                             characters.
                         </FormInfo>
-                        {/* <TextEditor
-                            className={isProblemOnFocus ? "focus" : ""}
-                            onChange={handleExpectation}
-                            focus={expectationFocusHandler}
-                            blur={expectationFocusHandler}
-                            placeholder={
-                                "Click to enter details of your trial and expectation."
-                            }
-                        /> */}
-                        <Editor
+                        <EditorWrapper>
+                            <Editor
                                 initialValue={expectation} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
                                 onFocus={expectationFocusHandler}
                                 onBlur={expectationFocusHandler}
@@ -564,11 +547,12 @@ const QuestionForm = () => {
                                     ["table", "image", "link"],
                                     ["code", "codeblock"],
                                 ]}
-                                ref={textRef}
+                                ref={expectationRef}
                                 onChange={handleExpectation}
                                 autofocus={false}
                                 hideModeSwitch={true}
                             ></Editor>
+                        </EditorWrapper>
                     </Expectation>
                     {isExpectationOnFocus ? (
                         <Helper id="expectationHelper">

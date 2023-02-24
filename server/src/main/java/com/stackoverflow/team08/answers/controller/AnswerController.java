@@ -5,12 +5,13 @@ import com.stackoverflow.team08.answers.dto.AnswerPostDto;
 import com.stackoverflow.team08.answers.dto.AnswerResponseDto;
 import com.stackoverflow.team08.answers.entity.Answer;
 import com.stackoverflow.team08.answers.mapper.AnswerMapper;
+import com.stackoverflow.team08.answers.response.MultiResponseDto;
 import com.stackoverflow.team08.answers.service.AnswerService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
@@ -26,20 +27,21 @@ public class AnswerController {
     }
 
     @PostMapping
-    public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
+    public ResponseEntity postAnswer(@RequestBody AnswerPostDto answerPostDto) {
         System.out.println("# POST Answer!");
-        Answer response = mapper.answerPostDtoToAnswer(answerPostDto);
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        Answer response = answerService.createAnswer(mapper.answerPostDtoToAnswer(answerPostDto));
+
+        return new ResponseEntity<>(mapper.answerToAnswerResponseDto(response), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{answer-id}")
     public ResponseEntity patchAnswer(@PathVariable("answer-id") long answerId,
-                                      @Valid @RequestBody AnswerPatchDto answerPatchDto) {
+                                      @RequestBody AnswerPatchDto answerPatchDto) {
         System.out.println("# PATCH Answer!");
         answerPatchDto.setAnswerId(answerId);
 
-        Answer response = answerService.updateAnswer(answerId);
+        Answer response = answerService.updateAnswer(mapper.answerPatchDtoToAnswer(answerPatchDto));
 
         return new ResponseEntity<>(mapper.answerToAnswerResponseDto(response), HttpStatus.OK);
     }
@@ -53,17 +55,18 @@ public class AnswerController {
     }
 
     @GetMapping
-    public RequestBody getAnswers() {
+    public ResponseEntity getAnswers(@Positive @RequestParam int page,
+                                     @Positive @RequestParam int size) {
         System.out.println("# GET Answers!");
 
-        List<Answer> answers = answerService.findAnswers();
-        List<AnswerResponseDto> response = mapper.answerToAnswerResponseDto(answers);
+        Page<Answer> pageAnswers = answerService.findAnswers(page - 1, size);
+        List<Answer> answers = pageAnswers.getContent();
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.answerToAnswerResponseDtos(answers), pageAnswers), HttpStatus.OK);
     }
 
     @DeleteMapping("/{answer-id}")
-    public RequestBody deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
+    public ResponseEntity deleteAnswer(@PathVariable("answer-id") @Positive long answerId) {
         System.out.println("# DELETE Answer!");
         answerService.deleteAnswer(answerId);
 

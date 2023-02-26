@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import useFetch from "../util/useFetch";
+import { useNavigate } from "react-router-dom";
 
 const QuestionForm = () => {
+    const navigate = useNavigate();
+
     //! GET DATA
     // eslint-disable-next-line
     const [data, isPending, error] = useFetch(
@@ -66,10 +69,7 @@ const QuestionForm = () => {
     const [problem, setProblem] = useState("");
     const [expectation, setExpectation] = useState("");
     const onDiscard = (e) => {
-        setTitle("");
-        setProblem("");
-        setExpectation("");
-        setTagList([]);
+        navigate("/question-form");
     };
     //TODO summit question 로직
     const problemRef = React.createRef(); //* Editor 관련 로직
@@ -98,7 +98,7 @@ const QuestionForm = () => {
             headers: { "Content-type": "application/json" },
             body: JSON.stringify(newQuestion),
         })
-            .then(() => (window.location.href = "http://localhost:3000/"))
+            .then(() => navigate("/"))
             .catch((err) => console.log("Error: ", err));
     };
 
@@ -108,7 +108,7 @@ const QuestionForm = () => {
             <QuestionFormWrapper>
                 <Cover>
                     <Head>Ask a public question</Head>
-                    <Robot src="robot.png"></Robot>
+                    <Robot src="image/robot.png"></Robot>
                 </Cover>
                 <Cover>
                     {/*!!!!!! 좋은 질문하는 방법에 관한 하늘색 텍스트 박스 !!!!!!*/}
@@ -156,6 +156,7 @@ const QuestionForm = () => {
                             another person.
                         </FormInfo>
                         <FormInput
+                            value={title}
                             id="titleInput"
                             onChange={handleTitle}
                             onFocus={titleFocusHandler}
@@ -168,7 +169,7 @@ const QuestionForm = () => {
                         <Helper>
                             <HelperHead>Writing a good title</HelperHead>
                             <HelperInfo>
-                                <Pen src="pen.png"></Pen>
+                                <Pen src="image/pen.png"></Pen>
                                 <HelperContent>
                                     <p>
                                         Your title should summarize the problem.
@@ -224,7 +225,7 @@ const QuestionForm = () => {
                         <Helper id="problemHelper">
                             <HelperHead>Introduce the problem</HelperHead>
                             <HelperInfo>
-                                <Pen src="pen.png"></Pen>
+                                <Pen src="image/pen.png"></Pen>
                                 <HelperContent>
                                     <p>
                                         Explain how you encountered the problem
@@ -279,7 +280,7 @@ const QuestionForm = () => {
                         <Helper id="expectationHelper">
                             <HelperHead>Expand on the problem</HelperHead>
                             <HelperInfo>
-                                <Pen src="pen.png"></Pen>
+                                <Pen src="image/pen.png"></Pen>
                                 <HelperContent>
                                     <p>
                                         Show what you’ve tried, tell us what
@@ -349,7 +350,7 @@ const QuestionForm = () => {
                         <Helper id="tagHelper">
                             <HelperHead>Adding tags</HelperHead>
                             <HelperInfo>
-                                <Pen src="pen.png"></Pen>
+                                <Pen src="image/pen.png"></Pen>
                                 <HelperContent>
                                     <p>
                                         Tags help ensure that your question will

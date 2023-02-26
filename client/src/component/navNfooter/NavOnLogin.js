@@ -17,7 +17,7 @@ const NavOnLogin = () => {
                 <Menu>Questions</Menu>
             </Link>
             <SearchBox>
-                {/*!!!!!! 검색기능 및 onFocus 효과 구현 필요 !!!!!!*/}
+                {/*!!!!!! 검색기능 구현 필요 !!!!!!*/}
                 <None>
                     <GrSearch id="magnifyingGlass" />
                 </None>
@@ -98,6 +98,10 @@ export const SearchBox = styled.div`
         color: #838c95;
         font-size: 20.8px;
     }
+    &:focus-within {
+        outline: 1px solid #58a4de;
+        box-shadow: 0px 0px 10px #ddeaf7;
+    }
 `;
 export const Input = styled.input`
     display: flex;
@@ -107,6 +111,7 @@ export const Input = styled.input`
     height: 4vh;
     padding: 0 1vw;
     border: none;
+    outline: none;
     font-size: 13.5px;
 `;
 export const Logo = styled.img`

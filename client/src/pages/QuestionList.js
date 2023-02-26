@@ -8,8 +8,11 @@ const QuestionList = () => {
     //! GET DATA
     // eslint-disable-next-line
     const [questions, isPending, error] = useFetch(
-        "http://localhost:3001/questions"
+        "http://localhost:3003/questions"
     );
+    // const [questions, isPending, error] = useFetch(
+    //     "http://localhost:3001/questions"
+    // );
 
     //! 기능 구현
 
@@ -60,13 +63,16 @@ const QuestionList = () => {
                                             <Shorter>
                                                 <span
                                                     className={
-                                                        question.answers > 0
+                                                        question.answers
+                                                            .length > 0
                                                             ? "answered"
                                                             : ""
                                                     }
                                                 >
-                                                    {question.answers} answer
-                                                    {question.answers !== 1
+                                                    {question.answers.length}{" "}
+                                                    answer
+                                                    {question.answers.length !==
+                                                    1
                                                         ? "s"
                                                         : ""}
                                                 </span>
@@ -76,7 +82,7 @@ const QuestionList = () => {
                                             </Shorter>
                                         </Left>
                                         <Right>
-                                            <QuestionTitle>
+                                            <QuestionTitle href={`/question-detail/${question.id}`}>
                                                 {question.title}
                                             </QuestionTitle>
                                             <QuestionContent>
@@ -200,13 +206,17 @@ export const QuestionUnit = styled.section`
     padding: 1vh 0 2vh 0;
     border-bottom: 0.7px solid #d2d2d2;
 `;
-export const QuestionTitle = styled.p`
+export const QuestionTitle = styled.a`
     display: flex;
     align-items: flex-start;
     margin-bottom: 0.5vh;
     color: #0074cc;
     width: 700px;
     font-size: 1.1rem;
+    text-decoration: none;
+    :hover {
+        color: #0A95FF;
+    }
 `;
 export const QuestionContent = styled.div`
     display: flex;

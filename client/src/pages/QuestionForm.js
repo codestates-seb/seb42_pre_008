@@ -11,8 +11,11 @@ const QuestionForm = () => {
     //! GET DATA
     // eslint-disable-next-line
     const [data, isPending, error] = useFetch(
-        "http://localhost:3001/questions"
+        "http://localhost:3003/questions"
     );
+    // const [data, isPending, error] = useFetch(
+    //     "http://localhost:3001/questions"
+    // );
 
     //! 기능 구현
     //TODO input onFocus/onBlur 시 Helper msg popup 및 box shadow 효과주는 로직
@@ -93,7 +96,8 @@ const QuestionForm = () => {
             votes: 0,
             answers: 0,
         };
-        fetch("http://localhost:3001/questions/", {
+        fetch("http://localhost:3003/questions/", {
+        // fetch("http://localhost:3001/questions/", {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify(newQuestion),

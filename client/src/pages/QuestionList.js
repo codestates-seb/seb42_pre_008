@@ -24,7 +24,7 @@ const QuestionList = ({ login }) => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const offset = (page - 1) * limit;
-//
+
     //! 페이지 본문
     return (
         <>

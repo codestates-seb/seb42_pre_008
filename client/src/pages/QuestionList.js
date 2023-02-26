@@ -24,6 +24,27 @@ const QuestionList = ({ login }) => {
     const [limit, setLimit] = useState(15);
     const [page, setPage] = useState(1);
     const offset = (page - 1) * limit;
+    //* 질문 게시 이후 시간 구하기
+    const detailDate = (a) => {
+        const milliSeconds = new Date() - a;
+        const seconds = milliSeconds / 1000;
+        if (seconds < 60) return `just now`;
+        const minutes = seconds / 60;
+        if (minutes < 60) return `${Math.floor(minutes)} mins ago`;
+        const hours = minutes / 60;
+        if (hours < 24) return `${Math.floor(hours)} hours ago`;
+        const days = hours / 24;
+        if (days < 7) return `${Math.floor(days)} days ago`;
+        const weeks = days / 7;
+        if (weeks < 5) return `${Math.floor(weeks)} weeks ago`;
+        const months = days / 30;
+        if (months < 12) return `${Math.floor(months)} months ago`;
+        const years = days / 365;
+        return `${Math.floor(years)} years ago`;
+    };
+    //* filter
+    const [filtered, setQuestions] = useState(questions)
+
 
     //! 페이지 본문
     return (
@@ -94,11 +115,11 @@ const QuestionList = ({ login }) => {
                                                                 : ""
                                                         }`}
                                                     >
-                                                        {
-                                                            question.adoptChosen
-                                                                ? <strong>⎷ </strong>
-                                                                : ""
-                                                        }
+                                                        {question.adoptChosen ? (
+                                                            <strong>⎷ </strong>
+                                                        ) : (
+                                                            ""
+                                                        )}
                                                         {
                                                             question.answers
                                                                 .length
@@ -138,8 +159,9 @@ const QuestionList = ({ login }) => {
                                                         <span>
                                                             {question.author}
                                                         </span>
-                                                        {/*!!!!!! 얼마전 입력한 질문인지 보여주는 자리 : 현재시간 - 질문시간 차 구하는 로직 구현 필요 !!!!!!*/}
-                                                        asked 1 min ago
+                                                        {/*!!!!!! 얼마전 입력한 질문인지 보여주는 자리 : 현재시간 - 질문시간 차 !!!!!!*/}
+                                                        asked{" "}
+                                                        {detailDate(new Date(question.createdAt))}
                                                     </Author>
                                                 </QuestionInfo>
                                             </Right>

@@ -6,7 +6,7 @@ import useFetch from "../util/useFetch";
 import { useNavigate } from "react-router-dom";
 import Loading from "../component/Loading";
 
-const QuestionForm = () => {
+const QuestionForm = ({ userInfo }) => {
     const navigate = useNavigate();
 
     //! GET DATA
@@ -91,8 +91,8 @@ const QuestionForm = () => {
             problem,
             expectation,
             tagList,
-            author: "kkte02",
-            createdAt: "date",
+            author: userInfo.name,
+            createdAt: new Date(),
             view: 0,
             votes: 0,
             answers: 0,

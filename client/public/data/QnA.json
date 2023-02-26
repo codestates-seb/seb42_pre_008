@@ -1,157 +1,80 @@
 {
-    "questions": [
-      {
-        "id": 1,
-        "title": "Testing transforms in Foundry: How to quickly select some rows from the preview of an existing dataframe as example data?",
-        "problem": "Having developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortable",
-        "expectation": "",
-        "tagList": [
-          "palantir-foundry"
-        ],
-        "author": "kkte02",
-        "createdAt": "date",
-        "view": 3,
-        "votes": 0,
-        "answers": [
-            {
-              "id": 1,
-              "author": "kkte02",
-              "update": "2023. 2. 22",
-              "votes": 3,
-              "content": "자바스크립트의 일반적인 함수는 자바스크립트 엔진의 콜스택에서 처리되지만, 타이머나 fetch같이 비동기적으로 처리되는 함수는 자바스크립트엔진이 아니라 실행환경인 브라우저나 node.js가 담당합니다. 만약에 setTimeout함수를 실행하면 해당 함수는 자바스크립트의 콜스택으로 들어가지만 setTimeout 내에 작성한 콜백함수는 ",
-              "adopt": false
-            }
-          ],
-        "adoptChosen" : false
-      },
-      {
-        "id": 2,
-        "title": "JsonCpp: Treat strings as numbers",
-        "problem": "I have floating-point numbers stored as strings. During serialization to JSON, I want to convert those strings to numbers. For example, the strings a='1.001' and b='0.1' must be ",
-        "expectation": "",
-        "tagList": [
-          "c++",
-          "json",
-          "jsoncpp"
-        ],
-        "author": "Eom0j",
-        "createdAt": "date",
-        "view": 7,
-        "votes": 0,
-        "answers": [
-            {
-              "id": 1,
-              "author": "kkte02",
-              "update": "2023. 2. 22",
-              "votes": 3,
-              "content": "자바스크립트의 일반적인 함수는 자바스크립트 엔진의 콜스택에서 처리되지만, 타이머나 fetch같이 비동기적으로 처리되는 함수는 자바스크립트엔진이 아니라 실행환경인 브라우저나 node.js가 담당합니다. 만약에 setTimeout함수를 실행하면 해당 함수는 자바스크립트의 콜스택으로 들어가지만 setTimeout 내에 작성한 콜백함수는 ",
-              "adopt": false
-            },
-            {
-              "id": 3,
-              "author": "Eom0j",
-              "update": "2023. 2. 22",
-              "votes": 3,
-              "content": "자바스크립트의 일반적인 함수는 자바스크립트 엔진의 콜스택에서 처리되지만, 타이머나 fetch같이 비동기적으로 처리되는 함수는 자바스크립트엔진이 아니라 실행환경인 브라우저나 node.js가 담당합니다. 만약에 setTimeout함수를 실행하면 해당 함수는 자바스크립트의 콜스택으로 들어가지만 setTimeout 내에 작성한 콜백함수는 브라우저의 태스크큐에 들어가서 콜스택이 빌 때까지 대기했다가 콜스택이 비면, 태스크 큐에 있던 함수가 콜스택에서 실행되게 됩니다. ",
-              "adopt": true
-            }
-          ],
-          "adoptChosen" : true
-      },
-      {
-        "id": 3,
-        "title": "How i can use custom listview in react-native-google-places-autocomplete?",
-        "problem": "I have two autocompleteinputs but i want them to use same listview to look nicer. The app i am developing looks like lyft in lyft they use two text inputs in destination selection screen. How i ca",
-        "expectation": "",
-        "tagList": [
-          "javascript",
-          "react",
-          "json-server"
-        ],
-        "author": "IKori",
-        "createdAt": "date",
-        "view": 4,
-        "votes": 8,
-        "answers": [
-            {
-              "id": 1,
-              "author": "kkte02",
-              "update": "2023. 2. 22",
-              "votes": 3,
-              "content": "자바스크립트의 일반적인 함수는 자바스크립트 엔진의 콜스택에서 처리되지만, 타이머나 fetch같이 비동기적으로 처리되는 함수는 자바스크립트엔진이 아니라 실행환경인 브라우저나 node.js가 담당합니다. 만약에 setTimeout함수를 실행하면 해당 함수는 자바스크립트의 콜스택으로 들어가지만 setTimeout 내에 작성한 콜백함수는 ",
-              "adopt": false
-            }
-          ]
-          ,
-          "adoptChosen" : false
-      },
-      {
-        "id": 4,
-        "title": "Create type for HOC parent depending on child object's properties",
-        "problem": "I'm making high order component for @expo/vector-icons and trying to define the general type for its props. There are several objects inside module (MaterialCommunityIcons, MaterialIcons",
-        "expectation": "",
-        "tagList": [
-          "javascript",
-          "react",
-          "json-server"
-        ],
-        "author": "myongdol",
-        "createdAt": "date",
-        "view": 526,
-        "votes": 25,
-        "answers": [
-            {
-              "id": 1,
-              "author": "kkte02",
-              "update": "2023. 2. 22",
-              "votes": 3,
-              "content": "자바스크립트의 일반적인 함수는 자바스크립트 엔진의 콜스택에서 처리되지만, 타이머나 fetch같이 비동기적으로 처리되는 함수는 자바스크립트엔진이 아니라 실행환경인 브라우저나 node.js가 담당합니다. 만약에 setTimeout함수를 실행하면 해당 함수는 자바스크립트의 콜스택으로 들어가지만 setTimeout 내에 작성한 콜백함수는 ",
-              "adopt": false
-            },
-            {
-              "id": 3,
-              "author": "Eom0j",
-              "update": "2023. 2. 22",
-              "votes": 3,
-              "content": "자바스크립트의 일반적인 함수는 자바스크립트 엔진의 콜스택에서 처리되지만, 타이머나 fetch같이 비동기적으로 처리되는 함수는 자바스크립트엔진이 아니라 실행환경인 브라우저나 node.js가 담당합니다. 만약에 setTimeout함수를 실행하면 해당 함수는 자바스크립트의 콜스택으로 들어가지만 setTimeout 내에 작성한 콜백함수는 브라우저의 태스크큐에 들어가서 콜스택이 빌 때까지 대기했다가 콜스택이 비면, 태스크 큐에 있던 함수가 콜스택에서 실행되게 됩니다. ",
-              "adopt": true
-            },
-            {
-              "id": 4,
-              "author": "JudiPARK0416",
-              "update": "2023. 2. 23",
-              "votes": 1,
-              "content": "자바스크립트의 일반적인 함수는 자바스크립트 엔진의 콜스택에서 처리되지만, 타이머나 fetch같이 비동기적으로 처리되는 함수는 자바스크립트엔진이 아니라 실행환경인 브라우저나 node.js가 담당합니다. 만약에 setTimeout함수를 실행하면 해당 함수는 자바스크립트의 콜스택으로 들어가지만 setTimeout 내에 작성한 콜백함수는 브라우저의 태스크큐에 들어가서 콜스택이 빌 때까지 대기했다가 콜스택이 비면, 태스크 큐에 있던 함수가 콜스택에서 실행되게 됩니다. ",
-              "adopt": false
-            }
-          ],
-          "adoptChosen" : true
-      },
-      {
-        "id": 5,
-        "title": "npm install command is taking extremely longer time than it should",
-        "problem": "I have clone the code from github and now I am running npm i --legacy-peer-deps to install node modules in it but it is taking too much time also it gives error everytime. What should I do? I have",
-        "expectation": "",
-        "tagList": [
-          "javascript",
-          "react",
-          "json-server"
-        ],
-        "author": "KyungaIM",
-        "createdAt": "date",
-        "view": 10,
-        "votes": 76875,
-        "answers": [
-            {
-              "id": 1,
-              "author": "kkte02",
-              "update": "2023. 2. 22",
-              "votes": 3,
-              "content": "자바스크립트의 일반적인 함수는 자바스크립트 엔진의 콜스택에서 처리되지만, 타이머나 fetch같이 비동기적으로 처리되는 함수는 자바스크립트엔진이 아니라 실행환경인 브라우저나 node.js가 담당합니다. 만약에 setTimeout함수를 실행하면 해당 함수는 자바스크립트의 콜스택으로 들어가지만 setTimeout 내에 작성한 콜백함수는 ",
-              "adopt": false
-            }
-          ],
-          "adoptChosen" : false
-      }
-    ]
-  }
+  "questions": [
+    {
+      "id": 6,
+      "title": "질문 시간을 테스트 해보겠습니다.",
+      "problem": "저는 지금 10시 45분에 이 글을 작성하고 있습니다. \n정말 하기 싫죠?",
+      "expectation": "시도한것은 없고 떡볶이가 먹고싶습니다.",
+      "tagList": [
+        "tteokbokki"
+      ],
+      "author": "kkte02",
+      "createdAt": "2023-02-26T13:46:31.333Z",
+      "view": 0,
+      "votes": 0,
+      "answers": 0
+    },
+    {
+      "id": 7,
+      "title": "Testing transforms in Foundry: How to quickly select some rows from the preview of an existing dataframe as example data?",
+      "problem": "Having developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortable",
+      "expectation": "",
+      "tagList": [
+        "palantirfoundry"
+      ],
+      "author": "kkte02",
+      "createdAt": "2023-02-26T14:10:20.162Z",
+      "view": 0,
+      "votes": 0,
+      "answers": 0
+    },
+    {
+      "id": 8,
+      "title": "JsonCpp: Treat strings as numbers",
+      "problem": "I have floating-point numbers stored as strings. During serialization to JSON, I want to convert those strings to numbers. For example, the strings a='1.001' and b='0.1' must be",
+      "expectation": "",
+      "tagList": [
+        "c",
+        "json",
+        "jsoncpp"
+      ],
+      "author": "kkte02",
+      "createdAt": "2023-02-26T14:11:26.039Z",
+      "view": 0,
+      "votes": 0,
+      "answers": 0
+    },
+    {
+      "id": 9,
+      "title": "How i can use custom listview in react-native-google-places-autocomplete?",
+      "problem": "I have two autocompleteinputs but i want them to use same listview to look nicer. The app i am developing looks like lyft in lyft they use two text inputs in destination selection screen. How i ca",
+      "expectation": "",
+      "tagList": [
+        "javascript",
+        "react",
+        "jsonserver"
+      ],
+      "author": "kkte02",
+      "createdAt": "2023-02-26T14:12:30.763Z",
+      "view": 0,
+      "votes": 0,
+      "answers": 0
+    },
+    {
+      "id": 10,
+      "title": "Create type for HOC parent depending on child object's properties",
+      "problem": "I'm making high order component for @expo/vector-icons and trying to define the general type for its props. There are several objects inside module (MaterialCommunityIcons, MaterialIcons",
+      "expectation": "",
+      "tagList": [
+        "javascript",
+        "date",
+        "Eomj"
+      ],
+      "author": "kkte02",
+      "createdAt": "2023-02-26T14:13:49.787Z",
+      "view": 0,
+      "votes": 0,
+      "answers": 0
+    }
+  ]
+}

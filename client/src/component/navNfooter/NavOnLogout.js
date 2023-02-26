@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
-const NavOnLogout = () => {
+const NavOnLogout = ({login, setLogin}) => {
     //! 페이지 본문
     return (
         <Nav>
@@ -22,8 +22,8 @@ const NavOnLogout = () => {
                 </None>
                 <Input placeholder="Search..."></Input>
             </SearchBox>
-            <Link to="/login">
-                <LoginButton>Log in</LoginButton>
+            <Link to="/">
+                <LoginButton onClick={()=>setLogin(true)}>Log in</LoginButton>
             </Link>
             <Link to="/sign-in">
                 <SignupButton>Sign up</SignupButton>

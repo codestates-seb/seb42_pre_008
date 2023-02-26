@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
 import { Link } from "react-router-dom";
-// import logo from "../../public/image/logo.png"
 
-const NavOnLogin = () => {
+const NavOnLogin = ({login, setLogin}) => {
     //! 페이지 본문
     return (
         <Nav>
@@ -27,7 +26,7 @@ const NavOnLogin = () => {
                 <Menu id="mypage">My Page</Menu>
             </Link>
             <Link to="/login">
-                <LoginButton>Log out</LoginButton>
+                <LoginButton onClick={()=>setLogin(false)}>Log out</LoginButton>
             </Link>
         </Nav>
     );

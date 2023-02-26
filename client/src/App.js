@@ -64,12 +64,15 @@ function App() {
     return (
         <>
             <GlobalStyle />
-            {/* <NavOnLogout/> */}
-            <NavOnLogin />
+            {login ? (
+                <NavOnLogin login={login} setLogin={setLogin} />
+            ) : (
+                <NavOnLogout login={login} setLogin={setLogin} />
+            )}
             {/* <BrowserRouter> */}
             <Suspense>
                 <Routes>
-                    <Route exact path="/" element={<QuestionList />} />
+                    <Route exact path="/" element={<QuestionList login={login}/>} />
                     <Route path="/question-form" element={<QuestionForm />} />
                     <Route
                         path="/question-detail"

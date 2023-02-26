@@ -32,11 +32,19 @@ const QuestionList = ({ login }) => {
                                     <InsideHeaderUpper>
                                         <Title>All Questions</Title>
                                         {/*!!!!!! 질문하기 버튼 자리 : 로그인 상태에 따라 QuestionForm, 또는 Login 화면으로 안내하는 기능구현 필요 !!!!!!*/}
-                                        <Link to="/question-form">
-                                            <AskQuestionButton>
-                                                Ask Question
-                                            </AskQuestionButton>
-                                        </Link>
+                                        {login ? (
+                                            <Link to="/question-form">
+                                                <AskQuestionButton>
+                                                    Ask Question
+                                                </AskQuestionButton>
+                                            </Link>
+                                        ) : (
+                                            <Link to="/login">
+                                                <AskQuestionButton>
+                                                    Ask Question
+                                                </AskQuestionButton>
+                                            </Link>
+                                        )}
                                     </InsideHeaderUpper>
                                     <InsideHeaderLower>
                                         <QuestionListCount>

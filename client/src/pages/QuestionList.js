@@ -1,21 +1,29 @@
-import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import Ads from "../component/questionList/Ads";
 import Sidebar from "../component/questionList/Sidebar";
 import useFetch from "../util/useFetch";
 import Loading from "../component/Loading";
+import Pagination from "../component/pagignation";
 
 const QuestionList = ({ login }) => {
     //! GET DATA
     // eslint-disable-next-line
+    //* useFetch -> Question and Answer togeter
     const [questions, isPending, error] = useFetch(
         "http://localhost:3003/questions"
     );
+    //* useFetch -> Question only
     // const [questions, isPending, error] = useFetch(
     //     "http://localhost:3001/questions"
     // );
 
     //! 기능 구현
+    //* pagination
+    const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
+    const offset = (page - 1) * limit;
 
     //! 페이지 본문
     return (
@@ -65,64 +73,85 @@ const QuestionList = ({ login }) => {
                                     </InsideHeaderLower>
                                 </QuestionListHeader>
                                 {/*!!!!!! 데이터 맵핑해서 질문 리스트 꾸리는 자리 : 질문제목 클릭시 QuestionDetail 화면으로 안내 !!!!!!*/}
-                                {questions.map((question) => (
-                                    <QuestionUnit key={question.id}>
-                                        <Left>
-                                            <Shorter>
-                                                {question.votes} votes
-                                            </Shorter>
-                                            <Shorter>
-                                                <span
-                                                    className={
-                                                        question.answers
-                                                            .length > 0
-                                                            ? "answered"
-                                                            : ""
-                                                    }
-                                                >
-                                                    {question.answers.length}{" "}
-                                                    answer
-                                                    {question.answers.length !==
-                                                    1
-                                                        ? "s"
-                                                        : ""}
-                                                </span>
-                                            </Shorter>
-                                            <Shorter>
-                                                {question.view} views
-                                            </Shorter>
-                                        </Left>
-                                        <Right>
-                                            <QuestionTitle
-                                                href={`/question-detail/${question.id}`}
-                                            >
-                                                {question.title}
-                                            </QuestionTitle>
-                                            <QuestionContent>
-                                                {question.problem}
-                                            </QuestionContent>
-                                            <QuestionInfo>
-                                                <Tags>
-                                                    {question.tagList.map(
-                                                        (t, i) => (
-                                                            <Tag key={i}>
-                                                                {t}
-                                                            </Tag>
-                                                        )
-                                                    )}
-                                                </Tags>
-                                                <Author>
-                                                    <Img src="image/icon.png" />
-                                                    <span>
-                                                        {question.author}
+                                {questions
+                                    .slice(offset, offset + limit)
+                                    .map((question) => (
+                                        <QuestionUnit key={question.id}>
+                                            <Left>
+                                                <Shorter>
+                                                    {question.votes} votes
+                                                </Shorter>
+                                                <Shorter>
+                                                    <span
+                                                        className={`${
+                                                            question.answers
+                                                                .length > 0
+                                                                ? "answered"
+                                                                : ""
+                                                        } ${
+                                                            question.adoptChosen
+                                                                ? "adopted"
+                                                                : ""
+                                                        }`}
+                                                    >
+                                                        {
+                                                            question.adoptChosen
+                                                                ? '✓ '
+                                                                : ""
+                                                        }
+                                                        {
+                                                            question.answers
+                                                                .length
+                                                        }{" "}
+                                                        answer
+                                                        {question.answers
+                                                            .length !== 1
+                                                            ? "s"
+                                                            : ""}
                                                     </span>
-                                                    {/*!!!!!! 얼마전 입력한 질문인지 보여주는 자리 : 현재시간 - 질문시간 차 구하는 로직 구현 필요 !!!!!!*/}
-                                                    asked 1 min ago
-                                                </Author>
-                                            </QuestionInfo>
-                                        </Right>
-                                    </QuestionUnit>
-                                ))}
+                                                </Shorter>
+                                                <Shorter>
+                                                    {question.view} views
+                                                </Shorter>
+                                            </Left>
+                                            <Right>
+                                                <QuestionTitle
+                                                    href={`/question-detail/${question.id}`}
+                                                >
+                                                    {question.title}
+                                                </QuestionTitle>
+                                                <QuestionContent>
+                                                    {question.problem}
+                                                </QuestionContent>
+                                                <QuestionInfo>
+                                                    <Tags>
+                                                        {question.tagList.map(
+                                                            (t, i) => (
+                                                                <Tag key={i}>
+                                                                    {t}
+                                                                </Tag>
+                                                            )
+                                                        )}
+                                                    </Tags>
+                                                    <Author>
+                                                        <Img src="image/icon.png" />
+                                                        <span>
+                                                            {question.author}
+                                                        </span>
+                                                        {/*!!!!!! 얼마전 입력한 질문인지 보여주는 자리 : 현재시간 - 질문시간 차 구하는 로직 구현 필요 !!!!!!*/}
+                                                        asked 1 min ago
+                                                    </Author>
+                                                </QuestionInfo>
+                                            </Right>
+                                        </QuestionUnit>
+                                    ))}
+                                <Pagination
+                                    limit={limit}
+                                    setPage={setPage}
+                                    total={questions.length}
+                                    page={page}
+                                    setLimit={setLimit}
+                                />
                             </QuestionContainer>
                             <Ads />
                         </QuestionListContainer>
@@ -216,6 +245,7 @@ export const QuestionUnit = styled.section`
     align-items: space-evenly;
     justify-content: space-evenly;
     width: 900px;
+    height: 120px;
     padding: 1vh 0 2vh 0;
     border-bottom: 0.7px solid #d2d2d2;
 `;
@@ -290,6 +320,11 @@ export const Shorter = styled.div`
             color: #2f6f44;
             padding: 0.2vh 0.5vh;
             border-radius: 0.3vh;
+            &.adopted {
+                background-color: #2f6f44;
+                border: 1px solid #2f6f44;
+                color: white;
+            }
         }
     }
 `;

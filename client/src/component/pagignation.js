@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
-//? Props = 전체 데이터 갯수, 보여줄 페이지 수, 현재 페이지, 페이지 상태변경 함수, 보여줄 페이지 상태변경 함수
-function Pagenation({ total, limit, page, setPage, setLimit }) {
+const Pagination = ({ total, limit, page, setPage, setLimit }) => {
     const numPages = Math.ceil(total / limit);
     return (
-        <PagenationLayout>
+        <PaginationLayout>
             <Nav>
                 <NumBtn onClick={() => setPage(page - 1)} disabled={page === 1}>
                     &lt;
@@ -36,18 +35,18 @@ function Pagenation({ total, limit, page, setPage, setLimit }) {
                         setLimit(Number(value))
                     }
                 >
+                    <option value="1">1</option>
+                    <option value="3">3</option>
                     <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
                 </select>
             </PerPage>
-        </PagenationLayout>
+        </PaginationLayout>
     );
-}
+};
 
-export default Pagenation;
+export default Pagination;
 
-const PagenationLayout = styled.article`
+const PaginationLayout = styled.article`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -100,22 +99,3 @@ const PerPage = styled.label`
         font-size: var(--font-size-md);
     }
 `;
-
-//? pagination 사용하는 곳에서
-// const [limit, setLimit] = useState(10);
-// const [page, setPage] = useState(1);
-// const offset = (page - 1) * limit;
-// const total = data.length;
-// return           data.slice(offset, offset + limit).map...
-
-//? props 로 넘겨줄때
-// eslint-disable-next-line
-{
-    /* <Pagenation
-        limit={limit}
-        setPage={setPage}
-        total={total}
-        page={page}
-        setLimit={setLimit}
-      /> */
-}

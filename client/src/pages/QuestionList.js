@@ -53,7 +53,7 @@ const QuestionList = () => {
                                         </FilterOptions>
                                     </InsideHeaderLower>
                                 </QuestionListHeader>
-                                {/*!!!!!! 데이터 맵핑해서 질문 리스트 꾸리는 자리 : 질문을 클릭해서 QuestionDetail 화면으로 안내하는 기능구현 필요 !!!!!!*/}
+                                {/*!!!!!! 데이터 맵핑해서 질문 리스트 꾸리는 자리 : 질문제목 클릭시 QuestionDetail 화면으로 안내 !!!!!!*/}
                                 {questions.map((question) => (
                                     <QuestionUnit key={question.id}>
                                         <Left>
@@ -82,7 +82,9 @@ const QuestionList = () => {
                                             </Shorter>
                                         </Left>
                                         <Right>
-                                            <QuestionTitle href={`/question-detail/${question.id}`}>
+                                            <QuestionTitle
+                                                href={`/question-detail/${question.id}`}
+                                            >
                                                 {question.title}
                                             </QuestionTitle>
                                             <QuestionContent>
@@ -215,7 +217,7 @@ export const QuestionTitle = styled.a`
     font-size: 1.1rem;
     text-decoration: none;
     :hover {
-        color: #0A95FF;
+        color: #0a95ff;
     }
 `;
 export const QuestionContent = styled.div`

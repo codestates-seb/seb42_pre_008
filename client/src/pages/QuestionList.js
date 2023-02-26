@@ -93,7 +93,7 @@ const QuestionList = () => {
                                                     )}
                                                 </Tags>
                                                 <Author>
-                                                    <Img src="icon.png" />
+                                                    <Img src="image/icon.png" />
                                                     <span>
                                                         {question.author}
                                                     </span>

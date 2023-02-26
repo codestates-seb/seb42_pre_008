@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
 import { Link } from "react-router-dom";
+// import logo from "../../public/image/logo.png"
 
 const NavOnLogin = () => {
     //! 페이지 본문
     return (
         <Nav>
             <Link to="/">
-                <Logo src="logo.png" />
+                <Logo src="image/logo.png" alt="logo"/>
             </Link>
             <Link to="/">
                 <Menu>Home</Menu>

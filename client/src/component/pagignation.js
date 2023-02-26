@@ -101,19 +101,21 @@ const PerPage = styled.label`
     }
 `;
 
-//? pagination 사용하는 곳에서 
+//? pagination 사용하는 곳에서
 // const [limit, setLimit] = useState(10);
 // const [page, setPage] = useState(1);
 // const offset = (page - 1) * limit;
 // const total = data.length;
 // return           data.slice(offset, offset + limit).map...
 
-//? props 로 넘겨줄때 
+//? props 로 넘겨줄때
 // eslint-disable-next-line
-{/* <Pagenation
+{
+    /* <Pagenation
         limit={limit}
         setPage={setPage}
         total={total}
         page={page}
         setLimit={setLimit}
-      /> */}
+      /> */
+}

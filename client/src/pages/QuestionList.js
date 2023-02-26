@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Ads from "../component/questionList/Ads";
@@ -21,7 +21,7 @@ const QuestionList = ({ login }) => {
 
     //! 기능 구현
     //* pagination
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(15);
     const [page, setPage] = useState(1);
     const offset = (page - 1) * limit;
 
@@ -96,7 +96,7 @@ const QuestionList = ({ login }) => {
                                                     >
                                                         {
                                                             question.adoptChosen
-                                                                ? '✓ '
+                                                                ? <strong>⎷ </strong>
                                                                 : ""
                                                         }
                                                         {
@@ -245,7 +245,7 @@ export const QuestionUnit = styled.section`
     align-items: space-evenly;
     justify-content: space-evenly;
     width: 900px;
-    height: 120px;
+    /* height: 120px; */
     padding: 1vh 0 2vh 0;
     border-bottom: 0.7px solid #d2d2d2;
 `;

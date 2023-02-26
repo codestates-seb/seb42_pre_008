@@ -4,42 +4,52 @@ const Pagination = ({ total, limit, page, setPage, setLimit }) => {
     const numPages = Math.ceil(total / limit);
     return (
         <PaginationLayout>
-            <Nav>
-                <NumBtn onClick={() => setPage(page - 1)} disabled={page === 1}>
-                    &lt;
-                </NumBtn>
+            <Block>
+                <Button onClick={() => setPage(page - 1)} disabled={page === 1}>
+                    prev
+                </Button>
                 {Array(numPages)
                     .fill()
                     .map((_, i) => (
-                        <NumBtn
+                        <Button
                             key={i + 1}
                             onClick={() => setPage(i + 1)}
-                            aria-current={page === i + 1 ? "page" : null}
+                            className={page === i + 1 ? "current" : null}
                         >
                             {i + 1}
-                        </NumBtn>
+                        </Button>
                     ))}
-                <NumBtn
+                <Button
                     onClick={() => setPage(page + 1)}
                     disabled={page === numPages}
                 >
-                    Next
-                </NumBtn>
-            </Nav>
-            <PerPage>
-                per page &nbsp;
-                <select
-                    type="number"
-                    value={limit}
-                    onChange={({ target: { value } }) =>
-                        setLimit(Number(value))
-                    }
+                    next
+                </Button>
+            </Block>
+            <Block>
+                <Button
+                    value="3"
+                    className={limit === 3 ? "current" : null}
+                    onClick={(e) => setLimit(Number(e.target.value))}
                 >
-                    <option value="1">1</option>
-                    <option value="3">3</option>
-                    <option value="5">5</option>
-                </select>
-            </PerPage>
+                    3
+                </Button>
+                <Button
+                    value="5"
+                    className={limit === 5 ? "current" : null}
+                    onClick={(e) => setLimit(Number(e.target.value))}
+                >
+                    5
+                </Button>
+                <Button
+                    value="15"
+                    className={limit === 15 ? "current" : null}
+                    onClick={(e) => setLimit(Number(e.target.value))}
+                >
+                    15
+                </Button>
+                <span></span>per page
+            </Block>
         </PaginationLayout>
     );
 };
@@ -51,51 +61,36 @@ const PaginationLayout = styled.article`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-top: 50px;
+    width: 900px;
 `;
-const Nav = styled.nav`
+const Block = styled.span`
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 4px;
-    margin: 16px;
+    margin: 30px;
 `;
-const NumBtn = styled.button`
-    border: 1px solid var(--line-003);
+const Button = styled.button`
+    padding: 3px 6px;
+    font-size: 15px;
+    background: white;
+    border: 1px solid #d5d9db;
     border-radius: 3px;
-    padding: 4px 10px;
-    margin: 0;
-    color: var(--black-003);
-    font-size: var(--font-size-md);
-    background: none;
-
     &:hover {
         cursor: pointer;
-        background: var(--black-005);
+        background: #d7d9dc;
+        color: black;
+        border: 1px solid #c1c5ca;
     }
-
     &[disabled] {
         cursor: revert;
         transform: revert;
     }
-
-    &[aria-current] {
-        font-weight: bold;
+    &.current {
         color: white;
-        background-color: var(--main-002);
-        cursor: revert;
-        transform: revert;
-    }
-`;
-const PerPage = styled.label`
-    color: var(--black-002);
-    font-size: var(--font-size-md);
-    & > select {
-        border: 1px solid var(--line-003);
-        border-radius: 3px;
-        padding: 4px 10px;
-        margin: 0;
-        color: var(--black-003);
-        font-size: var(--font-size-md);
+        background-color: #f48224;
+        border: 1px solid #f48224;
     }
 `;

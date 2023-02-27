@@ -72,7 +72,7 @@ function App() {
                     <Route exact path="/" element={<QuestionList />} />
                     <Route path="/question-form" element={<QuestionForm />} />
                     <Route
-                        path="/question-detail"
+                        path="/question-detail/:id"
                         element={
                             <QuestionDetail login={login} userInfo={userInfo} />
                         }

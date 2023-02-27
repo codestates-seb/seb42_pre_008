@@ -191,8 +191,6 @@ const QuestionList = () => {
         <>
             {isPending || (
                 <>
-                    <NavOnLogout />
-                    {/* <NavOnLogin /> */}
                     <QuestionListWrapper>
                         <QuestionListContainer>
                             <Sidebar />
@@ -225,6 +223,7 @@ const QuestionList = () => {
                                 </QuestionListHeader>
                                 {questions.map((question) => (
                                     <QuestionUnit key={question.id}>
+                                    <Link to={`/question-detail/${question.id}`} className='link'>
                                         <Left>
                                             <Shorter>
                                                 {question.votes} votes
@@ -273,13 +272,13 @@ const QuestionList = () => {
                                                 </Author>
                                             </QuestionInfo>
                                         </Right>
+                                        </Link>
                                     </QuestionUnit>
                                 ))}
                             </QuestionContainer>
                             <Ads />
                         </QuestionListContainer>
                     </QuestionListWrapper>
-                    <Footer />
                 </>
             )}
         </>

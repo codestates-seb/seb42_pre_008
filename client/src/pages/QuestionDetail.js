@@ -1,4 +1,5 @@
 import { useState,useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Question from './Question';
 import AnswerList  from './AnswerList';
 import styled from "styled-components";
@@ -93,6 +94,9 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
     const [openModal,setOpenModal] = useState(false)
     const [deleteUrl, setDeleteUrl] = useState('')
 
+    /*** useParams***/
+    const { id } = useParams();
+
     /*** Answer delete modal ***/
     const handleDelete = (url) => {
         setOpenModal(true);
@@ -116,7 +120,8 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
         const abortCont = new AbortController();
 
         setTimeout(() => {
-        fetch(process.env.REACT_APP_API_QUESTION+'/'+'1', { signal: abortCont.signal })
+        fetch(`${process.env.REACT_APP_API_QUESTION}/${id}`
+           , { signal: abortCont.signal })
         .then(res => {
             if (!res.ok) { 
                 throw Error('could not fetch the data for that resource');

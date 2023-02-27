@@ -61,7 +61,9 @@ const SidebarItem = styled.div`
         font-size: 0.8rem;
         color: #6A737c;
     }
-
+    :hover{
+        border: 1px solid #bbb;
+    }
 `;
 
 const UserInfoEditHead = styled.h1`
@@ -81,6 +83,9 @@ const TitleInput = styled.input`
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 0.3vh;
+    :first-of-type{
+        width: 300px;
+    }
 `;
 
 const IntroductionTextarea = styled.textarea`
@@ -131,6 +136,8 @@ const ImagePreview = styled.img`
 const NoImg = styled.div`
     width: 150px;
     height: 150px;
+    background-color: #ccc;
+    margin-bottom: 10px;
 `
 
 const SignupButton = styled.button`
@@ -151,12 +158,13 @@ const SignupButton = styled.button`
 
 
 function UserInfoEdit() {
-  const [userInfo, setUserInfo] = useState({ name: "", email: "", bio: "" });
+  const [userInfo, setUserInfo] = useState({ name: "", title: "", intro: "" });
   const [imageFile, setImageFile] = useState(null);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
     console.log(userInfo);
+    console.log(imageFile)
   };
 
   const handleImageUpload = (event) => {
@@ -204,16 +212,16 @@ function UserInfoEdit() {
             <TitleInput
               type="text"
               placeholder="Title"
-              value={userInfo.name}
+              value={userInfo.title}
               onChange={(event) =>
-                setUserInfo({ ...userInfo, name: event.target.value })
+                setUserInfo({ ...userInfo, title: event.target.value })
               }
             />
             <IntroductionTextarea
               placeholder="Introduction"
-              value={userInfo.bio}
+              value={userInfo.intro}
               onChange={(event) =>
-                setUserInfo({ ...userInfo, bio: event.target.value })
+                setUserInfo({ ...userInfo, intro: event.target.value })
               }
             />
             <SignupButton type="submit">Save Changes</SignupButton>

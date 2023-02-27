@@ -65,9 +65,10 @@ const AnswerList = ({login,userInfo,questionAuthor, handleDelete,id}) => {
     const [content,setContent] = useState('')
     const [blank, setBlank] = useState(false)
 
-    /*** 특정 focus로 이동***/
+    /*** 특정 focus로 이동 ***/
     const inputRef = useRef(null);
 
+    /*** Answer fetch ***/
     useEffect(() => {
         const abortCont = new AbortController();
 

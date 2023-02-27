@@ -4,7 +4,7 @@
       "id": 1,
       "title": "Testing transforms in Foundry: How to quickly select some rows from the preview of an existing dataframe as example data?",
       "problem": "Having developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortable",
-      "expectation": "",
+      "expectation": "loped a pipeline transform, I might want to write",
       "tagList": [
         "palantir-foundry"
       ],

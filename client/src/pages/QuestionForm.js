@@ -350,6 +350,7 @@ const QuestionForm = () => {
     // const [descriptions, setDescriptions] = useState("")
     const [problem, setProblem] = useState("");
     const [expectation, setExpectation] = useState("");
+    const [readError, setReadError] = useState("")
     const onDiscard = (e) => {
         setTitle("");
         setProblem("");
@@ -394,29 +395,30 @@ const QuestionForm = () => {
             .catch((err) => console.log("Error: ", err));
     };
 
-    /*** Raed data***/
-    // useEffect(() => {
-    //     const abortCont = new AbortController();
+    /*** Raed data ***/
+    useEffect(() => {
+        const abortCont = new AbortController();
 
-    //     setTimeout(() => {
-    //     fetch(`${process.env.REACT_APP_API_QUESTION}/${id}`
-    //        , { signal: abortCont.signal })
-    //     .then(res => {
-    //         if (!res.ok) { 
-    //             throw Error('could not fetch the data for that resource');
-    //         } 
-    //         return res.json();
-    //     })
-    //     .then(data => {
-    //         setData(data);
-    //         setError(null);
-    //         setVote(data.votes)
-    //         setQuestionAuthor(data.author)
-    //     })
-    //     .catch(err => {
-    //         setError(err.message);
-    //     })
-    //     }, 1000);},[])
+        setTimeout(() => {
+        fetch(`${process.env.REACT_APP_API_QUESTION}/${id}`
+           , { signal: abortCont.signal })
+        .then(res => {
+            if (!res.ok) { 
+                throw Error('could not fetch the data for that resource');
+            } 
+            return res.json();
+        })
+        .then(data => {
+            setTitle(data.title);
+            setProblem(data.problem)
+            setExpectation(data.expectation)
+            setTagList([...data.tagList]);
+            setReadError(null);
+        })
+        .catch(err => {
+            setReadError(err.message);
+        })
+        }, 1000);},[])
 
 
     return (
@@ -475,6 +477,7 @@ const QuestionForm = () => {
                             onFocus={titleFocusHandler}
                             onBlur={titleFocusHandler}
                             placeholder="e.g. Is there an R unction for finding the index of an element in a vector?"
+                            value={title}
                         ></FormInput>
                     </Title>
                     {isTitleOnFocus ? (
@@ -527,6 +530,7 @@ const QuestionForm = () => {
                                 onChange={handleProblem}
                                 autofocus={false}
                                 hideModeSwitch={true}
+                                value={problem}
                             ></Editor>
                         </EditorWrapper>
                     </Problem>
@@ -579,6 +583,7 @@ const QuestionForm = () => {
                                 onChange={handleExpectation}
                                 autofocus={false}
                                 hideModeSwitch={true}
+                                value={expectation}
                             ></Editor>
                         </EditorWrapper>
                     </Expectation>

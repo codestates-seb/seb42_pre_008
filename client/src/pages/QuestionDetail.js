@@ -82,7 +82,7 @@ const ModalWrap = styled.div`
 `
 
 
-const QuestionDetail = ({login,userInfo,endpoint}) => {
+const QuestionDetail = ({login,userInfo}) => {
     /***Question read***/
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
@@ -103,7 +103,8 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
         setDeleteUrl(url)
     }
     const handleConfirm = () => {
-        fetchDelete(deleteUrl,'/question-detail')
+        if (deleteUrl.includes('answer')){fetchDelete(deleteUrl,`/question-detail/${id}`)}
+        else{fetchDelete(deleteUrl,`/`)}
         setOpenModal(false);
     };
     const handleCancel = () => {
@@ -162,11 +163,13 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
                 setVote={setVote}
                 vote={vote}
                 data={data}
+                id={id}
                 />
 
             <AnswerList 
                 login={login} userInfo={userInfo} 
-                questionAuthor={questionAuthor} handleDelete={handleDelete}/>
+                questionAuthor={questionAuthor} handleDelete={handleDelete}
+                id={id}/>
             
         </QuestionDetailWraper>
         </>

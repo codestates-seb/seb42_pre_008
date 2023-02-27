@@ -97,7 +97,7 @@ const QuestionBodyWrap = styled.div`
         }
     }
 `
-const Question = ({login,userInfo,handleDelete,setVote,vote,data}) => {
+const Question = ({login,userInfo,handleDelete,setVote,vote,data,id}) => {
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
     const [checked,setChecked] = useState('still');
@@ -127,7 +127,7 @@ const Question = ({login,userInfo,handleDelete,setVote,vote,data}) => {
     }
     const onHandleQuestion = () =>{
         if(login){
-            window.location.href = '/question-form';
+            window.location.href = `/question-form/${id}`;
         }
         else{
             window.location.href = '/login';

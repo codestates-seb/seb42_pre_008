@@ -85,7 +85,7 @@ const AnswerWrap = styled.article`
     }
 `
 
-const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete}) => {
+const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id}) => {
     /*** vote ***/
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
@@ -130,13 +130,14 @@ const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete}) => {
         fetchPatch(url,
             {
                 "adopt":!el.adopt
-            }
-            ,'/question-detail')
+            },`/question-detail/${id}`)
     }
     const onHandleEdit = () => {
 
         setEdit(!edit)
-        fetchPatch(url,{"content":content , "update": today},)
+        fetchPatch(url,
+            {"content":content , "update": today
+           },`/question-detail/${id}`)
     }
 
     useEffect(() => {

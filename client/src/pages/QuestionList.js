@@ -200,7 +200,9 @@ const QuestionList = () => {
                                         <Title>All Questions</Title>
                                         <Link to="/question-form">
                                             <AskQuestionButton>
+                                            <Link to={`/question-form/0`}>
                                                 Ask Question
+                                            </Link>
                                             </AskQuestionButton>
                                         </Link>
                                     </InsideHeaderUpper>
@@ -223,7 +225,7 @@ const QuestionList = () => {
                                 </QuestionListHeader>
                                 {questions.map((question) => (
                                     <QuestionUnit key={question.id}>
-                                    <Link to={`/question-detail/${question.id}`} className='link'>
+                                    <Link to={`/question-detail/${question.id}`}>
                                         <Left>
                                             <Shorter>
                                                 {question.votes} votes

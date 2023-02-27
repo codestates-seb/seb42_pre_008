@@ -11,7 +11,7 @@
       "author": "kkte02",
       "createdAt": "date",
       "view": 3,
-      "votes": 1,
+      "votes": 2,
       "answers": 2
     },
     {
@@ -27,7 +27,7 @@
       "author": "Eom0j",
       "createdAt": "date",
       "view": 7,
-      "votes": 0,
+      "votes": 2,
       "answers": 0
     },
     {
@@ -76,36 +76,6 @@
       "createdAt": "date",
       "view": 10,
       "votes": 76875,
-      "answers": 0
-    },
-    {
-      "id": 6,
-      "title": "나 이제 진짜 잘 써볼게 ",
-      "problem": "생각해봐, 자러 안가게 생겼어?",
-      "expectation": "",
-      "tagList": [
-        "tired",
-        "exhausted"
-      ],
-      "author": "kkte02",
-      "createdAt": "date",
-      "view": 0,
-      "votes": 0,
-      "answers": 0
-    },
-    {
-      "id": 7,
-      "title": "dsfads",
-      "problem": "dsfdsd**sadasdasㅇ~~sadasdasㅇ~~**",
-      "expectation": "asdasd**ㅇASdasdas*asdasㅇㅁㄴd***",
-      "tagList": [
-        "sdasdas",
-        "assdsa"
-      ],
-      "author": "kkte02",
-      "createdAt": "date",
-      "view": 0,
-      "votes": 0,
       "answers": 0
     }
   ]

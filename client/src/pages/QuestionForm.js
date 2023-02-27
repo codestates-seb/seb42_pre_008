@@ -1,5 +1,6 @@
 import NavOnLogin from "../component/navNfooter/NavOnLogin";
 import Footer from "../component/navNfooter/Footer";
+import { useParams } from 'react-router-dom';
 import styled from "styled-components";
 import useFetch from "../util/useFetch";
 import React, { useEffect, useState } from "react";
@@ -291,6 +292,9 @@ export const EditorWrapper = styled.div`
 `;
 
 const QuestionForm = () => {
+    /*** useParams***/
+    const { id } = useParams();
+
     const [isTitleOnFocus, setIsTitleOnFocus] = useState(false);
     const [isProblemOnFocus, setIsProblemOnFocus] = useState(false);
     const [isExpectationOnFocus, setIsExpectationOnFocus] = useState(false);
@@ -389,6 +393,31 @@ const QuestionForm = () => {
             .then(() => (window.location.href = "http://localhost:3000/"))
             .catch((err) => console.log("Error: ", err));
     };
+
+    /*** Raed data***/
+    // useEffect(() => {
+    //     const abortCont = new AbortController();
+
+    //     setTimeout(() => {
+    //     fetch(`${process.env.REACT_APP_API_QUESTION}/${id}`
+    //        , { signal: abortCont.signal })
+    //     .then(res => {
+    //         if (!res.ok) { 
+    //             throw Error('could not fetch the data for that resource');
+    //         } 
+    //         return res.json();
+    //     })
+    //     .then(data => {
+    //         setData(data);
+    //         setError(null);
+    //         setVote(data.votes)
+    //         setQuestionAuthor(data.author)
+    //     })
+    //     .catch(err => {
+    //         setError(err.message);
+    //     })
+    //     }, 1000);},[])
+
 
     return (
         <>

@@ -70,7 +70,7 @@ function App() {
             <Suspense>
                 <Routes>
                     <Route exact path="/" element={<QuestionList />} />
-                    <Route path="/question-form" element={<QuestionForm />} />
+                    <Route path="/question-form/:id" element={<QuestionForm />} />
                     <Route
                         path="/question-detail/:id"
                         element={

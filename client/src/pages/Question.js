@@ -4,7 +4,8 @@ import { AiFillCaretDown } from "react-icons/ai";
 import { useState ,useEffect } from 'react'
 import { fetchPatch } from '../util/api'
 import Avatar, { genConfig } from 'react-nice-avatar'
-import useFetch from "../util/useFetch";
+import { Viewer } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
 const config = genConfig()
 const QuestionWrap = styled.div`
@@ -101,6 +102,11 @@ const Question = ({login,userInfo,handleDelete,setVote,vote,data,id}) => {
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
     const [checked,setChecked] = useState('still');
+
+    /***toast veiwer style***/
+    const contentStyle = {
+        fontSize: '1.4rem'
+      };
     
 
     const onHandleVoteUp = () => {
@@ -186,7 +192,14 @@ const Question = ({login,userInfo,handleDelete,setVote,vote,data,id}) => {
                             }    
                         </aside>
                         <article>
-                            {data.problem}
+                            {/* {data.problem} */}
+                            <Viewer
+                             initialValue={data.problem}
+                             contentStyle={contentStyle}
+                             />
+                             <Viewer
+                             initialValue={data.expectation}
+                             />
                             <div>{data.tagList.map((el) => <span>{el}</span>)}</div>
                         </article>
                         </>

@@ -60,6 +60,12 @@
       "name": "ruddk",
       "email": "ldd@dddd",
       "password": "aaaa1111"
+    },
+    {
+      "id": 66,
+      "name": "wawa",
+      "email": "kyunga@gmail.com",
+      "password": "aaaa1111"
     }
   ]
 }

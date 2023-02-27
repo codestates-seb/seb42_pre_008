@@ -48,22 +48,11 @@ const QuestionList = ({ login }) => {
         const years = days / 365;
         return `${Math.floor(years)} years ago`;
     };
-    //* filter
+    //* filter 버튼 눌린 상태에 따른 Css 스타일링
     const [filterOption, setFilterOption] = useState("");
-
-    const Newest = () => {
-        setFilterOption();
-    };
-    const Unanswered = () => {
-        setFilterOption(
-            [...questions].filter((question) => !question.answers.length)
-        );
-    };
-    const Answered = () => {
-        setFilterOption(
-            [...questions].filter((question) => question.answers.length)
-        );
-    };
+    const Newest = () => setFilterOption("newest");
+    const Unanswered = () => setFilterOption("unAnswered");
+    const Answered = () => setFilterOption("answered");
 
     //! 페이지 본문
     return (
@@ -102,13 +91,13 @@ const QuestionList = ({ login }) => {
                                         </QuestionListCount>
                                         {/*!!!!!! filter 메뉴박스가 들어갈 자리 : 기능구현 필요 !!!!!!*/}
                                         <FilterOptions>
-                                            <FilterButton onClick={Newest}>
+                                            <FilterButton onClick={Newest} className={filterOption==="newest"?"grey":""}>
                                                 Newest
                                             </FilterButton>
-                                            <FilterButton onClick={Unanswered}>
+                                            <FilterButton onClick={Unanswered} className={filterOption==="unAnswered"?"grey":""}>
                                                 Unanswered
                                             </FilterButton>
-                                            <FilterButton onClick={Answered}>
+                                            <FilterButton onClick={Answered} className={filterOption==="answered"?"grey":""}>
                                                 Answered
                                             </FilterButton>
                                         </FilterOptions>
@@ -291,6 +280,10 @@ export const FilterButton = styled.button`
     color: #6a737c;
     border: 0.5px solid #838c95;
     :hover {
+        background-color: #F8F9F9;
+        color: #3b4044;
+    }
+    &.grey {
         background-color: #e3e6e8;
         color: #3b4044;
     }

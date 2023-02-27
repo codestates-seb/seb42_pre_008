@@ -9,10 +9,10 @@ const NavOnLogout = ({login, setLogin}) => {
             <Link to="/">
                 <Logo src="/image/logo.png" />
             </Link>
-            <Link to="/">
+            <Link to="/" style={{ textDecoration: "none" }}>
                 <Menu>Home</Menu>
             </Link>
-            <Link to="/">
+            <Link to="/" style={{ textDecoration: "none" }}>
                 <Menu>Questions</Menu>
             </Link>
             <SearchBox>
@@ -22,10 +22,10 @@ const NavOnLogout = ({login, setLogin}) => {
                 </None>
                 <Input placeholder="Search..."></Input>
             </SearchBox>
-            <Link to="/">
+            <Link to="/" style={{ textDecoration: "none" }}>
                 <LoginButton onClick={()=>setLogin(true)}>Log in</LoginButton>
             </Link>
-            <Link to="/sign-in">
+            <Link to="/sign-in" style={{ textDecoration: "none" }}>
                 <SignupButton>Sign up</SignupButton>
             </Link>
         </Nav>

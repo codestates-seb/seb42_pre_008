@@ -74,7 +74,9 @@ const QuestionList = ({ login }) => {
                 <>
                     <QuestionListWrapper>
                         <QuestionListContainer>
-                            <Sidebar />
+                            <SidebarContainer>
+                                <Sidebar />
+                            </SidebarContainer>
                             <QuestionContainer>
                                 <QuestionListHeader>
                                     <InsideHeaderUpper>
@@ -230,6 +232,7 @@ export const QuestionListContainer = styled.div`
     flex-direction: row;
     justify-content: center;
     width: 1400px;
+    /* margin-left: 182px; */
 `;
 export const QuestionContainer = styled.main`
     display: flex;
@@ -404,4 +407,13 @@ export const Img = styled.img`
     border-radius: 50%;
     border: 2px solid orange;
     margin: 0 0.5vh 0.6vh 0;
+`;
+export const SidebarContainer = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 230px;
+    min-height: 100%;
 `;

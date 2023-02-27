@@ -3,14 +3,13 @@ import { RiEarthFill } from "react-icons/ri";
 import { TiStarburst } from "react-icons/ti";
 
 export const SidebarWrapper = styled.span`
-    position: sticky;
+    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     width: 182px;
     min-height: 100%;
-    /* border: 1px solid gray; */
 `;
 export const Home = styled.div`
     display: flex;

@@ -133,7 +133,7 @@ const Question = ({login,userInfo,handleDelete,setVote,vote,data,id}) => {
     }
     const onHandleQuestion = () =>{
         if(login){
-            window.location.href = `/question-form/${id}`;
+            window.location.href = `/question-form/0`;
         }
         else{
             window.location.href = '/login';
@@ -170,7 +170,9 @@ const Question = ({login,userInfo,handleDelete,setVote,vote,data,id}) => {
                         <span>{data.createdAt}</span>
                         <span>viewed</span> 
                         <span>{data.view}</span>
-                        <button disabled={ userInfo.name !== data.author }>edit</button>
+                        <button disabled={ userInfo.name !== data.author }
+                        onClick={()=> window.location.href = `/question-form/${id}`}
+                        >edit</button>
                         <button 
                         onClick={(e)=>handleDelete(e.target.value)} 
                         disabled={ userInfo.name !== data.author}

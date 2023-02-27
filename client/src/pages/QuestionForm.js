@@ -6,6 +6,7 @@ import useFetch from "../util/useFetch";
 import React, { useEffect, useState } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
+import { fetchPatch } from "../util/api";
 
 export const QuestionFormWrapper = styled.div`
     display: flex;
@@ -294,7 +295,7 @@ export const EditorWrapper = styled.div`
 const QuestionForm = () => {
     /*** useParams***/
     const { id } = useParams();
-
+    const [pending,setPending] = useState(true)
     const [isTitleOnFocus, setIsTitleOnFocus] = useState(false);
     const [isProblemOnFocus, setIsProblemOnFocus] = useState(false);
     const [isExpectationOnFocus, setIsExpectationOnFocus] = useState(false);
@@ -374,7 +375,9 @@ const QuestionForm = () => {
 
     const handleTag = (e) => setTagItem(e.target.value);
     const onSubmit = (e) => {
-        let newQuestion = {
+         /*** POST ***/
+        if(id==='0'){  
+            let newQuestion = {
             id: data.length + 1,
             title,
             problem,
@@ -392,11 +395,26 @@ const QuestionForm = () => {
             body: JSON.stringify(newQuestion),
         })
             .then(() => (window.location.href = "http://localhost:3000/"))
-            .catch((err) => console.log("Error: ", err));
+            .catch((err) => console.log("Error: ", err));}
+        /*** PATCH ***/
+        else{
+            const patchData = {
+                title,
+                problem,
+                expectation,
+                tagList,
+            }
+
+            fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${id}`, patchData, '/')
+        }
     };
 
     /*** Raed data ***/
     useEffect(() => {
+        if(id==='0'){
+            setPending(false)
+        }
+        else{
         const abortCont = new AbortController();
 
         setTimeout(() => {
@@ -414,16 +432,18 @@ const QuestionForm = () => {
             setExpectation(data.expectation);
             setTagList([...data.tagList]);
             setReadError(null);
+            setPending(false)
         })
         .catch(err => {
             setReadError(err.message);
         })
-        }, 1000);},[id])
+
+    }, 1000)}},[id])
 
 
     return (
         <>
-        {problem && console.log(problem)}
+        {problem && console.log(pending)}
             <QuestionFormWrapper>
                 <Cover>
                     <Head>Ask a public question</Head>
@@ -510,28 +530,28 @@ const QuestionForm = () => {
                             the title. Minimum 20 characters.
                         </FormInfo>
                         <EditorWrapper>
-                            <Editor
-                                initialValue={problem} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
-                                onFocus={problemFocusHandler}
-                                onBlur={problemFocusHandler}
-                                placeholder={
-                                    "Click to enter details of your problem."
-                                }
-                                previewStyle="vertical"
-                                height="300px"
-                                initialEditType="wysiwyg"
-                                toolbarItems={[
-                                    ["heading", "bold", "italic", "strike"],
-                                    ["hr", "quote"],
-                                    ["ul", "ol", "task", "indent", "outdent"],
-                                    ["table", "image", "link"],
-                                    ["code", "codeblock"],
-                                ]}
-                                ref={problemRef}
-                                onChange={handleProblem}
-                                autofocus={false}
-                                hideModeSwitch={true}
-                            ></Editor>
+                                {!pending && <Editor
+                                    initialValue={problem} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
+                                    onFocus={problemFocusHandler}
+                                    onBlur={problemFocusHandler}
+                                    placeholder={
+                                        "Click to enter details of your problem."
+                                    }
+                                    previewStyle="vertical"
+                                    height="300px"
+                                    initialEditType="wysiwyg"
+                                    toolbarItems={[
+                                        ["heading", "bold", "italic", "strike"],
+                                        ["hr", "quote"],
+                                        ["ul", "ol", "task", "indent", "outdent"],
+                                        ["table", "image", "link"],
+                                        ["code", "codeblock"],
+                                    ]}
+                                    ref={problemRef}
+                                    onChange={handleProblem}
+                                    autofocus={false}
+                                    hideModeSwitch={true}
+                                ></Editor>}
                         </EditorWrapper>
                     </Problem>
                     {isProblemOnFocus ? (
@@ -562,7 +582,7 @@ const QuestionForm = () => {
                             characters.
                         </FormInfo>
                         <EditorWrapper>
-                            <Editor
+                           {!pending&& <Editor
                                 initialValue={expectation} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
                                 onFocus={expectationFocusHandler}
                                 onBlur={expectationFocusHandler}
@@ -583,8 +603,7 @@ const QuestionForm = () => {
                                 onChange={handleExpectation}
                                 autofocus={false}
                                 hideModeSwitch={true}
-                                value={expectation}
-                            ></Editor>
+                            ></Editor>}
                         </EditorWrapper>
                     </Expectation>
                     {isExpectationOnFocus ? (

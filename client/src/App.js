@@ -23,10 +23,10 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
     const [login, setLogin] = useState(true);
-    const [userInfo, setUserInfo] = useState({
-        id: 1,
-        name: "kkte02",
-    });
+    const [userInfo, setUserInfo] = useState(    {
+        "id": 1,
+        "name": "kkte02",
+      });
     const [error, setError] = useState(null);
     //로그인 여부를 확인해 회원정보를 저장합니다
     // useEffect(() => {
@@ -78,11 +78,11 @@ function App() {
                         element={<QuestionList login={login} />}
                     />
                     <Route
-                        path="/question-form"
+                        path="/question-form/:id"
                         element={<QuestionForm userInfo={userInfo} />}
                     />
                     <Route
-                        path="/question-detail"
+                        path="/question-detail/:id"
                         element={
                             <QuestionDetail login={login} userInfo={userInfo} />
                         }
@@ -93,7 +93,7 @@ function App() {
                     <Route path="/welcome" element={<Welcome />} />
                     <Route
                         path="/userinfo-edit"
-                        element={<UserInfoEdit userInfo={userInfo} />}
+                        element={<UserInfoEdit loginInfo={userInfo} />}
                     />
                 </Routes>
             </Suspense>

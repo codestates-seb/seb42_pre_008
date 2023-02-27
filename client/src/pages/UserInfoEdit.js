@@ -1,79 +1,145 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState ,useEffect } from "react";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import Avatar, { genConfig } from 'react-nice-avatar'
+import { fetchPatch } from "../util/api";
+import Loading from "../component/Loading";
 
-const UserInfoEditWrap = styled.main`
-    
-    article{
-        width: 100vw;
-        margin:15vh 0;
-        display: flex;
-        height: 100vh;
-        aside{
-        background-color:#F1F2F3;
-        width: 40vw;
-        text-align: center;
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
-        align-items: center;
-        margin-left: 15vw;
-        div{
-            :first-child{
-                margin-top: 2vh;
-            }
-            background-color: #fff;
-            width: 8rem;
-            margin: 0 1rem;
-            margin-bottom: 2vh;
-            border: 1px solid #232629;
-            box-sizing: border-box;
-            padding: 1vh 0;
-            color: #232629;
-            font-size: 0.8rem;
-            p{
-                margin: 0.3rem 0;
-                font-size: 1.4rem;
-            }
-        }
-        }
-        >div{
-        width: 80vw;
-        margin-right: 15vw;
-        padding: 1rem;
-        h1{
-                font-size: 27px;
-                padding: 24px 0;
-                font-weight: 400;
-                color: #232629;
-                border-bottom: 1px solid #232629;
-                margin-bottom: 30px;
-            }
-        label{
-            display: block;
-        }
-        textarea{
-            display: block;
-            padding: 0.5rem;
-            font-size: 1rem;
-            border: 1px solid gray;
-            border-radius: 0.25rem;
-            box-sizing: border-box;
-            margin-top: 0.4rem;
-            margin-bottom: 1rem;
-            resize: none;
-        }
-        button{
-            padding: 0.5rem;
-            margin-top: 2rem;
-        }
-        input{
-            margin-bottom: 2rem;
-            margin-top: 1rem;
-        }
-        }
+const config = genConfig()
+
+const UserInfoEditWrap = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 20px;
+ padding: 4rem 4rem;
+ height: 100vh;
+`;
+
+const Header = styled.header`
+  padding: 30px 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  p{
+    margin-left: 10px;
+    font-size: 2rem;
+    span{
+        display: block;
+        font-size: 1rem;
+        color: #6A737c;
     }
+  }
+`;
+
+const MainSection = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: auto;
+  gap: 20px;
+`;
+
+const Sidebar = styled.div`
+    h2{  font-size: 1.6rem;
+  font-weight: 400;}
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 200px;
+`;
+
+const SidebarItem = styled.div`
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  :last-child{
+    margin-bottom: 26rem;
+  }
+    span{
+        display: block;
+        font-size: 0.8rem;
+        color: #6A737c;
+    }
+    :hover{
+        border: 1px solid #bbb;
+    }
+`;
+
+const UserInfoEditHead = styled.h1`
+  padding: 10px;
+  font-size: 1.6rem;
+  font-weight: 400;
+`;
+
+const UserInfoEditForm = styled.form`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  gap: 20px;
+`;
+
+const TitleInput = styled.input`
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 0.3vh;
+    :first-of-type{
+        width: 300px;
+    }
+`;
+
+const IntroductionTextarea = styled.textarea`
+  border: 1px solid #ccc;
+  padding: 10px;
+  resize: vertical;
+  border-radius: 0.3vh;
+`;
+
+const ImageUploadWrap = styled.div`
+  padding: 10px;
+`;
+
+const ImageUploadLabel = styled.label`
+  display: inline-block;
+  background: #6A737c;;
+  padding: 10px;
+  color: #fff;
+  display: flex;
+  width: 120px;
+  justify-content: center;
+  border-radius: 0.3vh;
+  cursor: pointer;
+  font-size: 0.8rem;
+  svg{
+    width: 1rem;
+    height: 1rem;
+  }
+  :hover{
+    background: #545e66;
+  }
+`;
+
+const ImageUploadInput = styled.input`
+  display: none;
+  max-width: 150px;
+  max-height: 150px;
+`;
+
+const ImagePreview = styled.img`
+  max-width: 150px;
+  max-height: 150px;
+  display: block;
+  margin-bottom: 8px;
+
+`;
+
+const NoImg = styled.div`
+    width: 150px;
+    height: 150px;
+    background-color: #ccc;
+    margin-bottom: 10px;
 `
-const SaveButton = styled.button`
+
+const SignupButton = styled.button`
     height: 37px;
     border-radius: 0.3vh;
     background-color: #0995ff;
@@ -82,79 +148,144 @@ const SaveButton = styled.button`
     box-shadow: inset 0px 0px 0px 0px #54a3f7;
     margin-top: 1.8rem;
     font-size: 1rem;
+    width: 10rem;
     cursor: pointer;
     :hover {
         background-color: #3172c6;
     }
 `;
 
-const Image = styled.div`
-    width: 10rem;
-    height: 10rem;
-    background-color: #ccc;
-    line-height: 10rem;
-`
-const UserInfoEdit = ({userInfo}) => {
-    const [file, setFile] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
 
-    const [name, setName] = useState(userInfo.name);
+function UserInfoEdit({loginInfo}) {
+  const [userInfo, setUserInfo] = useState({ name: "", title: "", intro: ""});
+  const [answerNum, setAnswerNum] = useState();
+  const [questionNum,setQuestionNum] = useState();
+  const [imageFile, setImageFile] = useState(null);
+  const [isError, setError] = useState(null)
 
-    const [title, setTitle] = useState("");
 
-    const [content, setContent] = useState("");
-    const [error, setError] = useState("")
-    
-    //save profile 버튼 클릭시
-    const handleSubmit = (event) => {
+  /***send Data***/
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('file', imageFile);
 
+    const data = {
+        ...userInfo,
+        img:formData
     }
-    
-    //이미지 변경시 반영 코드    
-    const handleChangeImg = event => {
-        setFile(event.target.files[0]);
-    
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            setImageUrl(event.target.result);
-        };
-        reader.readAsDataURL(event.target.files[0]);
-        }
 
-    return(
-        <UserInfoEditWrap>
-            <article>
-                <aside>
-                    <div><p>12</p>Qeustion</div>
-                    <div><p>12</p>Answer</div>
-                    <div><p>12</p>tags</div>
-                </aside>
-                <div>
-                    <h1>Edit your profile</h1>
+    fetch(process.env.REACT_APP_API_USER +'/'+ loginInfo.id, {
+        method: "PATCH",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify(data),
+        credentials: "include",
+    })
+    .then(() => {
+      window.location.href = '/userinfo-edit';
+    })
+    .catch((error) => {
+      console.error('Error', error);
+    })
+  };
 
-                    <Image />
-                    <input type="file" onChange={handleChangeImg}/>
-                    {imageUrl && <img src={imageUrl} alt="Uploaded image" />}
-                    <label>display name</label>
-                    <textarea
-                        onChange={ (e) => setName(e.target.value)} 
-                        value ={name} 
-                        autoFocus={true}
-                        rows="1"/>
-                    <label>title</label>
-                    <textarea
-                        onChange={ (e) => setTitle(e.target.value)} 
-                        value ={title}
-                        rows="1" cols="80"/>
-                    <label>about me</label>
-                    <textarea
-                        onChange={ (e) => setContent(e.target.value)} 
-                        value ={content} 
-                        rows="5" cols="80"/>
-                    <SaveButton>save profile</SaveButton>
-                </div>
-            </article>
-        </UserInfoEditWrap>
-    )
+  const handleImageUpload = (event) => {
+    setImageFile(event.target.files[0]);
+  };
+
+  /***Read data***/
+  useEffect(() => {
+    const abortCont = new AbortController();
+
+    setTimeout(() => {
+        fetch(process.env.REACT_APP_API_USER +'/'+ loginInfo.id, { signal: abortCont.signal })
+            .then((res) => {
+                if (!res.ok) {
+                    throw Error(
+                        "could not fetch the data for that resource"
+                    );
+                }
+                return res.json();
+            })
+            .then((data) => {
+                setUserInfo(
+                    {name:data.name,
+                    title:data.title,
+                    intro:data.intro,
+                    img:imageFile,
+                    });
+                setAnswerNum(data.answers)
+                setQuestionNum(data.questions)
+                setError(null);
+            })
+            .catch((err) => {
+                setError(err.message);
+            });
+    }, 1000);
+
+    return () => abortCont.abort();
+}, []);
+  
+
+  return (
+    <UserInfoEditWrap>
+      <Header>
+      <Avatar style={{ width: '5rem', height: '5rem', display: 'inline-block' }} {...config} />
+      <p>{userInfo.name} <span>{userInfo.title}</span></p>
+       </Header>
+      <MainSection>
+        <Sidebar>
+            <h2>Stats</h2>
+          <SidebarItem>{answerNum} <span>answers</span></SidebarItem>
+          <SidebarItem>{questionNum}<span>questions</span></SidebarItem>
+        </Sidebar>
+        <div>
+          <UserInfoEditHead>User Info Edit</UserInfoEditHead>
+          <UserInfoEditForm onSubmit={handleFormSubmit}>
+            <ImageUploadWrap>
+            {imageFile ?  (
+                <ImagePreview src={URL.createObjectURL(imageFile)} alt="uploaded" />
+              ): <NoImg />}
+            <ImageUploadLabel htmlFor="image-upload-input">
+               <AiOutlineCloudUpload/><p>Upload Image</p>
+            </ImageUploadLabel>
+            <ImageUploadInput
+                type="file"
+                id="image-upload-input"
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+            </ImageUploadWrap>
+            <TitleInput
+              type="text"
+              placeholder="name"
+              value={userInfo.name}
+              onChange={(event) =>
+                setUserInfo({ ...userInfo, name: event.target.value })
+              }
+            />
+            <TitleInput
+              type="text"
+              placeholder="Title"
+              value={userInfo.title}
+              onChange={(event) =>
+                setUserInfo({ ...userInfo, title: event.target.value })
+              }
+            />
+            <IntroductionTextarea
+              placeholder="Introduction"
+              value={userInfo.intro}
+              onChange={(event) =>
+                setUserInfo({ ...userInfo, intro: event.target.value })
+              }
+            />
+            <SignupButton type="submit"
+            >Save Changes</SignupButton>
+          </UserInfoEditForm>
+        </div>
+      </MainSection>
+    </UserInfoEditWrap>
+  );
 }
-export default UserInfoEdit
+
+export default UserInfoEdit;

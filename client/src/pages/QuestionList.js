@@ -319,6 +319,11 @@ export const QuestionContent = styled.div`
     align-items: center;
     flex-wrap: wrap;
     width: 700px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     font-size: 0.9rem;
 `;
 export const Left = styled.span`

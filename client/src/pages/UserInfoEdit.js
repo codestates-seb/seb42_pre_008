@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import Avatar, { genConfig } from 'react-nice-avatar'
+import { fetchPatch } from "../util/api";
+import Loading from "../component/Loading";
 
 const config = genConfig()
 
@@ -14,8 +16,6 @@ const UserInfoEditWrap = styled.div`
 `;
 
 const Header = styled.header`
-  /* background-color: #333; */
-  /* color: #fff; */
   padding: 30px 0;
   box-sizing: border-box;
   display: flex;
@@ -49,7 +49,6 @@ const Sidebar = styled.div`
 
 const SidebarItem = styled.div`
   padding: 10px;
-  height: 100%;
   text-align: center;
   border: 1px solid #ccc;
   font-size: 1rem;
@@ -157,32 +156,73 @@ const SignupButton = styled.button`
 `;
 
 
-function UserInfoEdit() {
-  const [userInfo, setUserInfo] = useState({ name: "", title: "", intro: "" });
+function UserInfoEdit({loginInfo}) {
+  const [userInfo, setUserInfo] = useState({ name: "", title: "", intro: ""});
+  const [answerNum, setAnswerNum] = useState();
+  const [questionNum,setQuestionNum] = useState();
   const [imageFile, setImageFile] = useState(null);
+  const [isError, setError] = useState(null)
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    console.log(userInfo);
-    console.log(imageFile)
+    const formData = new FormData();
+    formData.append('file', imageFile);
+
+    fetchPatch(process.env.REACT_APP_API_USER +'/'+ loginInfo.id,
+    {...userInfo,
+    img:formData
+    }, '/userinfo-edit')
   };
 
   const handleImageUpload = (event) => {
     setImageFile(event.target.files[0]);
   };
+
+  /***Read data***/
+  useEffect(() => {
+    const abortCont = new AbortController();
+
+    setTimeout(() => {
+        fetch(process.env.REACT_APP_API_USER +'/'+ loginInfo.id, { signal: abortCont.signal })
+            .then((res) => {
+                if (!res.ok) {
+                    throw Error(
+                        "could not fetch the data for that resource"
+                    );
+                }
+                return res.json();
+            })
+            .then((data) => {
+                setUserInfo(
+                    {name:data.name,
+                    title:data.title,
+                    intro:data.intro,
+                    img:imageFile,
+                    });
+                setAnswerNum(data.answers)
+                setQuestionNum(data.questions)
+                setError(null);
+            })
+            .catch((err) => {
+                setError(err.message);
+            });
+    }, 1000);
+
+    return () => abortCont.abort();
+}, []);
   
 
   return (
     <UserInfoEditWrap>
       <Header>
       <Avatar style={{ width: '5rem', height: '5rem', display: 'inline-block' }} {...config} />
-      <p>Nickname <span>Coding Newbie</span></p>
+      <p>{userInfo.name} <span>{userInfo.title}</span></p>
        </Header>
       <MainSection>
         <Sidebar>
             <h2>Stats</h2>
-          <SidebarItem>18 <span>answers</span></SidebarItem>
-          <SidebarItem>12 <span>questions</span></SidebarItem>
+          <SidebarItem>{answerNum} <span>answers</span></SidebarItem>
+          <SidebarItem>{questionNum}<span>questions</span></SidebarItem>
         </Sidebar>
         <div>
           <UserInfoEditHead>User Info Edit</UserInfoEditHead>
@@ -224,7 +264,8 @@ function UserInfoEdit() {
                 setUserInfo({ ...userInfo, intro: event.target.value })
               }
             />
-            <SignupButton type="submit">Save Changes</SignupButton>
+            <SignupButton type="submit"
+            >Save Changes</SignupButton>
           </UserInfoEditForm>
         </div>
       </MainSection>

@@ -410,8 +410,8 @@ const QuestionForm = () => {
         })
         .then(data => {
             setTitle(data.title);
-            setProblem(data.problem)
-            setExpectation(data.expectation)
+            setProblem(data.problem);
+            setExpectation(data.expectation);
             setTagList([...data.tagList]);
             setReadError(null);
         })

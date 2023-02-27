@@ -2,11 +2,20 @@
   "users": [
     {
       "id": 1,
-      "name": "kkte02"
+      "name": "kkte02",
+      "title": "king",
+      "intro": "Hi my name is kwanwooHi my name is king kwanwoo",
+      "answers": 3,
+      "questions": 10,
+      "img": {}
     },
     {
       "id": 3,
-      "name": "Eom0j"
+      "name": "Eom0j",
+      "title": "Hi my name is Enjung",
+      "intro": "Hi my name is Enjung my name is Enjung",
+      "answers": 5,
+      "questions": 9
     },
     {
       "id": 4,

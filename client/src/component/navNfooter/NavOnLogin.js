@@ -7,12 +7,12 @@ const NavOnLogin = ({login, setLogin}) => {
     return (
         <Nav>
             <Link to="/">
-                <Logo src="image/logo.png" alt="logo"/>
+                <Logo src="/image/logo.png" alt="logo"/>
             </Link>
-            <Link to="/">
+            <Link to="/" style={{ textDecoration: "none" }}>
                 <Menu>Home</Menu>
             </Link>
-            <Link to="/">
+            <Link to="/" style={{ textDecoration: "none" }}>
                 <Menu>Questions</Menu>
             </Link>
             <SearchBox>
@@ -22,10 +22,10 @@ const NavOnLogin = ({login, setLogin}) => {
                 </None>
                 <Input placeholder="Search..."></Input>
             </SearchBox>
-            <Link to="/mypage">
-                <Menu id="mypage">My Page</Menu>
+            <Link to="/mypage" style={{ textDecoration: "none" }}>
+                <Menu id="mypage" style={{ textDecoration: "none" }}>My Page</Menu>
             </Link>
-            <Link to="/login">
+            <Link to="/login" style={{ textDecoration: "none" }}>
                 <LoginButton onClick={()=>setLogin(false)}>Log out</LoginButton>
             </Link>
         </Nav>

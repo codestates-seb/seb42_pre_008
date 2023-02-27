@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FaStackOverflow } from "react-icons/fa";
 import { FiMessageSquare } from "react-icons/fi";
 import { HiPencil } from "react-icons/hi";
+import { AiFillEye } from "react-icons/ai";
 
 const Ads = () => {
     return (
@@ -55,7 +56,7 @@ const Ads = () => {
             <Grey>
                 <GreyTitle>Custom Filters</GreyTitle>
                 <GreyContent>
-                    <p id="blue">Create a custom filter</p>
+                    <p>Create a custom filter</p>
                 </GreyContent>
             </Grey>
             <Grey>
@@ -65,10 +66,10 @@ const Ads = () => {
                         src="/image/magnifyingGlass.png"
                         alt="magnifyingGlass"
                     />
-                    <p>Watch tags to curate your list of</p>
-                    <p>questions.</p>
+                    <span>Watch tags to curate your list of</span>
+                    <span>questions.</span>
                     <button>
-                        <i>@</i>Watch a tag
+                        <AiFillEye/>Watch a tag
                     </button>
                 </GreyContent>
             </Grey>
@@ -90,6 +91,7 @@ export const SidebarWrapper = styled.span`
     justify-content: flex-start;
     align-items: center;
     width: 350px;
+    height: 1100px;
     padding-top: 25px;
     gap: 15px;
 `;
@@ -145,19 +147,35 @@ export const GreyContent = styled.span`
         align-items: center;
     }
     p {
-        width: 250px;
         font-size: 15px;
-        color: #3b4044;
-        &#blue {
-            color: #0074cc;
-        }
-        /* border: 1px solid red; */
+        color: #0074cc;
     }
     span {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 200px;
+        width: 230px;
+        font-size: 15px;
+        color: #6a737c;
+    }
+    button {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 5px;
+        font-size: 13.5px;
+        height: 4.3vh;
+        padding: 0 1.3vh;
+        margin-top: 15px;
+        border-radius: 0.3vh;
+        background-color: #e3ecf3;
+        color: #477199;
+        border: 0.9px solid #477199;
+        box-shadow: inset 0px 0px 0px 0px #54a3f7;
+        :hover {
+            background-color: #b9d2e8;
+        }
     }
 `;
 export const Line = styled.span`
@@ -176,4 +194,5 @@ export const Line = styled.span`
 `;
 export const Img = styled.img`
     height: 70px;
+    margin-bottom: 15px;
 `;

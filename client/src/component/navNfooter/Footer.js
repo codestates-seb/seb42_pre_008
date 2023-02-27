@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <StyledFooter>
             <ContentsWrapper>
-                <Logo src="image/icon.png" />
+                <Logo src="/image/icon.png" />
                 <ExceptLogo>
                     <Extra>
                         <Contents>

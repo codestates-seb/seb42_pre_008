@@ -14,7 +14,7 @@ const QuestionList = ({ login }) => {
     // const [questions, isPending, error, setQuestions] = useFetch("http://localhost:3001/questions");
     //* useFetch -> Question and Answer together
     const [questions, isPending, error, setQuestions] = useFetch(
-        "http://localhost:3003/questions"
+        "http://localhost:3004/questions"
     );
     // const [filtered, setFiltered] = useState(null);
     // .then(()=>setFiltered(questions))
@@ -34,17 +34,34 @@ const QuestionList = ({ login }) => {
         const seconds = milliSeconds / 1000;
         if (seconds < 60) return `just now`;
         const minutes = seconds / 60;
-        if (minutes < 60) return `${Math.floor(minutes)} mins ago`;
+        if (minutes < 60)
+            return `${Math.floor(minutes)} min${
+                Math.floor(minutes) === 1 ? "" : "s"
+            } ago`;
         const hours = minutes / 60;
-        if (hours < 24) return `${Math.floor(hours)} hours ago`;
+        if (hours < 24)
+            return `${Math.floor(hours)} hour${
+                Math.floor(hours) === 1 ? "" : "s"
+            } ago`;
         const days = hours / 24;
-        if (days < 7) return `${Math.floor(days)} days ago`;
+        if (days < 7)
+            return `${Math.floor(days)} day${
+                Math.floor(days) === 1 ? "" : "s"
+            } ago`;
         const weeks = days / 7;
-        if (weeks < 5) return `${Math.floor(weeks)} weeks ago`;
+        if (weeks < 5)
+            return `${Math.floor(weeks)} week${
+                Math.floor(weeks) === 1 ? "" : "s"
+            } ago`;
         const months = days / 30;
-        if (months < 12) return `${Math.floor(months)} months ago`;
+        if (months < 12)
+            return `${Math.floor(months)} month${
+                Math.floor(months) === 1 ? "" : "s"
+            } ago`;
         const years = days / 365;
-        return `${Math.floor(years)} years ago`;
+        return `${Math.floor(years)} year${
+            Math.floor(years) === 1 ? "" : "s"
+        } ago`;
     };
     //* filter 버튼 눌린 상태에 따른 Css 스타일링
     const [filterOption, setFilterOption] = useState("");
@@ -70,7 +87,7 @@ const QuestionList = ({ login }) => {
                                         <Title>All Questions</Title>
                                         {/*!!!!!! 질문하기 버튼 자리 : 로그인 상태에 따라 QuestionForm, 또는 Login 화면으로 안내하는 기능구현 필요 !!!!!!*/}
                                         {login ? (
-                                            <Link to="/question-form">
+                                            <Link to="/question-form/0">
                                                 <AskQuestionButton>
                                                     Ask Question
                                                 </AskQuestionButton>
@@ -89,13 +106,35 @@ const QuestionList = ({ login }) => {
                                         </QuestionListCount>
                                         {/*!!!!!! filter 메뉴박스가 들어갈 자리 : 기능구현 필요 !!!!!!*/}
                                         <FilterOptions>
-                                            <FilterButton onClick={Newest} className={filterOption==="newest"?"grey":""}>
+                                            <FilterButton
+                                                onClick={Newest}
+                                                className={
+                                                    filterOption === "newest"
+                                                        ? "grey"
+                                                        : ""
+                                                }
+                                            >
                                                 Newest
                                             </FilterButton>
-                                            <FilterButton onClick={Unanswered} className={filterOption==="unAnswered"?"grey":""}>
+                                            <FilterButton
+                                                onClick={Unanswered}
+                                                className={
+                                                    filterOption ===
+                                                    "unAnswered"
+                                                        ? "grey"
+                                                        : ""
+                                                }
+                                            >
                                                 Unanswered
                                             </FilterButton>
-                                            <FilterButton onClick={Answered} className={filterOption==="answered"?"grey":""}>
+                                            <FilterButton
+                                                onClick={Answered}
+                                                className={
+                                                    filterOption === "answered"
+                                                        ? "grey"
+                                                        : ""
+                                                }
+                                            >
                                                 Answered
                                             </FilterButton>
                                         </FilterOptions>
@@ -179,14 +218,6 @@ const QuestionList = ({ login }) => {
                                             </Right>
                                         </QuestionUnit>
                                     ))}
-                                {/* <QuestionUnit>
-                                    <Viewer
-                                        initialValue={
-                                            questions[questions.length - 1]
-                                                .problem
-                                        }
-                                    />
-                                </QuestionUnit> */}
                                 <Pagination
                                     limit={limit}
                                     setPage={setPage}
@@ -278,7 +309,7 @@ export const FilterButton = styled.button`
     color: #6a737c;
     border: 0.5px solid #838c95;
     :hover {
-        background-color: #F8F9F9;
+        background-color: #f8f9f9;
         color: #3b4044;
     }
     &.grey {

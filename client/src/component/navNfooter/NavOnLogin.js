@@ -2,6 +2,38 @@ import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
+const NavOnLogin = ({login, setLogin}) => {
+    //! 페이지 본문
+    return (
+        <Nav>
+            <Link to="/">
+                <Logo src="image/logo.png" alt="logo"/>
+            </Link>
+            <Link to="/">
+                <Menu>Home</Menu>
+            </Link>
+            <Link to="/">
+                <Menu>Questions</Menu>
+            </Link>
+            <SearchBox>
+                {/*!!!!!! 검색기능 구현 필요 !!!!!!*/}
+                <None>
+                    <GrSearch id="magnifyingGlass" />
+                </None>
+                <Input placeholder="Search..."></Input>
+            </SearchBox>
+            <Link to="/mypage">
+                <Menu id="mypage">My Page</Menu>
+            </Link>
+            <Link to="/login">
+                <LoginButton onClick={()=>setLogin(false)}>Log out</LoginButton>
+            </Link>
+        </Nav>
+    );
+};
+export default NavOnLogin;
+
+//! styled components
 export const Nav = styled.nav`
     position: sticky;
     top: 0;
@@ -65,6 +97,10 @@ export const SearchBox = styled.div`
         color: #838c95;
         font-size: 20.8px;
     }
+    &:focus-within {
+        outline: 1px solid #58a4de;
+        box-shadow: 0px 0px 10px #ddeaf7;
+    }
 `;
 export const Input = styled.input`
     display: flex;
@@ -74,6 +110,7 @@ export const Input = styled.input`
     height: 4vh;
     padding: 0 1vw;
     border: none;
+    outline: none;
     font-size: 13.5px;
 `;
 export const Logo = styled.img`
@@ -87,32 +124,3 @@ export const None = styled.button`
     border: none;
     color: #838c95;
 `;
-
-const NavOnLogin = () => {
-    return (
-        <Nav>
-            <Link to="/">
-                <Logo src="logo.png" />
-            </Link>
-            <Link to="/">
-                <Menu>Home</Menu>
-            </Link>
-            <Link to="/">
-                <Menu>Questions</Menu>
-            </Link>
-            <SearchBox>
-                <None>
-                    <GrSearch id="magnifyingGlass" />
-                </None>
-                <Input placeholder="Search..."></Input>
-            </SearchBox>
-            <Link to="/mypage">
-                <Menu id="mypage">My Page</Menu>
-            </Link>
-            <Link to="/login">
-                <LoginButton>Log out</LoginButton>
-            </Link>
-        </Nav>
-    );
-};
-export default NavOnLogin;

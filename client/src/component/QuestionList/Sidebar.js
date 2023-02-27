@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { RiEarthFill } from "react-icons/ri";
 import { TiStarburst } from "react-icons/ti";
+import { RiInformationFill } from "react-icons/ri";
+import { AiOutlineTeam } from "react-icons/ai";
 
 export const SidebarWrapper = styled.span`
     position: fixed;
@@ -23,13 +25,20 @@ export const Home = styled.div`
     /* border: 1px solid pink; */
 `;
 export const Mini = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     width: 182px;
     color: #6a737c;
     font-size: 13px;
     padding-top: 1.5vh;
     padding-bottom: 1vh;
-    padding-left: 15px;
+    /* padding-left: 15px; */
     /* border: 1px solid magenta; */
+    span {
+        margin: 0 15px;
+    }
 `;
 export const Questions = styled.div`
     display: flex;
@@ -58,7 +67,7 @@ export const Collectives = styled.div`
     padding-left: 1vw;
     font-size: 14px;
     color: #51595f;
-    #star {
+    .star {
         color: #f48224;
     }
     /* border: 1px solid brown; */
@@ -72,7 +81,10 @@ const Sidebar = () => {
     return (
         <SidebarWrapper>
             <Home>Home</Home>
-            <Mini>PUBLIC</Mini>
+            <Mini>
+                <span>PUBLIC</span>
+                <span></span>
+            </Mini>
             <Questions>
                 <Icon>
                     <RiEarthFill />
@@ -82,12 +94,29 @@ const Sidebar = () => {
             <Else>Tags</Else>
             <Else>Users</Else>
             <Else>Companies</Else>
-            <Mini>COLLECTIVES</Mini>
+            <Mini>
+                <span>COLLECTIVES</span>
+                <span>
+                    <RiInformationFill />
+                </span>
+            </Mini>
             <Collectives>
                 <Icon>
-                    <TiStarburst id="star" />
+                    <TiStarburst className="star" />
                 </Icon>
                 Explore Collectives
+            </Collectives>
+            <Mini>
+                <span>TEAMS</span>
+                <span>
+                    <RiInformationFill />
+                </span>
+            </Mini>
+            <Collectives>
+                <Icon>
+                    <AiOutlineTeam className="star" />
+                </Icon>
+                Create free Team
             </Collectives>
         </SidebarWrapper>
     );

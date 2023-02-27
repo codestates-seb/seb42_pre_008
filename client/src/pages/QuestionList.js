@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Ads from "../component/questionList/Ads";
@@ -6,14 +6,20 @@ import Sidebar from "../component/questionList/Sidebar";
 import useFetch from "../util/useFetch";
 import Loading from "../component/Loading";
 import Pagination from "../component/pagignation";
+import { Viewer } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
 const QuestionList = ({ login }) => {
     //! GET DATA
     // eslint-disable-next-line
-    //* useFetch -> Question and Answer togeter
-    const [questions, isPending, error] = useFetch(
+    //* useFetch 변형 -> Question and Answer together
+    // const [questions, isPending, error, setQuestions] = useFetch("http://localhost:3001/questions");
+    //* useFetch -> Question and Answer together
+    const [questions, isPending, error, setQuestions] = useFetch(
         "http://localhost:3003/questions"
     );
+    // const [filtered, setFiltered] = useState(null);
+    // .then(()=>setFiltered(questions))
     //* useFetch -> Question only
     // const [questions, isPending, error] = useFetch(
     //     "http://localhost:3001/questions"
@@ -26,7 +32,7 @@ const QuestionList = ({ login }) => {
     const offset = (page - 1) * limit;
     //* 질문 게시 이후 시간 구하기
     const detailDate = (a) => {
-        const milliSeconds = new Date() - a;
+        const milliSeconds = new Date() - new Date(a);
         const seconds = milliSeconds / 1000;
         if (seconds < 60) return `just now`;
         const minutes = seconds / 60;
@@ -43,8 +49,21 @@ const QuestionList = ({ login }) => {
         return `${Math.floor(years)} years ago`;
     };
     //* filter
-    const [filtered, setQuestions] = useState(questions)
+    const [filterOption, setFilterOption] = useState("");
 
+    const Newest = () => {
+        setFilterOption();
+    };
+    const Unanswered = () => {
+        setFilterOption(
+            [...questions].filter((question) => !question.answers.length)
+        );
+    };
+    const Answered = () => {
+        setFilterOption(
+            [...questions].filter((question) => question.answers.length)
+        );
+    };
 
     //! 페이지 본문
     return (
@@ -81,13 +100,13 @@ const QuestionList = ({ login }) => {
                                         </QuestionListCount>
                                         {/*!!!!!! filter 메뉴박스가 들어갈 자리 : 기능구현 필요 !!!!!!*/}
                                         <FilterOptions>
-                                            <FilterButton value={"newest"}>
+                                            <FilterButton onClick={Newest}>
                                                 Newest
                                             </FilterButton>
-                                            <FilterButton value={"unanswered"}>
+                                            <FilterButton onClick={Unanswered}>
                                                 Unanswered
                                             </FilterButton>
-                                            <FilterButton value={"answered"}>
+                                            <FilterButton onClick={Answered}>
                                                 Answered
                                             </FilterButton>
                                         </FilterOptions>
@@ -161,12 +180,24 @@ const QuestionList = ({ login }) => {
                                                         </span>
                                                         {/*!!!!!! 얼마전 입력한 질문인지 보여주는 자리 : 현재시간 - 질문시간 차 !!!!!!*/}
                                                         asked{" "}
-                                                        {detailDate(new Date(question.createdAt))}
+                                                        {detailDate(
+                                                            new Date(
+                                                                question.createdAt
+                                                            )
+                                                        )}
                                                     </Author>
                                                 </QuestionInfo>
                                             </Right>
                                         </QuestionUnit>
                                     ))}
+                                {/* <QuestionUnit>
+                                    <Viewer
+                                        initialValue={
+                                            questions[questions.length - 1]
+                                                .problem
+                                        }
+                                    />
+                                </QuestionUnit> */}
                                 <Pagination
                                     limit={limit}
                                     setPage={setPage}

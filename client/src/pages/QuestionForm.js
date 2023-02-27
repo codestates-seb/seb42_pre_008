@@ -98,7 +98,6 @@ const QuestionForm = ({ userInfo }) => {
             answers: 0,
         };
         fetch("http://localhost:3003/questions/", {
-            // fetch("http://localhost:3001/questions/", {
             method: "POST",
             headers: { "Content-type": "application/json" },
             body: JSON.stringify(newQuestion),

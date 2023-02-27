@@ -3,7 +3,11 @@ import { AiFillCaretDown } from "react-icons/ai";
 import Avatar, { genConfig } from 'react-nice-avatar'
 import styled from "styled-components";
 import { fetchPatch } from '../util/api'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Viewer } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import { Editor } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
 const config = genConfig()
 const AnswerWrap = styled.article`
@@ -40,10 +44,6 @@ const AnswerWrap = styled.article`
             }
         }
         div{
-            height: 2rem;
-            width: 100%;
-            line-height: 2rem;
-            display:flex;
             button{
                 display: inline-block;
                 margin-right: 1vw;
@@ -60,30 +60,20 @@ const AnswerWrap = styled.article`
                     display: none;
                 }
             }
-            p{
-                width: 100%;
+            :nth-child(3){
+                text-align: end;
             }
-            :last-child{
-                display: flex;
-                justify-content: flex-end;
-                padding-top: 1vh;
-                padding-bottom: 2vh;
-                button{
-                    :disabled{
-                        display: none;
-                    }
-                }
-            }
-        }
-        textarea{
-            display: block;
-            width: 100%;
-            height:50%;
-            font-size: 1rem;
-            border: none;
         }
     }
 `
+const EditorWrapper = styled.div`
+margin-bottom: 1rem;
+    &:focus-within {
+        outline: 1px solid #58a4de;
+        border-bottom: 2px solid #58a4de;
+        box-shadow: 0px 0px 10px #ddeaf7;
+    }
+`;
 
 const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id}) => {
     /*** vote ***/
@@ -93,8 +83,21 @@ const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id}) => {
     const [votes, setVote] = useState(el.votes)
     /*** edit ***/
     const [edit, setEdit] = useState(false);
-    const [content, setContent] = useState(el.content)
+    const [content, setContent] = useState(el.content);
+    const [blank, setBlank] = useState(false)
     
+    /***Toast editor 적용***/
+    const contentRef = React.createRef();
+    const handleContent = (e) =>{
+    setContent(contentRef.current.getInstance().getMarkdown());
+    }
+    /***blur event***/
+    const onHandleBlur = () =>{
+        if(content === '') {
+            window.focus = contentRef
+            setBlank(true)
+        }
+    }
 
     /*** fetch link ***/
     const url = process.env.REACT_APP_API_ANSWER + '/' + el.id
@@ -167,14 +170,30 @@ const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id}) => {
             </aside>
             <section>
                 <div>
-                <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} />
-                <span>{el.author}</span>
-                <span>{el.update}</span>
+                    <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} />
+                    <span>{el.author}</span>
+                    <span>{el.update}</span>
                 </div>
-                {edit ?  
-                <textarea rows="4" cols="300" value={content} onChange={(e)=>setContent(e.target.value)}></textarea>
-                :<p>{content}</p>}
-
+                <div>
+                    {edit ?  
+                    <Editor
+                        initialValue={content} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
+                        toolbarItems={[
+                            ["heading", "bold", "italic", "strike"],
+                            ["hr", "quote"],
+                            ["ul", "ol", "task", "indent", "outdent"],
+                            ["table", "image", "link"],
+                            ["code", "codeblock"],
+                        ]}
+                        ref={contentRef}
+                        onChange={handleContent}
+                        onBlur={onHandleBlur}
+                        hideModeSwitch={true}
+                        height="200px"
+                    />
+                   :<Viewer
+                    initialValue={content}/>} 
+                </div>
                 <div>
                     {edit?
                     <button onClick={onHandleEdit}>submit</button>

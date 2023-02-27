@@ -192,7 +192,6 @@ const Question = ({login,userInfo,handleDelete,setVote,vote,data,id}) => {
                             }    
                         </aside>
                         <article>
-                            {/* {data.problem} */}
                             <Viewer
                              initialValue={data.problem}
                              contentStyle={contentStyle}

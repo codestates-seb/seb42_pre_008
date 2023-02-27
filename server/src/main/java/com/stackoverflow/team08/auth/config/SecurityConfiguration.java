@@ -1,9 +1,12 @@
 package com.stackoverflow.team08.auth.config;
 
+import com.google.gson.Gson;
 import com.stackoverflow.team08.auth.handler.OAuth2AuthenticationFailureHandler;
 import com.stackoverflow.team08.auth.handler.OAuth2AuthenticationSuccessHandler;
 import com.stackoverflow.team08.auth.service.CustomOAuth2UserService;
+import com.stackoverflow.team08.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -12,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -24,8 +28,12 @@ import java.util.Arrays;
 public class SecurityConfiguration {
 
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+//    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+    private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
+    private final RestTemplateBuilder restTemplateBuilder;
+    private final MemberService memberService;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -53,7 +61,7 @@ public class SecurityConfiguration {
                 .userService(customOAuth2UserService)
                 .and()
                 // 성공 시 Handler
-                .successHandler(oAuth2AuthenticationSuccessHandler)
+                .successHandler(new OAuth2AuthenticationSuccessHandler(new Gson(),oAuth2AuthorizedClientService,restTemplateBuilder,memberService))
                 // 실패 시 Handler
                 .failureHandler(oAuth2AuthenticationFailureHandler);
 
@@ -71,10 +79,5 @@ public class SecurityConfiguration {
         return source;
     }
 
-    // password encoding 을 위해 선언
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();  // (1-1)
-//    }
 
 }

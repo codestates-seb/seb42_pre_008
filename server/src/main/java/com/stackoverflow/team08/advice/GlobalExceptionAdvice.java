@@ -1,6 +1,7 @@
 package com.stackoverflow.team08.advice;
 
 import com.stackoverflow.team08.exception.BusinessLogicException;
+import com.stackoverflow.team08.exception.ValidationException;
 import com.stackoverflow.team08.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -58,5 +59,13 @@ public class GlobalExceptionAdvice {
         final ErrorResponse response = ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
 
         return response;
+    }
+
+    @ExceptionHandler
+    public ResponseEntity handleValidationLogicException(ValidationException e) {
+
+        final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
+
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 }

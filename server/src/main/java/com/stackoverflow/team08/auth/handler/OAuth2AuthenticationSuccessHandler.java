@@ -1,5 +1,6 @@
 package com.stackoverflow.team08.auth.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.stackoverflow.team08.auth.entity.GithubEmailEntity;
 import com.stackoverflow.team08.member.service.MemberService;
@@ -29,7 +30,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Component
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final Gson gson;
@@ -38,10 +38,15 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
     private final RestTemplate restTemplate;
 
+    private final MemberService memberService;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     public OAuth2AuthenticationSuccessHandler(Gson gson, OAuth2AuthorizedClientService authorizedClientService, RestTemplateBuilder restTemplateBuilder, MemberService memberService) {
         this.gson = gson;
         this.authorizedClientService = authorizedClientService;
         this.restTemplate = restTemplateBuilder.build();
+        this.memberService = memberService;
     }
 
     @Override
@@ -87,8 +92,14 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         // 없을 경우 기본적으로 정보를 저장 추가 정보를 받기위한 페이지로 이동
 
         String uri = UriComponentsBuilder.fromUriString("http://localhost:8080/test/user")
-                .queryParam("userEmail", email)
                 .build().toUriString();
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+
+        String responseEmail = objectMapper.writeValueAsString(email);
+
+        response.getWriter().write(responseEmail);
 
         response.sendRedirect(uri);
     }

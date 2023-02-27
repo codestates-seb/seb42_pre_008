@@ -1,5 +1,6 @@
 package com.stackoverflow.team08.auth.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackoverflow.team08.auth.jwt.service.JwtCreateService;
 import com.stackoverflow.team08.member.entity.Member;
 import com.stackoverflow.team08.member.service.MemberService;
@@ -41,5 +42,15 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
+
+        // response displayName, id, email
+        Member builder = Member.builder()
+                .memberId(findMember.getMemberId())
+                .displayName(findMember.getDisplayName())
+                .email(findMember.getEmail())
+                .build();
+        ObjectMapper mapper = new ObjectMapper();
+        String memberResponse = mapper.writeValueAsString(builder);
+        response.getWriter().write(memberResponse);
     }
 }

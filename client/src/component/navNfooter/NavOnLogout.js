@@ -7,7 +7,7 @@ const NavOnLogout = ({login, setLogin}) => {
     return (
         <Nav>
             <Link to="/">
-                <Logo src="image/logo.png" />
+                <Logo src="/image/logo.png" />
             </Link>
             <Link to="/">
                 <Menu>Home</Menu>

@@ -7,7 +7,7 @@ const NavOnLogin = ({login, setLogin}) => {
     return (
         <Nav>
             <Link to="/">
-                <Logo src="image/logo.png" alt="logo"/>
+                <Logo src="/image/logo.png" alt="logo"/>
             </Link>
             <Link to="/">
                 <Menu>Home</Menu>

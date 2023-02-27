@@ -1,5 +1,5 @@
-import { useEffect, Suspense, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
@@ -23,10 +23,10 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
     const [login, setLogin] = useState(true);
-    const [userInfo, setUserInfo] = useState(    {
-        "id": 1,
-        "name": "kkte02",
-      });
+    const [userInfo, setUserInfo] = useState({
+        id: 1,
+        name: "kkte02",
+    });
     const [error, setError] = useState(null);
     //로그인 여부를 확인해 회원정보를 저장합니다
     // useEffect(() => {

@@ -1,8 +1,8 @@
 import NavOnLogin from "../component/navNfooter/NavOnLogin";
 import Footer from "../component/navNfooter/Footer";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import useFetch from "../util/useFetch";
@@ -15,36 +15,39 @@ const QuestionForm = ({ userInfo }) => {
     const navigate = useNavigate();
     /*** useParams***/
     const { id } = useParams();
-    const [pending,setPending] = useState(true)
-       /*** Raed data ***/
-   useEffect(() => {
-    if(id==='0'){
-        setPending(false)
-    }
-    else{
-    const abortCont = new AbortController();
+    const [pending, setPending] = useState(true);
+    /*** Raed data ***/
+    useEffect(() => {
+        if (id === "0") {
+            setPending(false);
+        } else {
+            const abortCont = new AbortController();
 
-    setTimeout(() => {
-    fetch(`${process.env.REACT_APP_API_QUESTION}/${id}`
-       , { signal: abortCont.signal })
-    .then(res => {
-        if (!res.ok) { 
-            throw Error('could not fetch the data for that resource');
-        } 
-        return res.json();
-    })
-    .then(data => {
-        setTitle(data.title);
-        setProblem(data.problem);
-        setExpectation(data.expectation);
-        setTagList([...data.tagList]);
-        setPending(false)
-    })
-    .catch(err => {
-        console.log(err.message);
-    })
-
-    }, 1000)}},[id])
+            setTimeout(() => {
+                fetch(`${process.env.REACT_APP_API_QUESTION}/${id}`, {
+                    signal: abortCont.signal,
+                })
+                    .then((res) => {
+                        if (!res.ok) {
+                            throw Error(
+                                "could not fetch the data for that resource"
+                            );
+                        }
+                        return res.json();
+                    })
+                    .then((data) => {
+                        setTitle(data.title);
+                        setProblem(data.problem);
+                        setExpectation(data.expectation);
+                        setTagList([...data.tagList]);
+                        setPending(false);
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+            }, 1000);
+        }
+    }, [id]);
 
     //! 기능 구현
     //TODO input onFocus/onBlur 시 Helper msg popup 및 box shadow 효과주는 로직
@@ -113,37 +116,40 @@ const QuestionForm = ({ userInfo }) => {
         setExpectation(expectationRef.current.getInstance().getMarkdown());
     const handleTag = (e) => setTagItem(e.target.value);
     const onSubmit = (e) => {
-        if(title.length === 0 || problem.length === 0) return;
-        if(id==='0'){  
-            
+        if (title.length === 0 || problem.length === 0) return;
+        if (id === "0") {
             let newQuestion = {
-            id: uuidv4(),
-            title,
-            problem,
-            expectation,
-            tagList,
-            author: userInfo.name,
-            createdAt: new Date(),
-            view: 0,
-            votes: 0,
-            answers: 0,
-        };
-        fetch("http://localhost:3003/questions/", {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify(newQuestion),
-        })
-            .then(() => navigate("/"))
-            .catch((err) => console.log("Error: ", err));
-    }else{
-        const patchData = {
-            title,
-            problem,
-            expectation,
-            tagList,
+                id: uuidv4(),
+                title,
+                problem,
+                expectation,
+                tagList,
+                author: userInfo.name,
+                createdAt: new Date(),
+                view: 0,
+                votes: 0,
+                answers: 0,
+            };
+            fetch("http://localhost:3003/questions/", {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(newQuestion),
+            })
+                .then(() => navigate("/"))
+                .catch((err) => console.log("Error: ", err));
+        } else {
+            const patchData = {
+                title,
+                problem,
+                expectation,
+                tagList,
+            };
+            fetchPatch(
+                `${process.env.REACT_APP_API_QUESTION}/${id}`,
+                patchData,
+                "/"
+            );
         }
-        fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${id}`, patchData, '/')
-    }
     };
 
     //! 페이지 본문
@@ -218,7 +224,7 @@ const QuestionForm = ({ userInfo }) => {
                             <Helper>
                                 <HelperHead>Writing a good title</HelperHead>
                                 <HelperInfo>
-                                    <Pen src="image/pen.png"></Pen>
+                                    <Pen src="/image/pen.png"></Pen>
                                     <HelperContent>
                                         <p>
                                             Your title should summarize the
@@ -247,34 +253,41 @@ const QuestionForm = ({ userInfo }) => {
                             </FormInfo>
                             {/*!!!!!! 이 안에 toast editor 있음 !!!!!!*/}
                             <EditorWrapper>
-                               {!pending && <Editor
-                                    initialValue={problem} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
-                                    onFocus={problemFocusHandler}
-                                    onBlur={problemFocusHandler}
-                                    placeholder={
-                                        "Click to enter details of your problem."
-                                    }
-                                    previewStyle="vertical"
-                                    height="300px"
-                                    initialEditType="wysiwyg"
-                                    toolbarItems={[
-                                        ["heading", "bold", "italic", "strike"],
-                                        ["hr", "quote"],
-                                        [
-                                            "ul",
-                                            "ol",
-                                            "task",
-                                            "indent",
-                                            "outdent",
-                                        ],
-                                        ["table", "image", "link"],
-                                        ["code", "codeblock"],
-                                    ]}
-                                    ref={problemRef}
-                                    onChange={handleProblem}
-                                    autofocus={false}
-                                    hideModeSwitch={true}
-                                ></Editor>}
+                                {!pending && (
+                                    <Editor
+                                        initialValue={problem} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
+                                        onFocus={problemFocusHandler}
+                                        onBlur={problemFocusHandler}
+                                        placeholder={
+                                            "Click to enter details of your problem."
+                                        }
+                                        previewStyle="vertical"
+                                        height="300px"
+                                        initialEditType="wysiwyg"
+                                        toolbarItems={[
+                                            [
+                                                "heading",
+                                                "bold",
+                                                "italic",
+                                                "strike",
+                                            ],
+                                            ["hr", "quote"],
+                                            [
+                                                "ul",
+                                                "ol",
+                                                "task",
+                                                "indent",
+                                                "outdent",
+                                            ],
+                                            ["table", "image", "link"],
+                                            ["code", "codeblock"],
+                                        ]}
+                                        ref={problemRef}
+                                        onChange={handleProblem}
+                                        autofocus={false}
+                                        hideModeSwitch={true}
+                                    ></Editor>
+                                )}
                             </EditorWrapper>
                         </Problem>
                         {/*!!!!!! 질문 내용 onFocus 시 helper msg popup 조건 !!!!!!*/}
@@ -282,7 +295,7 @@ const QuestionForm = ({ userInfo }) => {
                             <Helper id="problemHelper">
                                 <HelperHead>Introduce the problem</HelperHead>
                                 <HelperInfo>
-                                    <Pen src="image/pen.png"></Pen>
+                                    <Pen src="/image/pen.png"></Pen>
                                     <HelperContent>
                                         <p>
                                             Explain how you encountered the
@@ -308,34 +321,41 @@ const QuestionForm = ({ userInfo }) => {
                             </FormInfo>
                             {/*!!!!!! 이 안에 toast editor 있음 !!!!!!*/}
                             <EditorWrapper>
-                                {!pending && <Editor
-                                    initialValue={expectation} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
-                                    onFocus={expectationFocusHandler}
-                                    onBlur={expectationFocusHandler}
-                                    placeholder={
-                                        "Click to enter details of your problem."
-                                    }
-                                    previewStyle="vertical"
-                                    height="300px"
-                                    initialEditType="wysiwyg"
-                                    toolbarItems={[
-                                        ["heading", "bold", "italic", "strike"],
-                                        ["hr", "quote"],
-                                        [
-                                            "ul",
-                                            "ol",
-                                            "task",
-                                            "indent",
-                                            "outdent",
-                                        ],
-                                        ["table", "image", "link"],
-                                        ["code", "codeblock"],
-                                    ]}
-                                    ref={expectationRef}
-                                    onChange={handleExpectation}
-                                    autofocus={false}
-                                    hideModeSwitch={true}
-                                ></Editor>}
+                                {!pending && (
+                                    <Editor
+                                        initialValue={expectation} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
+                                        onFocus={expectationFocusHandler}
+                                        onBlur={expectationFocusHandler}
+                                        placeholder={
+                                            "Click to enter details of your problem."
+                                        }
+                                        previewStyle="vertical"
+                                        height="300px"
+                                        initialEditType="wysiwyg"
+                                        toolbarItems={[
+                                            [
+                                                "heading",
+                                                "bold",
+                                                "italic",
+                                                "strike",
+                                            ],
+                                            ["hr", "quote"],
+                                            [
+                                                "ul",
+                                                "ol",
+                                                "task",
+                                                "indent",
+                                                "outdent",
+                                            ],
+                                            ["table", "image", "link"],
+                                            ["code", "codeblock"],
+                                        ]}
+                                        ref={expectationRef}
+                                        onChange={handleExpectation}
+                                        autofocus={false}
+                                        hideModeSwitch={true}
+                                    ></Editor>
+                                )}
                             </EditorWrapper>
                         </Expectation>
                         {/*!!!!!! 질문 상세 onFocus 시 helper msg popup 조건 !!!!!!*/}
@@ -343,7 +363,7 @@ const QuestionForm = ({ userInfo }) => {
                             <Helper id="expectationHelper">
                                 <HelperHead>Expand on the problem</HelperHead>
                                 <HelperInfo>
-                                    <Pen src="image/pen.png"></Pen>
+                                    <Pen src="/image/pen.png"></Pen>
                                     <HelperContent>
                                         <p>
                                             Show what you’ve tried, tell us what
@@ -413,7 +433,7 @@ const QuestionForm = ({ userInfo }) => {
                             <Helper id="tagHelper">
                                 <HelperHead>Adding tags</HelperHead>
                                 <HelperInfo>
-                                    <Pen src="image/pen.png"></Pen>
+                                    <Pen src="/image/pen.png"></Pen>
                                     <HelperContent>
                                         <p>
                                             Tags help ensure that your question
@@ -445,7 +465,6 @@ const QuestionForm = ({ userInfo }) => {
     );
 };
 export default QuestionForm;
-
 
 //! styled components
 export const QuestionFormWrapper = styled.div`

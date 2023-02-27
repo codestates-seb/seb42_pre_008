@@ -116,4 +116,10 @@ public class MemberService {
         }
     }
 
+    // 단순히 저장
+    public void saveMember(Member member){
+
+        memberRepository.save(member);
+    }
+
 }

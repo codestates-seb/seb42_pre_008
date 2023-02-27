@@ -1,20 +1,28 @@
 package com.stackoverflow.team08.auth.config;
 
 import com.google.gson.Gson;
+import com.stackoverflow.team08.auth.handler.MemberAuthenticationFailureHandler;
+import com.stackoverflow.team08.auth.handler.MemberAuthenticationSuccessHandler;
 import com.stackoverflow.team08.auth.handler.OAuth2AuthenticationFailureHandler;
 import com.stackoverflow.team08.auth.handler.OAuth2AuthenticationSuccessHandler;
+import com.stackoverflow.team08.auth.jwt.JwtTokenizer;
+import com.stackoverflow.team08.auth.jwt.filter.JwtAuthenticationProcessingFilter;
+import com.stackoverflow.team08.auth.jwt.filter.JwtVerificationFilter;
+import com.stackoverflow.team08.auth.jwt.service.JwtCreateService;
 import com.stackoverflow.team08.auth.service.CustomOAuth2UserService;
+import com.stackoverflow.team08.auth.utils.CustomAuthorityUtils;
+import com.stackoverflow.team08.member.repository.MemberRepository;
 import com.stackoverflow.team08.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -28,11 +36,13 @@ import java.util.Arrays;
 public class SecurityConfiguration {
 
     private final CustomOAuth2UserService customOAuth2UserService;
-//    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final OAuth2AuthorizedClientService oAuth2AuthorizedClientService;
     private final RestTemplateBuilder restTemplateBuilder;
     private final MemberService memberService;
+    private final JwtTokenizer jwtTokenizer;
+    private final CustomAuthorityUtils customAuthorityUtils;
+    private final JwtCreateService jwtCreateService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,14 +57,17 @@ public class SecurityConfiguration {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .apply(new CustomFilterConfigurer())
+                .and()
                 // 접근 권한 설정
                 .authorizeRequests(auth -> auth
+                        .antMatchers(HttpMethod.GET,"/members/test/jwt").hasRole("USER")
                         .antMatchers("/members/**").permitAll()
                         .antMatchers("/answers/**").permitAll()
                         .antMatchers("/questions/**").permitAll()
                         .antMatchers("/h2/**").permitAll()
-                        .antMatchers("/test/**").permitAll()
-                        .anyRequest().authenticated()
+                        .antMatchers("/auth/login/**").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .oauth2Login()
                 .userInfoEndpoint()
@@ -71,13 +84,30 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));   // (8-1)
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));  // (8-2)
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();   // (8-3)
-        source.registerCorsConfiguration("/**", configuration);      // (8-4)     주의 사항: 컨텐츠 표시 오류로 인해 '/**'를 '\/**'로 표기했으니 실제 코드 구현 시에는 '\(역슬래시)'를 빼 주세요.
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
+    // Jwt 검증 필터 추가
+    public class CustomFilterConfigurer  extends AbstractHttpConfigurer<CustomFilterConfigurer , HttpSecurity>{
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+            JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter = new JwtAuthenticationProcessingFilter(authenticationManager, memberService);
+            jwtAuthenticationProcessingFilter.setFilterProcessesUrl("/auth/login");
+            jwtAuthenticationProcessingFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler(jwtCreateService, memberService));
+            jwtAuthenticationProcessingFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
+            // jwt 검증 필터 추가
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, customAuthorityUtils);
+
+            builder
+                    .addFilter(jwtAuthenticationProcessingFilter)
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationProcessingFilter.class);
+        }
+    }
 }

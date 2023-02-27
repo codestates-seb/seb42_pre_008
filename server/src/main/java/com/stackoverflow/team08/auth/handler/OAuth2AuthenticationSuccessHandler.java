@@ -63,7 +63,7 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
         Map<String, Object> attributes = principal.getAttributes();
 
-        String authorizedClientRegistrationId = ((OAuth2AuthenticationToken) authentication).getAuthorizedClientRegistrationId();
+        String authorizedClientRegistrationId = token.getAuthorizedClientRegistrationId();
 
         log.info("로그인 플랫폼 : {}", authorizedClientRegistrationId);
 

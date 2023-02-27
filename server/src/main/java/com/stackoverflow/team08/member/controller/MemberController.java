@@ -98,4 +98,9 @@ public class MemberController {
         String email = objectMapper.writeValueAsString("emailemail");
         response.getWriter().write(email);
     }
+
+    @GetMapping("/test/jwt")
+    public String testJwt(){
+        return "jwt 로그인 성공";
+    }
 }

@@ -2,24 +2,49 @@ import NavOnLogin from "../component/navNfooter/NavOnLogin";
 import Footer from "../component/navNfooter/Footer";
 import { useParams } from 'react-router-dom';
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import useFetch from "../util/useFetch";
 import { useNavigate } from "react-router-dom";
 import Loading from "../component/Loading";
+import { fetchPatch } from "../util/api";
+import { v4 as uuidv4 } from "uuid";
 
 const QuestionForm = ({ userInfo }) => {
     const navigate = useNavigate();
+    /*** useParams***/
+    const { id } = useParams();
+    const [pending,setPending] = useState(true)
+       /*** Raed data ***/
+   useEffect(() => {
+    if(id==='0'){
+        setPending(false)
+    }
+    else{
+    const abortCont = new AbortController();
 
-    //! GET DATA
-    // eslint-disable-next-line
-    const [data, isPending, error] = useFetch(
-        "http://localhost:3003/questions"
-    );
-    // const [data, isPending, error] = useFetch(
-    //     "http://localhost:3001/questions"
-    // );
+    setTimeout(() => {
+    fetch(`${process.env.REACT_APP_API_QUESTION}/${id}`
+       , { signal: abortCont.signal })
+    .then(res => {
+        if (!res.ok) { 
+            throw Error('could not fetch the data for that resource');
+        } 
+        return res.json();
+    })
+    .then(data => {
+        setTitle(data.title);
+        setProblem(data.problem);
+        setExpectation(data.expectation);
+        setTagList([...data.tagList]);
+        setPending(false)
+    })
+    .catch(err => {
+        console.log(err.message);
+    })
+
+    }, 1000)}},[id])
 
     //! 기능 구현
     //TODO input onFocus/onBlur 시 Helper msg popup 및 box shadow 효과주는 로직
@@ -88,8 +113,11 @@ const QuestionForm = ({ userInfo }) => {
         setExpectation(expectationRef.current.getInstance().getMarkdown());
     const handleTag = (e) => setTagItem(e.target.value);
     const onSubmit = (e) => {
-        let newQuestion = {
-            id: data.length + 1,
+        if(title.length === 0 || problem.length === 0) return;
+        if(id==='0'){  
+            
+            let newQuestion = {
+            id: uuidv4(),
             title,
             problem,
             expectation,
@@ -107,12 +135,21 @@ const QuestionForm = ({ userInfo }) => {
         })
             .then(() => navigate("/"))
             .catch((err) => console.log("Error: ", err));
+    }else{
+        const patchData = {
+            title,
+            problem,
+            expectation,
+            tagList,
+        }
+        fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${id}`, patchData, '/')
+    }
     };
 
     //! 페이지 본문
     return (
         <>
-            {isPending ? (
+            {pending ? (
                 <Loading />
             ) : (
                 <QuestionFormWrapper>
@@ -210,7 +247,7 @@ const QuestionForm = ({ userInfo }) => {
                             </FormInfo>
                             {/*!!!!!! 이 안에 toast editor 있음 !!!!!!*/}
                             <EditorWrapper>
-                                <Editor
+                               {!pending && <Editor
                                     initialValue={problem} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
                                     onFocus={problemFocusHandler}
                                     onBlur={problemFocusHandler}
@@ -237,7 +274,7 @@ const QuestionForm = ({ userInfo }) => {
                                     onChange={handleProblem}
                                     autofocus={false}
                                     hideModeSwitch={true}
-                                ></Editor>
+                                ></Editor>}
                             </EditorWrapper>
                         </Problem>
                         {/*!!!!!! 질문 내용 onFocus 시 helper msg popup 조건 !!!!!!*/}
@@ -271,7 +308,7 @@ const QuestionForm = ({ userInfo }) => {
                             </FormInfo>
                             {/*!!!!!! 이 안에 toast editor 있음 !!!!!!*/}
                             <EditorWrapper>
-                                <Editor
+                                {!pending && <Editor
                                     initialValue={expectation} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
                                     onFocus={expectationFocusHandler}
                                     onBlur={expectationFocusHandler}
@@ -298,7 +335,7 @@ const QuestionForm = ({ userInfo }) => {
                                     onChange={handleExpectation}
                                     autofocus={false}
                                     hideModeSwitch={true}
-                                ></Editor>
+                                ></Editor>}
                             </EditorWrapper>
                         </Expectation>
                         {/*!!!!!! 질문 상세 onFocus 시 helper msg popup 조건 !!!!!!*/}
@@ -408,7 +445,7 @@ const QuestionForm = ({ userInfo }) => {
     );
 };
 export default QuestionForm;
-import { fetchPatch } from "../util/api";
+
 
 //! styled components
 export const QuestionFormWrapper = styled.div`
@@ -696,420 +733,3 @@ export const EditorWrapper = styled.div`
         box-shadow: 0px 0px 10px #ddeaf7;
     }
 `;
-
-const QuestionForm = () => {
-    /*** useParams***/
-    const { id } = useParams();
-    const [pending,setPending] = useState(true)
-    const [isTitleOnFocus, setIsTitleOnFocus] = useState(false);
-    const [isProblemOnFocus, setIsProblemOnFocus] = useState(false);
-    const [isExpectationOnFocus, setIsExpectationOnFocus] = useState(false);
-    const [isTagOnFocus, setIsTagOnFocus] = useState(false);
-    const titleFocusHandler = () => {
-        setIsTitleOnFocus(!isTitleOnFocus);
-    };
-    const problemFocusHandler = () => {
-        setIsProblemOnFocus(!isProblemOnFocus);
-    };
-    const expectationFocusHandler = () => {
-        setIsExpectationOnFocus(!isExpectationOnFocus);
-    };
-    const tagFocusHandler = () => {
-        setIsTagOnFocus(!isTagOnFocus);
-    };
-    //! 여기서부터 태그
-    const [tagItem, setTagItem] = useState("");
-    const [tagList, setTagList] = useState([]);
-    const [isInEnglish, setIsInEnglish] = useState(false);
-    const onKeyPress = (e) => {
-        const isKorean = /[^A-Za-z]/g.test(e.target.value);
-        if (isKorean) {
-            setIsInEnglish(!isInEnglish);
-            e.preventDefault();
-            return;
-        }
-        if (
-            !isKorean &&
-            e.target.value.length &&
-            e.key === "Enter" &&
-            tagList.length < 5
-        ) {
-            setIsInEnglish(false);
-            submitTagItem();
-        }
-    };
-    const submitTagItem = () => {
-        let updatedTagList = [...tagList];
-        updatedTagList.push(tagItem);
-        setTagList(updatedTagList);
-        setTagItem("");
-    };
-    const deleteTagItem = (e) => {
-        const deleteTagItem = e.target.value;
-        const filteredTagList = tagList.filter(
-            (tagItem) => tagItem !== deleteTagItem
-        );
-        setTagList(filteredTagList);
-    };
-    //! 여기서부터 discard
-    const [title, setTitle] = useState("");
-    // const [descriptions, setDescriptions] = useState("")
-    const [problem, setProblem] = useState("");
-    const [expectation, setExpectation] = useState("");
-    const [readError, setReadError] = useState("")
-    const onDiscard = (e) => {
-        setTitle("");
-        setProblem("");
-        setExpectation("");
-        setTagList([]);
-    };
-
-    //! 여기서부터 submit
-    const [data, isPending, error] = useFetch(
-        "http://localhost:3001/questions"
-    );
-    const handleTitle = (e) => setTitle(e.target.value);
-
-    //todo 여기서부터 에디터랑 기싸움중
-    const problemRef = React.createRef();
-    const expectationRef = React.createRef();
-    const handleProblem = (e) =>
-        setProblem(problemRef.current.getInstance().getMarkdown());
-    const handleExpectation = (e) =>
-        setExpectation(expectationRef.current.getInstance().getMarkdown());
-
-    const handleTag = (e) => setTagItem(e.target.value);
-    const onSubmit = (e) => {
-         /*** POST ***/
-         if(title.length === 0 || problem.length === 0) return;
-        if(id==='0'){  
-            let newQuestion = {
-            id: data.length + 1,
-            title,
-            problem,
-            expectation,
-            tagList,
-            author: "kkte02",
-            createdAt: "date",
-            view: 0,
-            votes: 0,
-            answers: 0,
-        };
-        fetch("http://localhost:3001/questions/", {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify(newQuestion),
-        })
-            .then(() => (window.location.href = "http://localhost:3000/"))
-            .catch((err) => console.log("Error: ", err));}
-        /*** PATCH ***/
-        else{
-            const patchData = {
-                title,
-                problem,
-                expectation,
-                tagList,
-            }
-
-            fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${id}`, patchData, '/')
-        }
-    };
-
-    /*** Raed data ***/
-    useEffect(() => {
-        if(id==='0'){
-            setPending(false)
-        }
-        else{
-        const abortCont = new AbortController();
-
-        setTimeout(() => {
-        fetch(`${process.env.REACT_APP_API_QUESTION}/${id}`
-           , { signal: abortCont.signal })
-        .then(res => {
-            if (!res.ok) { 
-                throw Error('could not fetch the data for that resource');
-            } 
-            return res.json();
-        })
-        .then(data => {
-            setTitle(data.title);
-            setProblem(data.problem);
-            setExpectation(data.expectation);
-            setTagList([...data.tagList]);
-            setReadError(null);
-            setPending(false)
-        })
-        .catch(err => {
-            setReadError(err.message);
-        })
-
-    }, 1000)}},[id])
-
-
-    return (
-        <>
-        {problem && console.log(pending)}
-            <QuestionFormWrapper>
-                <Cover>
-                    <Head>Ask a public question</Head>
-                    <Robot src="robot.png"></Robot>
-                </Cover>
-                <Cover>
-                    <Information>
-                        <InfoTitle>Writing a good question</InfoTitle>
-                        <p>
-                            You’re ready to{" "}
-                            <a href="https://stackoverflow.com/help/how-to-ask">
-                                ask
-                            </a>{" "}
-                            a{" "}
-                            <a href="https://stackoverflow.com/help/on-topic">
-                                programming-related question
-                            </a>{" "}
-                            and this form will help guide you through the
-                            process.
-                        </p>
-                        <p>
-                            Looking to ask a non-programming question? See{" "}
-                            <a href="https://stackexchange.com/sites#technology">
-                                the topics here
-                            </a>{" "}
-                            to find a relevant site.
-                        </p>
-                        <strong>Steps</strong>
-                        <li>Summarize your problem in a one-line title.</li>
-                        <li>Describe your problem in more detail.</li>
-                        <li>
-                            Describe what you tried and what you expected to
-                            happen.
-                        </li>
-                        <li>
-                            Add “tags” which help surface your question to
-                            members of the community.
-                        </li>
-                        <li>Review your question and post it to the site.</li>
-                    </Information>
-                </Cover>
-                <Cover>
-                    <Title>
-                        <FormTitle id="title">Title</FormTitle>
-                        <FormInfo>
-                            Be specific and imagine you’re asking a question to
-                            another person.
-                        </FormInfo>
-                        <FormInput
-                            id="titleInput"
-                            onChange={handleTitle}
-                            onFocus={titleFocusHandler}
-                            onBlur={titleFocusHandler}
-                            placeholder="e.g. Is there an R unction for finding the index of an element in a vector?"
-                            value={title}
-                        ></FormInput>
-                    </Title>
-                    {isTitleOnFocus ? (
-                        <Helper>
-                            <HelperHead>Writing a good title</HelperHead>
-                            <HelperInfo>
-                                <Pen src="pen.png"></Pen>
-                                <HelperContent>
-                                    <p>
-                                        Your title should summarize the problem.
-                                    </p>
-                                    <p>
-                                        You might find that you have a better
-                                        idea of your title after writing out the
-                                        rest of the question.
-                                    </p>
-                                </HelperContent>
-                            </HelperInfo>
-                        </Helper>
-                    ) : null}
-                </Cover>
-                <Cover>
-                    <Problem>
-                        <FormTitle>
-                            What are the details of your problem?
-                        </FormTitle>
-                        <FormInfo>
-                            Introduce the problem and expand on what you put in
-                            the title. Minimum 20 characters.
-                        </FormInfo>
-                        <EditorWrapper>
-                                {!pending && <Editor
-                                    initialValue={problem} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
-                                    onFocus={problemFocusHandler}
-                                    onBlur={problemFocusHandler}
-                                    placeholder={
-                                        "Click to enter details of your problem."
-                                    }
-                                    previewStyle="vertical"
-                                    height="300px"
-                                    initialEditType="wysiwyg"
-                                    toolbarItems={[
-                                        ["heading", "bold", "italic", "strike"],
-                                        ["hr", "quote"],
-                                        ["ul", "ol", "task", "indent", "outdent"],
-                                        ["table", "image", "link"],
-                                        ["code", "codeblock"],
-                                    ]}
-                                    ref={problemRef}
-                                    onChange={handleProblem}
-                                    autofocus={false}
-                                    hideModeSwitch={true}
-                                ></Editor>}
-                        </EditorWrapper>
-                    </Problem>
-                    {isProblemOnFocus ? (
-                        <Helper id="problemHelper">
-                            <HelperHead>Introduce the problem</HelperHead>
-                            <HelperInfo>
-                                <Pen src="pen.png"></Pen>
-                                <HelperContent>
-                                    <p>
-                                        Explain how you encountered the problem
-                                        you’re trying to solve, and any
-                                        difficulties that have prevented you
-                                        from solving it yourself.
-                                    </p>
-                                </HelperContent>
-                            </HelperInfo>
-                        </Helper>
-                    ) : null}
-                </Cover>
-                <Cover>
-                    <Expectation>
-                        <FormTitle>
-                            What did you try and what were you expecting?
-                        </FormTitle>
-                        <FormInfo>
-                            Describe what you tried, what you expected to
-                            happen, and what actually resulted. Minimum 20
-                            characters.
-                        </FormInfo>
-                        <EditorWrapper>
-                           {!pending&& <Editor
-                                initialValue={expectation} // -> 수정버튼 클릭시 나타나는 (작성중상태의)텍스트 설정하는 속성
-                                onFocus={expectationFocusHandler}
-                                onBlur={expectationFocusHandler}
-                                placeholder={
-                                    "Click to enter details of your problem."
-                                }
-                                previewStyle="vertical"
-                                height="300px"
-                                initialEditType="wysiwyg"
-                                toolbarItems={[
-                                    ["heading", "bold", "italic", "strike"],
-                                    ["hr", "quote"],
-                                    ["ul", "ol", "task", "indent", "outdent"],
-                                    ["table", "image", "link"],
-                                    ["code", "codeblock"],
-                                ]}
-                                ref={expectationRef}
-                                onChange={handleExpectation}
-                                autofocus={false}
-                                hideModeSwitch={true}
-                            ></Editor>}
-                        </EditorWrapper>
-                    </Expectation>
-                    {isExpectationOnFocus ? (
-                        <Helper id="expectationHelper">
-                            <HelperHead>Expand on the problem</HelperHead>
-                            <HelperInfo>
-                                <Pen src="pen.png"></Pen>
-                                <HelperContent>
-                                    <p>
-                                        Show what you’ve tried, tell us what
-                                        happened, and why it didn’t meet your
-                                        needs.
-                                    </p>
-                                    <p>
-                                        Not all questions benefit from including
-                                        code, but if your problem is better
-                                        understood with code you’ve written, you
-                                        should include a minimal, reproducible
-                                        example.
-                                    </p>
-                                    <p>
-                                        Please make sure to post code and errors
-                                        as text directly to the question (and
-                                        not as images), and format them
-                                        appropriately.
-                                    </p>
-                                </HelperContent>
-                            </HelperInfo>
-                        </Helper>
-                    ) : null}
-                </Cover>
-                <Cover>
-                    <Tags>
-                        <FormTitle>Tags</FormTitle>
-                        <FormInfo>
-                            Add up to 5 tags to describe what your question is
-                            about. Start typing to see suggestions. Maximum 5
-                            tags.
-                        </FormInfo>
-                        <TagBox>
-                            {tagList.map((tagItem, index) => {
-                                return (
-                                    <TagItem key={index}>
-                                        <span>{tagItem}</span>
-                                        <Button
-                                            value={tagItem}
-                                            onClick={deleteTagItem}
-                                        >
-                                            ✕
-                                        </Button>
-                                    </TagItem>
-                                );
-                            })}
-                            <TagInput
-                                type="text"
-                                onFocus={tagFocusHandler}
-                                onBlur={tagFocusHandler}
-                                placeholder="e.g. (ajax iphone string)"
-                                tabIndex={2}
-                                // onChange={(e) => setTagItem(e.target.value)}
-                                onChange={handleTag}
-                                value={tagItem}
-                                onKeyPress={onKeyPress}
-                            />
-                        </TagBox>
-                        <TagAlert id={isInEnglish ? "english" : ""}>
-                            Tags must be in English
-                        </TagAlert>
-                    </Tags>
-                    {isTagOnFocus ? (
-                        <Helper id="tagHelper">
-                            <HelperHead>Adding tags</HelperHead>
-                            <HelperInfo>
-                                <Pen src="pen.png"></Pen>
-                                <HelperContent>
-                                    <p>
-                                        Tags help ensure that your question will
-                                        get attention from the right people.{" "}
-                                    </p>
-                                    <p>
-                                        Tag things in more than one way so
-                                        people can find them more easily. Add
-                                        tags for product lines, projects, teams,
-                                        and the specific technologies or
-                                        languages used.{" "}
-                                    </p>
-                                    <p>Learn more about tagging</p>
-                                </HelperContent>
-                            </HelperInfo>
-                        </Helper>
-                    ) : null}
-                </Cover>
-                <ButtonContainer>
-                    <Discard onClick={onDiscard}>Discard draft</Discard>
-                    <SubmitButton onClick={onSubmit}>
-                        Submit your question
-                    </SubmitButton>
-                </ButtonContainer>
-            </QuestionFormWrapper>
-        </>
-    );
-};
-export default QuestionForm;

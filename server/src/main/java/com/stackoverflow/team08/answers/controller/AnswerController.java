@@ -2,7 +2,6 @@ package com.stackoverflow.team08.answers.controller;
 
 import com.stackoverflow.team08.answers.dto.AnswerPatchDto;
 import com.stackoverflow.team08.answers.dto.AnswerPostDto;
-import com.stackoverflow.team08.answers.dto.AnswerResponseDto;
 import com.stackoverflow.team08.answers.entity.Answer;
 import com.stackoverflow.team08.answers.entity.AnswerVote;
 import com.stackoverflow.team08.answers.mapper.AnswerMapper;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -36,6 +36,8 @@ public class AnswerController {
         Answer answer = mapper.answerPostDtoToAnswer(answerPostDto);
         // Vote 객체 추가
         answer.setAnswerVote(new AnswerVote());
+        answer.setCreatedAt(LocalDateTime.now());
+        answer.setModifiedAt(LocalDateTime.now());
 
         Answer createdAnswer = answerService.createAnswer(answer);
         URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, createdAnswer.getAnswerId());
@@ -50,9 +52,12 @@ public class AnswerController {
         System.out.println("# PATCH Answer!");
         answerPatchDto.setAnswerId(answerId);
 
-        Answer response = answerService.updateAnswer(mapper.answerPatchDtoToAnswer(answerPatchDto));
+        Answer answer = mapper.answerPatchDtoToAnswer(answerPatchDto);
+        answer.setModifiedAt(LocalDateTime.now());
 
-        return new ResponseEntity<>(mapper.answerToAnswerResponseDto(response), HttpStatus.OK);
+        Answer updatedAnswer = answerService.updateAnswer(answer);
+
+        return new ResponseEntity<>(mapper.answerToAnswerResponseDto(updatedAnswer), HttpStatus.OK);
     }
 
     @GetMapping("/{answer-id}")

@@ -62,7 +62,7 @@ const PaginationLayout = styled.article`
     justify-content: space-between;
     align-items: center;
     margin-top: 50px;
-    width: 900px;
+    width: 800px;
 `;
 const Block = styled.span`
     display: flex;

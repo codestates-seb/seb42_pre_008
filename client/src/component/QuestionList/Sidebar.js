@@ -8,8 +8,9 @@ export const SidebarWrapper = styled.span`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 182px;
+    width: 180px;
     min-height: 100%;
+    /* border: 1px solid magenta; */
 `;
 export const Home = styled.div`
     display: flex;

@@ -5,9 +5,7 @@ import Ads from "../component/questionList/Ads";
 import Sidebar from "../component/questionList/Sidebar";
 import useFetch from "../util/useFetch";
 import Loading from "../component/Loading";
-import Pagination from "../component/pagignation";
-import { Viewer } from "@toast-ui/react-editor";
-import "@toast-ui/editor/dist/toastui-editor.css";
+import Pagination from "../component/questionList/pagignation";
 
 const QuestionList = ({ login }) => {
     //! GET DATA
@@ -228,13 +226,13 @@ export const QuestionContainer = styled.main`
     flex-direction: column;
     align-items: start;
     justify-content: start;
-    width: 900px;
+    width: 800px;
     border-left: 0.2vh solid #e4e6e7;
 `;
 export const QuestionListHeader = styled.header`
     display: flex;
     flex-direction: column;
-    width: 900px;
+    width: 800px;
     border-bottom: 0.2vh solid #e4e6e7;
 `;
 export const InsideHeaderUpper = styled.div`
@@ -293,7 +291,7 @@ export const QuestionUnit = styled.section`
     flex-direction: row;
     align-items: space-evenly;
     justify-content: space-evenly;
-    width: 900px;
+    width: 800px;
     /* height: 120px; */
     padding: 1vh 0 2vh 0;
     border-bottom: 0.7px solid #d2d2d2;
@@ -303,7 +301,7 @@ export const QuestionTitle = styled.a`
     align-items: flex-start;
     margin-bottom: 0.5vh;
     color: #0074cc;
-    width: 700px;
+    width: 650px;
     font-size: 1.1rem;
     text-decoration: none;
     :hover {
@@ -314,7 +312,7 @@ export const QuestionContent = styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    width: 700px;
+    width: 650px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -326,18 +324,17 @@ export const Left = styled.span`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    width: 150px;
+    width: 100px;
 `;
 export const Right = styled.span`
-    /* width: 45vw; */
-    width: 700px;
+    width: 650px;
 `;
 export const QuestionInfo = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 700px;
+    width: 650px;
     padding-top: 1vh;
     font-size: 0.9rem;
 `;
@@ -407,6 +404,6 @@ export const SidebarContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 230px;
+    width: 181px;
     min-height: 100%;
 `;

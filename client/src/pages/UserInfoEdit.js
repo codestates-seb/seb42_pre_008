@@ -163,15 +163,30 @@ function UserInfoEdit({loginInfo}) {
   const [imageFile, setImageFile] = useState(null);
   const [isError, setError] = useState(null)
 
+
+  /***send Data***/
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append('file', imageFile);
 
-    fetchPatch(process.env.REACT_APP_API_USER +'/'+ loginInfo.id,
-    {...userInfo,
-    img:formData
-    }, '/userinfo-edit')
+    const data = {
+        ...userInfo,
+        img:formData
+    }
+
+    fetch(process.env.REACT_APP_API_USER +'/'+ loginInfo.id, {
+        method: "PATCH",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify(data),
+        credentials: "include",
+    })
+    .then(() => {
+      window.location.href = '/userinfo-edit';
+    })
+    .catch((error) => {
+      console.error('Error', error);
+    })
   };
 
   const handleImageUpload = (event) => {

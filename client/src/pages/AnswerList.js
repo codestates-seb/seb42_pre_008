@@ -108,7 +108,7 @@ const AnswerList = ({login,userInfo,questionAuthor, handleDelete,id}) => {
     
     /***Creat Answer***/
     const onHandleClick = () => {
-
+        if(content.length === 0) return ;
         const random = Math.round(Math.random()*100)+0
         const date = new Date();
         const today = date.toLocaleDateString().slice(0,-1);

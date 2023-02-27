@@ -376,6 +376,7 @@ const QuestionForm = () => {
     const handleTag = (e) => setTagItem(e.target.value);
     const onSubmit = (e) => {
          /*** POST ***/
+         if(title.length === 0 || problem.length === 0) return;
         if(id==='0'){  
             let newQuestion = {
             id: data.length + 1,

@@ -418,11 +418,12 @@ const QuestionForm = () => {
         .catch(err => {
             setReadError(err.message);
         })
-        }, 1000);},[])
+        }, 1000);},[id])
 
 
     return (
         <>
+        {problem && console.log(problem)}
             <QuestionFormWrapper>
                 <Cover>
                     <Head>Ask a public question</Head>
@@ -530,7 +531,6 @@ const QuestionForm = () => {
                                 onChange={handleProblem}
                                 autofocus={false}
                                 hideModeSwitch={true}
-                                value={problem}
                             ></Editor>
                         </EditorWrapper>
                     </Problem>

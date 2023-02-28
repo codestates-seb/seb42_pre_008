@@ -4,8 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import {MdOutlineOpenInNew} from 'react-icons/md'
 // import {SiNaver} from 'react-icons/si'
 import {AiOutlineGithub, AiOutlineFacebook} from 'react-icons/ai'
-import { fetchLogin } from "../util/fetchLogin";
 import styled from 'styled-components';
+import useUserActions from "../component/oauth/useUserAction";
+import axios from "axios";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import authAtom from "../component/oauth/auth";
+import userAtom from "../component/oauth/userAuth";
+
 
 const DivWrapper = styled.div`
 justify-content: center;
@@ -233,38 +238,76 @@ const EmployIcon = styled(MdOutlineOpenInNew)`
 
 
 export default function Login (props) {
-    const navigate = useNavigate();
-    const [userEmail, setUserEmail] = useState('');
-    const [userPassword, setUserPassword] = useState('');
+  //   const navigate = useNavigate();
+  //   const [userEmail, setUserEmail] = useState('');
+  //   const [userPassword, setUserPassword] = useState('');
 
 
-    const onEmailChange = (e) => {
-        setUserEmail(e.target.value);
-    };
-    const onPasswordChange = (e) => {
-        setUserPassword(e.target.value);
-    };
+  //   const onEmailChange = (e) => {
+  //       setUserEmail(e.target.value);
+  //   };
+  //   const onPasswordChange = (e) => {
+  //       setUserPassword(e.target.value);
+  //   };
 
-   function onSubmit(e) {
-    e.preventDefault();
-    onLogin()
-    };
+  //  function onSubmit(e) {
+  //   e.preventDefault();
+  //   onLogin()
+  //   };
 
-    const onLogin = async (callback) => {
-        const loginData = JSON.stringify({
-            email: userEmail,
-            password: userPassword,
-        });
-        const toHome = () => {
-            navigate('/');
-        }
-        let login = await fetchLogin(loginData).then((data) => {
-            if(data.status === 200) {
-                toHome();
-                window.location.reload();
-            }
-        })
-    }
+  //   const onLogin = async (callback) => {
+  //       const loginData = JSON.stringify({
+  //           email: userEmail,
+  //           password: userPassword,
+  //       });
+  //       const toHome = () => {
+  //           navigate('/');
+  //       }
+  //       let login = await fetchLogin(loginData).then((data) => {
+  //           if(data.status === 200) {
+  //               toHome();
+  //               window.location.reload();
+  //           }
+  //       })
+  //   }
+  const navigate = useNavigate();
+  const userActions = useUserActions();
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const auth = useRecoilValue(authAtom);
+
+  const setAuth = useSetRecoilState(authAtom);
+  const setUserAuth = useSetRecoilState(userAtom);
+
+  const onEmailChange = (e) => {
+      setUserEmail(e.target.value);
+  };
+  const onPasswordChange = (e) => {
+      setUserPassword(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+      e.preventDefault();
+      axios
+          .post(
+              `URL`,
+              { email: userEmail, password: userPassword },
+          )
+          .then((response) => {
+              alert('로그인 되었습니다');
+              const { data } = response;
+              localStorage.setItem('user', JSON.stringify(data.accessToken));
+              localStorage.setItem('userInfo', JSON.stringify(data));
+              setAuth(data.accessToken);
+              setUserAuth(data);
+          })
+          .then(() => navigate('/'))
+          .catch((error) => {
+              alert(error);
+          });
+  }; 
+
+ 
         
 
 

@@ -54,3 +54,11 @@ export const fetchPatch = (url, data, link) => {
       console.error('Error', error);
     })
 }
+
+export const LoginAPI = async (data) => {
+    const response = await axios.post(`https://c356-61-73-131-137.jp.ngrok.io/auth/login`, data).catch((error) => {
+        console.log(error.response, 'res');
+        return error.response;
+    });
+    return response
+}

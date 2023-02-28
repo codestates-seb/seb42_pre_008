@@ -1,6 +1,7 @@
 export const fetchLogin = async (data) => {
-    return fetch(`auth/login`, {
+    return fetch(`https://c356-61-73-131-137.jp.ngrok.io/auth/login`, {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
             Accept: 'application/json',

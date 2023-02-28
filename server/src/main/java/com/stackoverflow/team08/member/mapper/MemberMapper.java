@@ -13,4 +13,6 @@ public interface MemberMapper {
     Member memberPatchDtoToMember(MemberDto.Patch patch);
 
     MemberDto.Response memberToMemberResponse(Member member);
+
+    Member memberOAuthInfoToMember(MemberDto.OAuthInfo oAuthInfo);
 }

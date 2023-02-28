@@ -1,6 +1,7 @@
 package com.stackoverflow.team08.response;
 
 import com.stackoverflow.team08.exception.ExceptionCode;
+import com.stackoverflow.team08.exception.ValidationExceptionCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -46,6 +47,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(HttpStatus httpStatus, String message) {
         return new ErrorResponse(httpStatus.value(), message);
+    }
+
+    public static ErrorResponse of(ValidationExceptionCode exceptionCode) {
+        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
     }
 
     @Getter

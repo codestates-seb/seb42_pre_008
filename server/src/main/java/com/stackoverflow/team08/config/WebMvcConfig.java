@@ -27,7 +27,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public QuestionPageableArgumentResolver questionPageableArgumentResolver() {
-        QuestionPageableArgumentResolver questionResolver = new QuestionPageableArgumentResolver(1, 2);
+        QuestionPageableArgumentResolver questionResolver = new QuestionPageableArgumentResolver(1, 15);
         setDefaultParameterNames(questionResolver);
         return questionResolver;
     }

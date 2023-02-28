@@ -63,7 +63,6 @@ export default function Login(props) {
                 alert(error);
             });
     };
-
     //   const navigate = useNavigate();
     //   const [userEmail, setUserEmail] = useState('');
     //   const [userPassword, setUserPassword] = useState('');
@@ -95,7 +94,6 @@ export default function Login(props) {
     //           }
     //       })
     //   }
-
     return (
         <DivWrapper>
             <div>
@@ -160,13 +158,13 @@ export default function Login(props) {
         </DivWrapper>
     );
 }
+
 const DivWrapper = styled.div`
     background-color: #f1f2f3;
     padding: 15vh 0;
     display: flex;
     justify-content: center;
 `;
-
 const OauthWrap = styled.div`
     display: flex;
     flex-direction: column;
@@ -216,7 +214,6 @@ const OauthWrap = styled.div`
         }
     }
 `;
-
 const IconWrapper = styled.div`
     margin-bottom: 5px;
     display: flex;

@@ -116,14 +116,15 @@ const QuestionForm = ({ userInfo }) => {
         if (title.length === 0 || problem.length === 0) return;
         if (id === "0") {
             let newQuestion = {
-                id: uuidv4(),
-                title,
-                problem,
-                expectation,
+                question_id: uuidv4(),
+                question_title:title,
+                question_content:problem,
+                question_try_and_expecting:expectation,
                 tagList,
-                author: userInfo.name,
-                createdAt: new Date(),
-                view: 0,
+                member_id: userInfo.email,
+                created_at: new Date(),
+                updated_at: new Date(),
+                question_view_count: 0,
                 votes: 0,
                 answers: 0,
             };

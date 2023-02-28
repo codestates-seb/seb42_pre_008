@@ -25,7 +25,7 @@ function App() {
     const [login, setLogin] = useState(true);
     const [userInfo, setUserInfo] = useState({
         id: 1,
-        name: "kkte02",
+        email: "kkte02",
     });
     const [error, setError] = useState(null);
     //로그인 여부를 확인해 회원정보를 저장합니다

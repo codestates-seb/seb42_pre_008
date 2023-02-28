@@ -144,10 +144,10 @@ const QuestionList = ({ login }) => {
                                 {questions
                                     .slice(offset, offset + limit)
                                     .map((question) => (
-                                        <QuestionUnit key={question.id}>
+                                        <QuestionUnit key={question.question_id}>
                                             <Left>
                                                 <Shorter>
-                                                    {question.votes} votes
+                                                    {question.votes||0} votes
                                                 </Shorter>
                                                 <Shorter>
                                                     <span
@@ -179,17 +179,17 @@ const QuestionList = ({ login }) => {
                                                     </span>
                                                 </Shorter>
                                                 <Shorter>
-                                                    {question.view} views
+                                                    {question.question_view_count} views
                                                 </Shorter>
                                             </Left>
                                             <Right>
                                                 <QuestionTitle
-                                                    href={`/question-detail/${question.id}`}
+                                                    href={`/question-detail/${question.question_id}`}
                                                 >
-                                                    {question.title}
+                                                    {question.question_title}
                                                 </QuestionTitle>
                                                 <QuestionContent>
-                                                    {question.problem}
+                                                    {question.question_content}
                                                 </QuestionContent>
                                                 <QuestionInfo>
                                                     <Tags>
@@ -204,13 +204,13 @@ const QuestionList = ({ login }) => {
                                                     <Author>
                                                         <Img src="image/icon.png" />
                                                         <span>
-                                                            {question.author}
+                                                            {question.member_id}
                                                         </span>
                                                         {/*!!!!!! 얼마전 입력한 질문인지 보여주는 자리 : 현재시간 - 질문시간 차 !!!!!!*/}
                                                         asked{" "}
                                                         {detailDate(
                                                             new Date(
-                                                                question.createdAt
+                                                                question.created_at
                                                             )
                                                         )}
                                                     </Author>

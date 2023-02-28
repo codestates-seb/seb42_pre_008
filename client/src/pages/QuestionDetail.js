@@ -1,4 +1,5 @@
 import { useState,useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Question from './Question';
 import AnswerList  from './AnswerList';
 import styled from "styled-components";
@@ -81,21 +82,37 @@ const ModalWrap = styled.div`
 `
 
 
-const QuestionDetail = ({login,userInfo,endpoint}) => {
+const QuestionDetail = ({login,userInfo}) => {
+    /***Question read***/
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(null);
+    const [vote, setVote] = useState('')
+    const [answerId, setAnswerId] = useState(null)
 
-    const [author,setAuthor] = useState('') 
+    const [questionAuthor,setQuestionAuthor] = useState('') 
 
     /*** modal***/
     const [openModal,setOpenModal] = useState(false)
     const [deleteUrl, setDeleteUrl] = useState('')
 
-    /*** Answer delete modal ***/
+    /*** useParams***/
+    const { id } = useParams();
+
+    /*** modal ***/
     const handleDelete = (url) => {
         setOpenModal(true);
         setDeleteUrl(url)
     }
     const handleConfirm = () => {
-        fetchDelete(deleteUrl,'/question-detail')
+        if (deleteUrl.includes('answer')){
+         /*** Answer DELTE ***/
+        //`${process.env.REACT_APP_API_SERVER}/answers/${answerId}           
+            fetchDelete(deleteUrl,`/question-detail/${id}`)
+        }
+        
+        /*** Answer DELTE ***/
+        //`${process.env.REACT_APP_API_SERVER}/questions/${id}
+        else{fetchDelete(deleteUrl,`/`)}
         setOpenModal(false);
     };
     const handleCancel = () => {
@@ -106,7 +123,33 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
     useEffect(() => {
         window.scrollTo(0, 0);
       }, []);
+
+    /*** Question Read ***/
+    //`${process.env.REACT_APP_API_SERVER}/questions/${id}
+    useEffect(() => {
+        const abortCont = new AbortController();
+
+        setTimeout(() => {
+        fetch(`${process.env.REACT_APP_API_QUESTION}/${id}`
+           , { signal: abortCont.signal })
+        .then(res => {
+            if (!res.ok) { 
+                throw Error('could not fetch the data for that resource');
+            } 
+            return res.json();
+        })
+        .then(data => {
+            setData(data);
+            setError(null);
+            setVote(data.votes)
+            setQuestionAuthor(data.author)
+        })
+        .catch(err => {
+            setError(err.message);
+        })
+        }, 1000);},[])
     
+
     return(
         <>
         <QuestionDetailWraper>
@@ -126,11 +169,16 @@ const QuestionDetail = ({login,userInfo,endpoint}) => {
                 login={login} 
                 userInfo={userInfo} 
                 handleDelete={handleDelete} 
-                setAuthor={setAuthor}/>
+                setVote={setVote}
+                vote={vote}
+                data={data}
+                id={id}
+                />
 
             <AnswerList 
                 login={login} userInfo={userInfo} 
-                author={author} handleDelete={handleDelete}/>
+                questionAuthor={questionAuthor} handleDelete={handleDelete}
+                id={id} setAnswerId={setAnswerId}/>
             
         </QuestionDetailWraper>
         </>

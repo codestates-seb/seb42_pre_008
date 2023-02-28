@@ -3,10 +3,11 @@ import { AiFillCaretUp } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
 import { useState ,useEffect } from 'react'
 import { fetchPatch } from '../util/api'
-// import Avatar, { genConfig } from 'react-nice-avatar'
-import useFetch from "../util/useFetch";
+import Avatar, { genConfig } from 'react-nice-avatar'
+import { Viewer } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
 
-// const config = genConfig()
+const config = genConfig()
 const QuestionWrap = styled.div`
     padding-bottom: 5vh;
     margin-bottom: 5vh;
@@ -97,16 +98,16 @@ const QuestionBodyWrap = styled.div`
         }
     }
 `
-const Question = ({login,userInfo,handleDelete,setAuthor}) => {
-    //fetchdata
-    const [data, setData] = useState(null);
-    const [isPending, setIsPending] = useState(true);
-    const [error, setError] = useState(null);
-
+const Question = ({login,userInfo,handleDelete,setVote,vote,data,id}) => {
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
     const [checked,setChecked] = useState('still');
-    const [vote, setVote] = useState('')
+
+    /***toast veiwer style***/
+    const contentStyle = {
+        fontSize: '1.4rem'
+      };
+    
 
     const onHandleVoteUp = () => {
         if(checked === 'still'){
@@ -132,7 +133,7 @@ const Question = ({login,userInfo,handleDelete,setAuthor}) => {
     }
     const onHandleQuestion = () =>{
         if(login){
-            window.location.href = '/question-form';
+            window.location.href = `/question-form/0`;
         }
         else{
             window.location.href = '/login';
@@ -140,31 +141,10 @@ const Question = ({login,userInfo,handleDelete,setAuthor}) => {
     }
 
 
-    useEffect(() => {
-        const abortCont = new AbortController();
 
-        setTimeout(() => {
-        fetch(process.env.REACT_APP_API_QUESTION+'/'+'1', { signal: abortCont.signal })
-        .then(res => {
-            if (!res.ok) { 
-                throw Error('could not fetch the data for that resource');
-            } 
-            return res.json();
-        })
-        .then(data => {
-            setIsPending(false);
-            setData(data);
-            setError(null);
-            setVote(data.votes)
-            setAuthor(data.author)
-        })
-        .catch(err => {
-            setIsPending(false);
-            setError(err.message);
-        })
-        }, 1000);},[])
-
-
+    /*** question PATCH vote***/
+    //`${process.env.REACT_APP_API_SERVER}/questions/${data.id}/vote/up`  
+    //`${process.env.REACT_APP_API_SERVER}/questions/${data.id}/vote/down`  
     useEffect(() => {
         function handleBeforeUnload() {
             if(checked === 'up') fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${data.id}`,{"votes": data.votes + 1 },)
@@ -185,14 +165,16 @@ const Question = ({login,userInfo,handleDelete,setAuthor}) => {
                     <div>
                         <h1>{data.title}</h1>
                         <div>
-                        {/* <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} /> */}
+                        <Avatar style={{ width: '1.5rem', height: '1.5rem', display: 'inline-block' }} {...config} />
                         <span>author</span>
                         <span>{data.author}</span>
                         <span>asked</span>
                         <span>{data.createdAt}</span>
                         <span>viewed</span> 
                         <span>{data.view}</span>
-                        <button disabled={ userInfo.name !== data.author }>edit</button>
+                        <button disabled={ userInfo.name !== data.author }
+                        onClick={()=> window.location.href = `/question-form/${id}`}
+                        >edit</button>
                         <button 
                         onClick={(e)=>handleDelete(e.target.value)} 
                         disabled={ userInfo.name !== data.author}
@@ -214,8 +196,14 @@ const Question = ({login,userInfo,handleDelete,setAuthor}) => {
                             }    
                         </aside>
                         <article>
-                            {data.content}
-                            <div>{data.tag.map((el) => <span>{el}</span>)}</div>
+                            <Viewer
+                             initialValue={data.problem}
+                             contentStyle={contentStyle}
+                             />
+                             <Viewer
+                             initialValue={data.expectation}
+                             />
+                            <div>{data.tagList.map((el) => <span>{el}</span>)}</div>
                         </article>
                         </>
                 }

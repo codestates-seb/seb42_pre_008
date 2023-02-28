@@ -1,5 +1,5 @@
-import { useEffect, Suspense, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import Login from "./pages/Login";
 import MyPage from "./pages/MyPage";
@@ -64,15 +64,25 @@ function App() {
     return (
         <>
             <GlobalStyle />
-            {/* <NavOnLogout/> */}
-            <NavOnLogin />
+            {login ? (
+                <NavOnLogin login={login} setLogin={setLogin} />
+            ) : (
+                <NavOnLogout login={login} setLogin={setLogin} />
+            )}
             {/* <BrowserRouter> */}
             <Suspense>
                 <Routes>
-                    <Route exact path="/" element={<QuestionList />} />
-                    <Route path="/question-form" element={<QuestionForm />} />
                     <Route
-                        path="/question-detail"
+                        exact
+                        path="/"
+                        element={<QuestionList login={login} />}
+                    />
+                    <Route
+                        path="/question-form/:id"
+                        element={<QuestionForm userInfo={userInfo} />}
+                    />
+                    <Route
+                        path="/question-detail/:id"
                         element={
                             <QuestionDetail login={login} userInfo={userInfo} />
                         }
@@ -83,7 +93,7 @@ function App() {
                     <Route path="/welcome" element={<Welcome />} />
                     <Route
                         path="/userinfo-edit"
-                        element={<UserInfoEdit userInfo={userInfo} />}
+                        element={<UserInfoEdit loginInfo={userInfo} />}
                     />
                 </Routes>
             </Suspense>

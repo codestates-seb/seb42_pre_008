@@ -2,16 +2,17 @@
   "questions": [
     {
       "id": 1,
-      "title": "Testing transforms in Foundry: How to quickly select some rows from the preview of an existing dataframe as example data?",
-      "problem": "Having developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortable",
-      "expectation": "",
+      "title": "Testing transforms in Foundry: rerere",
+      "problem": "Having developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortabledddd",
+      "expectation": "loped a pipeline transform, I might want to writeddd",
       "tagList": [
-        "palantir-foundry"
+        "palantir-foundry",
+        "ajax"
       ],
       "author": "kkte02",
       "createdAt": "date",
       "view": 3,
-      "votes": 0,
+      "votes": 2,
       "answers": 2
     },
     {
@@ -27,7 +28,7 @@
       "author": "Eom0j",
       "createdAt": "date",
       "view": 7,
-      "votes": 0,
+      "votes": 3,
       "answers": 0
     },
     {
@@ -43,7 +44,7 @@
       "author": "IKori",
       "createdAt": "date",
       "view": 4,
-      "votes": 8,
+      "votes": 10,
       "answers": 1
     },
     {
@@ -59,7 +60,7 @@
       "author": "myongdol",
       "createdAt": "date",
       "view": 526,
-      "votes": 25,
+      "votes": 28,
       "answers": 2
     },
     {
@@ -76,36 +77,6 @@
       "createdAt": "date",
       "view": 10,
       "votes": 76875,
-      "answers": 0
-    },
-    {
-      "id": 6,
-      "title": "나 이제 진짜 잘 써볼게 ",
-      "problem": "생각해봐, 자러 안가게 생겼어?",
-      "expectation": "",
-      "tagList": [
-        "tired",
-        "exhausted"
-      ],
-      "author": "kkte02",
-      "createdAt": "date",
-      "view": 0,
-      "votes": 0,
-      "answers": 0
-    },
-    {
-      "id": 7,
-      "title": "dsfads",
-      "problem": "dsfdsd**sadasdasㅇ~~sadasdasㅇ~~**",
-      "expectation": "asdasd**ㅇASdasdas*asdasㅇㅁㄴd***",
-      "tagList": [
-        "sdasdas",
-        "assdsa"
-      ],
-      "author": "kkte02",
-      "createdAt": "date",
-      "view": 0,
-      "votes": 0,
       "answers": 0
     }
   ]

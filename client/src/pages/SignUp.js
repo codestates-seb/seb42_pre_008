@@ -218,6 +218,8 @@ function SignUp() {
             "email" : email,
             "password" : password
         }
+        /*** Users POST ***/
+        //`${process.env.REACT_APP_API_SERVER}/users`
         fetch(process.env.REACT_APP_API_USER, {
             method: "POST",
             headers: {"Content-Type" : "application/json"},
@@ -290,9 +292,9 @@ function SignUp() {
         </aside>
         <div>
             <OauthWrap>
-                <Button type="submit"><FcGoogle/><span>Sign Up with Google</span></Button>
-                <Button type="submit"><AiFillGithub/><span>Sign Up with GitHub</span></Button>
-                <Button type="submit"><SiNaver/><span>Sign Up with Naver</span></Button>
+                <Button ><FcGoogle/><span>Sign Up with Google</span></Button>
+                <Button ><AiFillGithub/><span>Sign Up with GitHub</span></Button>
+                <Button ><SiNaver/><span>Sign Up with Naver</span></Button>
             </OauthWrap>
 
             <Form onSubmit={handleSubmit}>

@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import {MdOutlineOpenInNew} from 'react-icons/md'
 // import {SiNaver} from 'react-icons/si'
 import {AiOutlineGithub, AiOutlineFacebook} from 'react-icons/ai'
+import {SiNaver} from 'react-icons/si'
+import {AiOutlineGithub} from 'react-icons/ai'
+import { fetchLogin } from "../util/fetchLogin";
 import styled from 'styled-components';
 import useUserActions from "../component/oauth/useUserAction";
 import axios from "axios";
@@ -13,34 +16,62 @@ import userAtom from "../component/oauth/userAuth";
 
 
 const DivWrapper = styled.div`
-justify-content: center;
-align-items: middle;
+    background-color: #F1F2F3;
+    padding:15vh 0;
+    display: flex;
+    justify-content: center;
 `;
-//
-const Container = styled.div`
-  width: 100%;
-  background-color: #E5E7EB;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+const OauthWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    >button{
+        width: 100%;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e1e4e8;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        svg{
+            width: 20px;
+            height: 20px;
+            margin-right: 4px;
+        }
+        p{
+            display: inline-block;
+            height: 100%;
+            transform: translateY(4px);
+        }
+        :first-child{
+            background-color: #fff;
+            color: #3b4045;
+            :hover{
+                background-color: #f7f8f9;
+            }
+        }
+        :nth-child(2){
+            background-color: #242629;
+            color: #FFFFFF;
+            :hover{
+                background-color: #18191c;
+            }
+        }
+        :nth-child(3){
+            background-color: #03CF5D;
+            color: #FFFFFF;
+            :hover{
+                background-color: #01ba51;
+            }
+        }
+    }
 `
 
-const Container2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: fit-content;
-`
-const FlexDiv = styled.div`
- display: flex;
-`
-
-const OauthWrapper = styled.div`
-  margin-top: 24px;
-  margin-left: auto;
-  margin-right: auto;
-`
 
 const IconWrapper = styled.div`
   margin-bottom: 5px;
@@ -57,187 +88,77 @@ const Path = styled.path`
   fill: ${props => props.fillColor};
 `;
 
-const GoogleBtn = styled.button`
-  width: 100%;
-  padding: 0.5rem 2.5rem;
-  margin: 0.25rem 0;
-  background-color: white;
-  color: black;
-  text-align: center;
-  font-size: 1rem;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  &:hover {
-    background-color: #f3f3f3;
-	border: 2px solid blue;
-  }
-  &:focus {
-    outline: none;
-    border: 2px solid blue;
-  }
 
-`
-const GoogleLogo = styled(FcGoogle)`
-  display: inline;
-  font-size: 1.5rem;
-  margin-right: 0.25rem;
+const Form = styled.form`
+  box-sizing:border-box;
+  width:40rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: 2rem;
+  background-color:#fff;
+  padding:4vh 4vh;
+  box-shadow: 2px 2px 4px #e3e9ef;
+  border-radius: 0.25rem;
+    label{
+        font-weight: 500;
+        margin-bottom: 0.8rem;
+        margin-top: 1.8rem;
+        :first-child{
+            margin-top: 0;
+        }
+    }
+    input{  
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid gray;
+      border-radius: 0.25rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    p{
+        margin-top: 0.4rem;
+        font-size: 14px;
+        color: #6A737c;
+        :first-child{
+            color: red;
+        }
+    }
 `;
 
-
-const GithubBtn = styled.button`
-  width: 100%;
-  border-radius: 4px;
-  background-color: #1c1c1e;
-  margin-bottom: 0.75rem;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  &:hover {
-    background-color: #2c2c2e;
-	border: 2px solid blue;
-  }
-  &:focus {
-    outline: none;
-    border: 2px solid blue;
-  }
-`
-const GithubLogo = styled(AiOutlineGithub)`
-  display: inline;
-  font-size: 1.5rem;
-  margin-right: 0.25rem;
-`
-
-const FacebookBtn = styled.button`
-  width: 100%;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.2;
-  text-align: center;
-  text-transform: none;
-  color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
-  border-radius: 0.25rem;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    background-color: #218838;
-    border-color: 1px solid #1e7e34;
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
-  }
-  `
-const FacebookLogo = styled(AiOutlineFacebook)`
-  display: inline;
-  font-size: 1.5rem;
-  margin-right: 0.25rem;
-`
-
-const FormContainer = styled.form`
-width: 100%;
-background-color: #fff;
-padding: 1.25rem;
-margin-top: 1.5rem;
-box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.06);
-border-radius: 0.375rem;
-& > div:first-child {
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-  font-size: 1rem;
-}
-input {
-  width: 100%;
-  border: 1.5px solid #d1d5db;
-  border-radius: 0.375rem;
-  padding: 0.25rem 0.5rem;
-  outline: none;
-  &:focus {
-	border-color: #60a5fa;
-	box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
-  }
-}
-button {
-  width: 100%;
-  background-color: #3b82f6;
-  color: #fff;
-  border-radius: 0.375rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  outline: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  &:hover {
-	background-color: #2563eb;
-  }
-  &:focus {
-	box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
-  }
-}
-`
-
-const SubmitBtn = styled.button`
-  background-color: #3b82f6;
-  border-radius: 0.375rem;
-  width: 100%;
-  margin-top: 0.625rem;
-  margin-bottom: 0.25rem;
-  padding: 0.5rem 0;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  border: none;
-  &:hover {
-    background-color: #2563eb;
-  }
-  &:focus {
-    outline: none;
-    border: 2px solid blue;
-  }
-`
+const LoginButton = styled.button`
+    height: 37px;
+    border-radius: 0.3vh;
+    background-color: #0995ff;
+    color: white;
+    border: 1px solid #477199;
+    box-shadow: inset 0px 0px 0px 0px #54a3f7;
+    margin-top: 1.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    :hover {
+        background-color: #3172c6;
+    }
+`;
 const AccountDiv = styled.div`
-  font-size: 16px;
-  margin-top: 16px;
+  font-size: 1rem;
+  margin-top: 1rem;
+  text-align: center;
   `
 const SignupLink = styled(Link)`
-  color: blue;
-  font-size: 14px;
+  color: #0995ff;
+  font-size: 1.2rem;
+  margin-left: 0.4rem;
   text-decoration: none;
   &:hover {
     color: #00bfff;
   }
 `
-const EmployContainer = styled.div`
-  margin-top: 1rem;
-  margin-bottom: 7rem;
-  font-size: 0.875rem;
-  color: #4b5563;
-`;
-const EmployerLink = styled(Link)`
-  margin-left: 0.25rem;
-  color: #3b82f6;
-  text-decoration: none;
-  &:hover {
-    color: #60a5fa;
-  }
-`;
-const EmployIcon = styled(MdOutlineOpenInNew)`
-  margin-left: 0.25rem;
-  vertical-align: middle;
-`;
 
 
 
 export default function Login (props) {
+
   //   const navigate = useNavigate();
   //   const [userEmail, setUserEmail] = useState('');
   //   const [userPassword, setUserPassword] = useState('');
@@ -270,6 +191,7 @@ export default function Login (props) {
   //           }
   //       })
   //   }
+  
   const navigate = useNavigate();
   const userActions = useUserActions();
   const [userEmail, setUserEmail] = useState('');
@@ -307,18 +229,14 @@ export default function Login (props) {
           });
   }; 
 
- 
+
         
 
 
 
     return (
 		<DivWrapper>
-			<Container>
-                
-				<Container2>
-					<FlexDiv>
-						<OauthWrapper>
+      <div>
 							<IconWrapper>
 							 <SvgIcon viewBox="0 0 32 37" aria-hidden="true">
 								<Path
@@ -332,68 +250,49 @@ export default function Login (props) {
 								</SvgIcon>  
 							</IconWrapper>
 
-							<GoogleBtn>
-								<GoogleLogo />
-								Log in with Google
-							</GoogleBtn>
+            <OauthWrap>
+							<button><FcGoogle />Log in with Google</button>
+              <button><AiOutlineGithub/>Log in with GitHub</button>
+              <button><SiNaver/>Log in with Facebook</button>
+            </OauthWrap>
 
-							<GithubBtn>
-                <GithubLogo/>
-								Log in with GitHub
-							</GithubBtn>
-
-							<FacebookBtn>
-								<FacebookLogo/>
-								Log in with Facebook
-							</FacebookBtn>
-
-							<FormContainer>
-								<div>Email</div>
+							<Form>
+								<label htmlFor="email">Email</label>
 								<input
                   onChange={onEmailChange}
                   value={userEmail}
 									type="email"
+                  id="email"
+                  onBlur={handleEmailBlur}
 								/>
-								
-								<div>Password</div>
+								{emailError && <p>{emailError}</p>}
+
+								<label htmlFor="password">Password</label>
 								<input
 									onChange={onPasswordChange}
                   value={userPassword}
 									type="password"
+                  id="password"
+                  onBlur={handlePasswordBlur}
 								/>
-								<SubmitBtn
+                {passwordError && <p>{passwordError}</p>}
+								<LoginButton
 									type="submit"
 									onClick={onSubmit}
 								>
 									Log in
-								</SubmitBtn>
-							</FormContainer>
-						</OauthWrapper>
-					</FlexDiv>
-
+								</LoginButton>
+							</Form>
 
 					<AccountDiv>
 						Don’t have an account?
 						<SignupLink
-							to="/signup"
-							className="ml-1"
+							to="/sign-up"
 						>
 							Sign up
 						</SignupLink>
 					</AccountDiv>
-
-					<EmployContainer>
-						Are you an employer?
-						<EmployerLink
-							to="."
-						>
-							Sign up on Talent
-							<EmployIcon/>
-						</EmployerLink>
-					</EmployContainer>
-
-				</Container2>
-			</Container>
+          </div>
 		</DivWrapper>
 	);
 }

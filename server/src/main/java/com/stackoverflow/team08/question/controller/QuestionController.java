@@ -7,6 +7,18 @@ import com.stackoverflow.team08.question.dto.QuestionPatchDto;
 import com.stackoverflow.team08.question.dto.QuestionPostDto;
 import com.stackoverflow.team08.question.entity.Question;
 import com.stackoverflow.team08.question.mapper.QuestionMapper;
+import com.stackoverflow.team08.config.pageable.CustomPageRequest;
+import com.stackoverflow.team08.dto.MultiResponseDto;
+import com.stackoverflow.team08.dto.SingleResponseDto;
+import com.stackoverflow.team08.member.entity.Member;
+import com.stackoverflow.team08.member.service.MemberService;
+import com.stackoverflow.team08.question.dto.QuestionPatchDto;
+import com.stackoverflow.team08.question.dto.QuestionPostDto;
+import com.stackoverflow.team08.question.dto.QuestionResponseDto;
+import com.stackoverflow.team08.question.entity.Question;
+import com.stackoverflow.team08.question.mapper.QuestionMapper;
+import com.stackoverflow.team08.question.page.QuestionPageRequest;
+import com.stackoverflow.team08.question.page.QuestionSortingType;
 import com.stackoverflow.team08.question.service.QuestionService;
 import com.stackoverflow.team08.utils.UriCreator;
 import com.stackoverflow.team08.vote.service.QuestionVoteService;
@@ -14,6 +26,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
@@ -33,7 +54,7 @@ public class QuestionController {
     private final static String QUESTION_DEFAULT_URL = "/questions";
     private final QuestionService questionService;
     private final QuestionVoteService questionVoteService;
-//    private final MemberService memberService;
+    private final MemberService memberService;
     private final QuestionMapper mapper;
 
 //    public QuestionController(QuestionService questionService, QuestionMapper mapper, QuestionVoteService questionVoteService) {
@@ -52,23 +73,25 @@ public class QuestionController {
         return ResponseEntity.created(location).build();
     }
 
-//    @PostMapping("/{question-id}/vote/up")
-//    public ResponseEntity<SingleResponseDto> questionVoteUp(@PathVariable("question-id") @Positive long questionId) {
-////        Member member = memberService.findMember(memberId); //관우님이 설계 하신 거에 따라 변경 가능
-//        Question question = questionService.findQuestion(questionId);
-//        questionVoteService.increaseVote(member, question);
+    @PostMapping("/{question-id}/{member-id}/vote/up")
+    public ResponseEntity<SingleResponseDto> questionVoteUp(@PathVariable("question-id") @Positive long questionId,
+                                                            @PathVariable("member-id") @Positive long id) {
+        Member member = memberService.findMemberToId(id); //관우님이 설계 하신 거에 따라 변경 가능
+        Question question = questionService.findQuestion(questionId);
+        questionVoteService.increaseVote(member, question);
+
+        return new ResponseEntity<>(new SingleResponseDto(mapper.questionToQuestionVoteResponse(question)), HttpStatus.OK);
+    }
 //
-//        return new ResponseEntity<>(new SingleResponseDto(mapper.questionToQuestionVoteResponse(question)), HttpStatus.OK);
-//    }
-//
-//    @PostMapping("/{question-id}/vote/down")
-//    public ResponseEntity<SingleResponseDto> questionVoteDown(@PathVariable("question-id") @Positive long questionId) {
-//        Member member = memberService.findMember(memberId);
-//        Question question = questionService.findQuestion(questionId);
-//        questionVoteService.decreaseVote(member, question);
-//
-//        return new ResponseEntity<>(new SingleResponseDto(mapper.questionToQuestionResponse(question)), HttpStatus.OK);
-//    }
+    @PostMapping("/{question-id}/{member-id}/vote/down")
+    public ResponseEntity<SingleResponseDto> questionVoteDown(@PathVariable("question-id") @Positive long questionId,
+                                                              @PathVariable("member-id") @Positive long id) {
+        Member member = memberService.findMemberToId(id);
+        Question question = questionService.findQuestion(questionId);
+        questionVoteService.decreaseVote(member, question);
+
+        return new ResponseEntity<>(new SingleResponseDto(mapper.questionToQuestionVoteResponse(question)), HttpStatus.OK);
+    }
 
     @PatchMapping("/{question-id}")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
@@ -88,14 +111,25 @@ public class QuestionController {
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.questionToQuestionResponse(question)), HttpStatus.OK);
     }
 
+//테스트중 27일 전체목록 불러오기 포스트맨으로
 //    @GetMapping
-//    public ResponseEntity<?> getQuestions(QuestionPageRequest pageRequest) {
+//    public ResponseEntity getQuestions(QuestionPageRequest pageRequest) {
 //        Page<Question> pageQuestions = questionService.findAll(pageRequest);
 //        List<Question> questions = pageQuestions.getContent();
-//        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions), HttpStatus.OK);
+//        return new ResponseEntity<>(
+//                new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions
+//                     ),
+//                HttpStatus.OK);
 //    }
+    @GetMapping
+        public ResponseEntity<?> getAll(
+        QuestionPageRequest pageRequest
+    ) {
+        return getMultiResponseEntity(questionService.findAll(pageRequest));
+    }
 
 
+//    @GetMapping
 //    public ResponseEntity getQuestions(@Positive @RequestParam int page, //pageable
 //                                       @Positive @RequestParam int size,
 //                                       @RequestParam(defaultValue = "Newest", required = false) String filter) {
@@ -112,12 +146,14 @@ public class QuestionController {
 //            List<Question> questions = pageQuestions.getContent();
 //            return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions), HttpStatus.OK);
 //        }
-//        Page<Question> pageQuestions = questionService.findQuestions(page - 1 , size);
+
+//        Page<Question> pageQuestions = questionService.findQuestions(page - 1, size);
 //        List<Question> questions = pageQuestions.getContent();
-
+//
 //        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions), HttpStatus.OK);
-//        return null;
-
+//
+//    }
+//밑으로 잠시 주석처리 27일
 //    @GetMapping("/search")
 //    public ResponseEntity<?> searchQuestions(@RequestParam(name = "query") String query,
 //                                             QuestionPageRequest pageRequest) {
@@ -126,6 +162,33 @@ public class QuestionController {
 //        return new ResponseEntity<>(new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), pageQuestions), HttpStatus.OK);
 //    }
 
+// 페이지 네이션 까지 출력 되게
+//    @GetMapping
+//    public ResponseEntity getQuestions(
+//            @PageableDefault(size = 15, sort = "questionId", direction = Sort.Direction.DESC) Pageable pageable) {
+//
+//        Page<Question> questionPage = questionService.findAll(0);
+//        List<Question> questions = questionPage.getContent();
+//
+//
+//        return new ResponseEntity<>(
+//                new MultiResponseDto<>(
+//                        mapper.questionsToQuestionResponses(questions), questionPage),
+//                HttpStatus.OK);
+//    }
+    @GetMapping("/search")
+    public ResponseEntity<?> searchQuestions(
+            @RequestParam(name = "q") String query,
+            QuestionPageRequest pageRequest
+    ) {
+        return getMultiResponseEntity(questionService.search(query, pageRequest));
+    }
+
+    @GetMapping("/tagged/{tag-name}")
+    public ResponseEntity<?> searchQuestionsByTag(
+            @PathVariable("tag-name") String tagName, QuestionPageRequest pageRequest) {
+        return getMultiResponseEntity(questionService.findAllByTag(tagName, pageRequest));
+    }
 
 
 
@@ -166,4 +229,12 @@ public class QuestionController {
     }
 
 
+    private ResponseEntity<?> getMultiResponseEntity(Page<Question> page) {
+        if (page.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            List<QuestionResponseDto> responses = mapper.questionsToResponses(page, Member.builder().build());
+            return new ResponseEntity<>(new MultiResponseDto<>(responses, page), HttpStatus.OK);
+        }
+    }
 }

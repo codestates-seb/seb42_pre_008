@@ -28,10 +28,17 @@ public abstract class PageableHandlerMethodArgumentResolver<T extends CustomPage
         this.defaultSize = defaultSize;
     }
 
+<<<<<<< HEAD
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return QuestionPageRequest.class.isAssignableFrom(parameter.getParameterType());
     }
+=======
+//    @Override
+//    public boolean supportsParameter(MethodParameter parameter) {
+//        return QuestionPageRequest.class.isAssignableFrom(parameter.getParameterType());
+//    }
+>>>>>>> 87fd81608c10976510178d0206f8e9e4776fa75d
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,

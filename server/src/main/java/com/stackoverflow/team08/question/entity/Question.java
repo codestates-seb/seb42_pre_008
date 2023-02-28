@@ -3,6 +3,10 @@ package com.stackoverflow.team08.question.entity;
 import com.stackoverflow.team08.answers.entity.Answer;
 import com.stackoverflow.team08.audit.Auditable;
 //import com.stackoverflow.team08.member.entity.Member;
+import com.stackoverflow.team08.enums.VoteStatus;
+import com.stackoverflow.team08.member.entity.Member;
+import com.stackoverflow.team08.tag.entity.Tag;
+import com.stackoverflow.team08.vote.entity.QuestionVote;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +14,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Getter
@@ -39,27 +44,35 @@ public class Question extends Auditable {
     @Column(name = "question_vote_count")
     private long questionVoteCount;
 
-//    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
-//    private List<QuestionVote> questionVotes = new ArrayList<>();
-//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id", updatable = false)
-//    private Member member;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<QuestionVote> questionVotes = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private String tags =
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<Answer> answers = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id", updatable = false)
+    private Member member;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<QuestionTag> questionTags = new ArrayList<>();
 
     public void viewCount(Question question) {
         question.viewCount++;
     }
 
-    @OneToMany(mappedBy = "question")
-    private List<Answer> answers = new ArrayList<>();
+    public VoteStatus getVoteType(Member member) {
+        if (member == null)
+            return VoteStatus.NONE;
 
-    public void addAnswer(Answer answer) {
-        answers.add(answer);
+        return questionVotes.stream()
+                .filter(vote -> vote.getMember().getMemberId() == member.getMemberId())
+                .findFirst()
+                .map(QuestionVote::getStatus)
+                .orElse(VoteStatus.NONE);
     }
-}
 
+
+}
 
 //연관관계 매핑 적용 x

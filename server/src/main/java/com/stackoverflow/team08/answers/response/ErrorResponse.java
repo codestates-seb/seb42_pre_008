@@ -1,6 +1,10 @@
 package com.stackoverflow.team08.answers.response;
 
+<<<<<<< HEAD
 import com.stackoverflow.team08.exception.ExceptionCode;
+=======
+import com.stackoverflow.team08.answers.exception.ExceptionCode;
+>>>>>>> 87fd81608c10976510178d0206f8e9e4776fa75d
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;

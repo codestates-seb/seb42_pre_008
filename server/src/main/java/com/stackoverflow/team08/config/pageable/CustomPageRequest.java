@@ -20,6 +20,14 @@ public abstract class CustomPageRequest <E extends Enum<?>> {
     }
 
     public PageRequest of() {
+<<<<<<< HEAD
         return of(Sort.by("Newest").descending());
+=======
+        return of(Sort.by("createdAt").descending());
+    }
+
+    public PageRequest unsorted() {
+        return of(Sort.unsorted());
+>>>>>>> 87fd81608c10976510178d0206f8e9e4776fa75d
     }
 }

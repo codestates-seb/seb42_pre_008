@@ -23,20 +23,20 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Page<Question> findAllByTag(Tag tag, Pageable pageable);
 
     //Unanswered (TAG)
-    @Query(value = "SELECT q FROM Question q INNER JOIN QuestionTag qt WHERE qt.tag = :tag AND NOT EXISTS(SELECT 1 FROM Answer a WHERE a.question = q)")
+    @Query(value = "SELECT q FROM Question q INNER JOIN QuestionTag qt WHERE qt.tag = :tag AND NOT EXISTS(SELECT 1 FROM ANSWER a WHERE a.question = q)")
     Page<Question> findAllByTagAndAnswersEmpty(Tag tag, Pageable pageable);
 
     //Answered (TAG)
 
-    @Query(value = "SELECT q FROM Question q INNER JOIN QuestionTag qt WHERE qt.tag = :tag AND EXISTS(SELECT 1 FROM Answer a WHERE a.question = q)" )
+    @Query(value = "SELECT q FROM Question q INNER JOIN QuestionTag qt WHERE qt.tag = :tag AND EXISTS(SELECT 1 FROM ANSWER a WHERE a.question = q)" )
     Page<Question> findAllByTagAndAnswersExist(Tag tag, Pageable pageable);
 
 //    Unanswered
-    @Query(value = "SELECT q FROM Question q WHERE NOT EXISTS (SELECT 1 FROM Answer a where a.question = q)" )
+    @Query(value = "SELECT q FROM Question q WHERE NOT EXISTS (SELECT 1 FROM ANSWER a where a.question = q)" )
     Page<Question> findAllByAnswersEmpty(Pageable pageable);
 
 //    Answered
-    @Query(value = "SELECT q FROM Question q WHERE EXISTS(SELECT 1 FROM Answer a where a.question = q)")
+    @Query(value = "SELECT q FROM Question q WHERE EXISTS(SELECT 1 FROM ANSWER a where a.question = q)")
     Page<Question> findAllByAnswersExistQuestion(Pageable pageable);
 
 //    Newest(Search)
@@ -46,14 +46,14 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 //    Unanswered(Search)
 //    @Query(value = "SELECT q FROM Question q WHERE NOT EXISTS(SELECT 1 FROM Answer a.question = q) and (q.title like concat('%', :query, '%') or q.content like concat('%', :query, '%'))")
     @Query("select q from Question q "
-        + "where not exists (select 1 from Answer a where a.question = q) "
+        + "where not exists (select 1 from ANSWER a where a.question = q) "
         + "and (q.title like concat('%', :query, '%') or q.content like concat('%', :query, '%'))")
     Page<Question> findAllByAnswersIsEmptyAndTitleOrContentLike(String query, Pageable pageable);
 
 //    Answered
 //    @Query(value = "SELECT q FROM Question q WHERE EXISTS(SELECT 1 FROM Answer a.question = q) and (q.title like concat('%', :query, '%') or q.content like concat('%', :query, '%'))")
     @Query("select q from Question q "
-        + "where exists (select 1 from Answer a where a.question = q) "
+        + "where exists (select 1 from ANSWER a where a.question = q) "
         + "and (q.title like concat('%', :query, '%') or q.content like concat('%', :query, '%'))")
     Page<Question> findAllByAnswersIsExistAndTitleOrContentLike(String query, Pageable pageable);
 }

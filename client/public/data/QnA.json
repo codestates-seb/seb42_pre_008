@@ -1,16 +1,17 @@
 {
   "questions": [
     {
-      "id": 1,
-      "title": "specific GraphQL query fetch's are being cancelled",
-      "problem": "I've been using graphql for a project for the past few months and have never run into this problem. This specific query was able to run only once but now every time this query is fetched the resultI've been using graphql for a project for the past few months and have never run into this problem. This specific query was able to run only once but now every time this query is fetched the resultI've been using graphql for a project for the past few months and have never run into this problem. This specific query was able to run only once but now every time this query is fetched the result",
-      "expectation": "시도한것은 없고 떡볶이가 먹고싶습니다.",
+      "question_id": 1,
+      "question_title": "specific GraphQL query fetch's are being cancelled",
+      "question_content": "I've been using graphql for a project for the past few months and have never run into this problem. This specific query was able to run only once but now every time this query is fetched the resultI've been using graphql for a project for the past few months and have never run into this problem. This specific query was able to run only once but now every time this query is fetched the resultI've been using graphql for a project for the past few months and have never run into this problem. This specific query was able to run only once but now every time this query is fetched the result",
+      "question_try_and_expecting": "시도한것은 없고 떡볶이가 먹고싶습니다.",
       "tagList": [
         "tteokbokki"
       ],
-      "author": "kkte02",
-      "createdAt": "2023-02-25T13:46:31.333Z",
-      "view": 0,
+      "member_id": "kkte02",
+      "created_at": "2023-02-25T13:46:31.333Z",
+      "updated_at": "2023-02-25T13:46:31.333Z",
+      "question_view_count": 0,
       "votes": 0,
       "answers": [
         {
@@ -25,16 +26,17 @@
       "adoptChosen": true
     },
     {
-      "id": 2,
-      "title": "Testing transforms in Foundry: How to quickly select some rows from the preview of an existing dataframe as example data?",
-      "problem": "Having developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortableHaving developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortableHaving developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortable",
-      "expectation": "",
+      "question_id": 2,
+      "question_title": "Testing transforms in Foundry: How to quickly select some rows from the preview of an existing dataframe as example data?",
+      "question_content": "Having developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortableHaving developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortableHaving developed a pipeline transform, I might want to write a test that applies the new transform to a given small dataset and compares the result with an expected result. How do I comfortable",
+      "question_try_and_expecting": "",
       "tagList": [
         "palantirfoundry"
       ],
-      "author": "kkte02",
-      "createdAt": "2023-02-26T14:10:20.162Z",
-      "view": 0,
+      "member_id": "kkte02",
+      "created_at": "2023-02-26T14:10:20.162Z",
+      "updated_at": "2023-02-26T14:10:20.162Z",
+      "question_view_count": 0,
       "votes": 0,
       "answers": [
         {
@@ -73,18 +75,19 @@
       "adoptChosen": false
     },
     {
-      "id": 3,
-      "title": "JsonCpp: Treat strings as numbers",
-      "problem": "I have floating-point numbers stored as strings. During serialization to JSON, I want to convert those strings to numbers. For example, the strings a='1.001' and b='0.1' must beI have floating-point numbers stored as strings. During serialization to JSON, I want to convert those strings to numbers. For example, the strings a='1.001' and b='0.1' must beI have floating-point numbers stored as strings. During serialization to JSON, I want to convert those strings to numbers. For example, the strings a='1.001' and b='0.1' must be",
-      "expectation": "",
+      "question_id": 3,
+      "question_title": "JsonCpp: Treat strings as numbers",
+      "question_content": "I have floating-point numbers stored as strings. During serialization to JSON, I want to convert those strings to numbers. For example, the strings a='1.001' and b='0.1' must beI have floating-point numbers stored as strings. During serialization to JSON, I want to convert those strings to numbers. For example, the strings a='1.001' and b='0.1' must beI have floating-point numbers stored as strings. During serialization to JSON, I want to convert those strings to numbers. For example, the strings a='1.001' and b='0.1' must be",
+      "question_try_and_expecting": "",
       "tagList": [
         "c",
         "json",
         "jsoncpp"
       ],
-      "author": "kkte02",
-      "createdAt": "2023-02-26T14:11:26.039Z",
-      "view": 0,
+      "member_id": "kkte02",
+      "created_at": "2023-02-26T14:11:26.039Z",
+      "updated_at": "2023-02-26T14:11:26.039Z",
+      "question_view_count": 0,
       "votes": 0,
       "answers": [
         {
@@ -115,18 +118,19 @@
       "adoptChosen": false
     },
     {
-      "id": 4,
-      "title": "How i can use custom listview in react-native-google-places-autocomplete?",
-      "problem": "I have two autocompleteinputs but i want them to use same listview to look nicer. The app i am developing looks like lyft in lyft they use two text inputs in destination selection screen. How i caI have two autocompleteinputs but i want them to use same listview to look nicer. The app i am developing looks like lyft in lyft they use two text inputs in destination selection screen. How i caI have two autocompleteinputs but i want them to use same listview to look nicer. The app i am developing looks like lyft in lyft they use two text inputs in destination selection screen. How i ca",
-      "expectation": "",
+      "question_id": 4,
+      "question_title": "How i can use custom listview in react-native-google-places-autocomplete?",
+      "question_content": "I have two autocompleteinputs but i want them to use same listview to look nicer. The app i am developing looks like lyft in lyft they use two text inputs in destination selection screen. How i caI have two autocompleteinputs but i want them to use same listview to look nicer. The app i am developing looks like lyft in lyft they use two text inputs in destination selection screen. How i caI have two autocompleteinputs but i want them to use same listview to look nicer. The app i am developing looks like lyft in lyft they use two text inputs in destination selection screen. How i ca",
+      "question_try_and_expecting": "",
       "tagList": [
         "javascript",
         "react",
         "jsonserver"
       ],
-      "author": "kkte02",
-      "createdAt": "2023-02-26T14:12:30.763Z",
-      "view": 0,
+      "member_id": "kkte02",
+      "created_at": "2023-02-26T14:12:30.763Z",
+      "updated_at": "2023-02-26T14:12:30.763Z",
+      "question_view_count": 0,
       "votes": 0,
       "answers": [
         {
@@ -149,18 +153,19 @@
       "adoptChosen": true
     },
     {
-      "id": 5,
-      "title": "Create type for HOC parent depending on child object's properties",
-      "problem": "I'm making high order component for @expo/vector-icons and trying to define the general type for its props. There are several objects inside module (MaterialCommunityIcons, MaterialIconsI'm making high order component for @expo/vector-icons and trying to define the general type for its props. There are several objects inside module (MaterialCommunityIcons, MaterialIconsI'm making high order component for @expo/vector-icons and trying to define the general type for its props. There are several objects inside module (MaterialCommunityIcons, MaterialIcons",
-      "expectation": "",
+      "question_id": 5,
+      "question_title": "Create type for HOC parent depending on child object's properties",
+      "question_content": "I'm making high order component for @expo/vector-icons and trying to define the general type for its props. There are several objects inside module (MaterialCommunityIcons, MaterialIconsI'm making high order component for @expo/vector-icons and trying to define the general type for its props. There are several objects inside module (MaterialCommunityIcons, MaterialIconsI'm making high order component for @expo/vector-icons and trying to define the general type for its props. There are several objects inside module (MaterialCommunityIcons, MaterialIcons",
+      "question_try_and_expecting": "",
       "tagList": [
         "javascript",
         "date",
         "Eomj"
       ],
-      "author": "kkte02",
-      "createdAt": "2023-02-26T14:13:49.787Z",
-      "view": 0,
+      "member_id": "kkte02",
+      "created_at": "2023-02-26T14:13:49.787Z",
+      "updated_at": "2023-02-26T14:13:49.787Z",
+      "question_view_count": 0,
       "votes": 0,
       "answers": [],
       "adoptChosen": false

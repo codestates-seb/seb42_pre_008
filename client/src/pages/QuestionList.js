@@ -13,7 +13,7 @@ const QuestionList = ({ login }) => {
     //* useFetch 변형 -> Question and Answer together
     // const [questions, isPending, error, setQuestions] = useFetch("http://localhost:3001/questions");
     //* useFetch -> Question and Answer together
-    const [questions, isPending, error] = useFetch(
+    const [questions, isPending, error, setQuestions] = useFetch(
         "http://localhost:3004/questions"
     );
     // const [filtered, setFiltered] = useState(null);

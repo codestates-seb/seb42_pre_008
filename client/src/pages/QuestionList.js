@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Ads from "../component/QuestionList/Ads"
-import Sidebar from "../component/QuestionList/Sidebar"
+import Ads from "./Ads"
+import Sidebar from "./Sidebar"
 import useFetch from "../util/useFetch";
 import Loading from "../component/Loading";
-import Pagination from "../component/QuestionList/pagignation"
+import Pagination from "./pagignation"
 
 const QuestionList = ({ login }) => {
     //! GET DATA
@@ -13,7 +13,7 @@ const QuestionList = ({ login }) => {
     //* useFetch 변형 -> Question and Answer together
     // const [questions, isPending, error, setQuestions] = useFetch("http://localhost:3001/questions");
     //* useFetch -> Question and Answer together
-    const [questions, isPending, error, setQuestions] = useFetch(
+    const [questions, isPending, error] = useFetch(
         "http://localhost:3004/questions"
     );
     // const [filtered, setFiltered] = useState(null);

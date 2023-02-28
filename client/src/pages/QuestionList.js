@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Ads from "../component/questionList/Ads";
-import Sidebar from "../component/questionList/Sidebar";
+import Ads from "../component/QuestionList/Ads"
+import Sidebar from "../component/QuestionList/Sidebar"
 import useFetch from "../util/useFetch";
 import Loading from "../component/Loading";
-import Pagination from "../component/questionList/pagignation";
+import Pagination from "../component/QuestionList/pagignation"
 
 const QuestionList = ({ login }) => {
     //! GET DATA

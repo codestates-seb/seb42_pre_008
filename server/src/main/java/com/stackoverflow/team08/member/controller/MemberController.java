@@ -1,6 +1,7 @@
 package com.stackoverflow.team08.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stackoverflow.team08.auth.jwt.service.JwtCreateService;
 import com.stackoverflow.team08.member.dto.MemberDto;
 import com.stackoverflow.team08.member.entity.Member;
 import com.stackoverflow.team08.member.mapper.MemberMapper;
@@ -33,6 +34,8 @@ public class MemberController {
     private final String MEMBER_DEFAULT_URL = "/members";
 
     private final PatchDtoValidation patchDtoValidation;
+
+    private final JwtCreateService jwtCreateService;
 
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post post){
@@ -102,5 +105,25 @@ public class MemberController {
     @GetMapping("/test/jwt")
     public String testJwt(){
         return "jwt 로그인 성공";
+    }
+
+    @PatchMapping("/OAuth-info")
+    public ResponseEntity postOAuth2Info(@Valid @RequestBody MemberDto.OAuthInfo info, HttpServletResponse response){
+        Member member = memberMapper.memberOAuthInfoToMember(info);
+
+        // 토큰 생성
+        String accessToken = jwtCreateService.delegateAccessToken(member);
+        String refreshToken = jwtCreateService.delegateRefreshToken(member);
+
+        member.setRefreshToken(refreshToken);
+        // 서비스로 보내서 해당 정보를 업데이트 해주기
+        Member updateMember = memberService.oAuth2Update(member);
+
+        URI location = UriCreator.createUri(MEMBER_DEFAULT_URL, updateMember.getMemberId());
+
+        response.setHeader("Authorization", "Bearer " + accessToken);
+        response.setHeader("Refresh", refreshToken);
+
+        return ResponseEntity.created(location).build();
     }
 }

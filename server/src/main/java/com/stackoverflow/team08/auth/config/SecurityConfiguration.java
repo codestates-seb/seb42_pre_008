@@ -74,7 +74,7 @@ public class SecurityConfiguration {
                 .userService(customOAuth2UserService)
                 .and()
                 // 성공 시 Handler
-                .successHandler(new OAuth2AuthenticationSuccessHandler(new Gson(),oAuth2AuthorizedClientService,restTemplateBuilder,memberService))
+                .successHandler(new OAuth2AuthenticationSuccessHandler(new Gson(),oAuth2AuthorizedClientService,restTemplateBuilder,memberService,jwtCreateService))
                 // 실패 시 Handler
                 .failureHandler(oAuth2AuthenticationFailureHandler);
 

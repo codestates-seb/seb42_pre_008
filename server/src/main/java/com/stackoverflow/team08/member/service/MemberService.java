@@ -5,7 +5,6 @@ import com.stackoverflow.team08.exception.ExceptionCode;
 import com.stackoverflow.team08.member.entity.Member;
 import com.stackoverflow.team08.member.repository.MemberRepository;
 import com.stackoverflow.team08.member.status.MemberStatus;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,14 @@ public class MemberService {
         // 해당 이메일을 가진 유저가 있는지 검증하기
         verifiedExistsUser(member.getEmail());
 
+        // 해당 닉네임을 가진 유저가 있는지 검증하기
+        verifiedExistsDisplayName(member.getDisplayName());
+
         // 기본이미지 설정
-        member.setMemberImage("기본이미지");
+        if(member.getMemberImage() == null || member.getMemberImage().equals("")){
+            member.setMemberImage("기본이미지");
+        }
+
 
         // password encoding 하기
         String encodedPw = passwordEncoder.encode(member.getPassword());
@@ -54,6 +59,8 @@ public class MemberService {
 
         Member findMember = existsMemberToFindById(member.getMemberId());
 
+        verifiedExistsDisplayName(member.getDisplayName());
+
         Optional.ofNullable(member.getDisplayName())
                 .ifPresent(findMember::setDisplayName);
         Optional.ofNullable(member.getLocation())
@@ -62,6 +69,10 @@ public class MemberService {
                 .ifPresent(findMember::setAboutMe);
         Optional.ofNullable(member.getMemberImage())
                 .ifPresent(findMember::setMemberImage);
+        Optional.of(member.isAuthentication())
+                .ifPresent(findMember::setAuthentication);
+        Optional.ofNullable(member.getRefreshToken())
+                .ifPresent(findMember::setRefreshToken);
 
         return memberRepository.save(findMember);
 
@@ -116,10 +127,47 @@ public class MemberService {
         }
     }
 
+
     // 단순히 저장
     public void saveMember(Member member){
 
         memberRepository.save(member);
     }
 
+    public Optional<Member> existMember(String email){
+        return memberRepository.findByEmail(email);
+    }
+
+    // displayName 중복 검증
+    public void verifiedExistsDisplayName(String displayName){
+        Optional<Member> optionalMember = memberRepository.findByDisplayName(displayName);
+        if(optionalMember.isPresent()){
+            throw new BusinessLogicException(ExceptionCode.DISPLAY_NAME_EXISTS);
+        }
+    }
+
+    // 인증 여부 확인
+    
+    // OAuth2 에서 넘어온 정보 저장해주기
+    public Member oAuth2Update(Member member){
+
+        Optional<Member> optionalMember = memberRepository.findById(member.getMemberId());
+
+        Member findMember = optionalMember.orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)
+        );
+
+        Optional.ofNullable(member.getDisplayName())
+                        .ifPresent(findMember::setDisplayName);
+        Optional.ofNullable(member.getMemberImage())
+                    .ifPresent(findMember::setMemberImage);
+        Optional.ofNullable(member.getRefreshToken())
+                    .ifPresent(findMember::setRefreshToken);
+
+        findMember.setAuthentication(true);
+
+        Member updateMember = updateMember(findMember);
+
+        return updateMember;
+    }
 }

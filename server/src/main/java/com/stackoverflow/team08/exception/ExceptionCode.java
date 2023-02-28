@@ -11,6 +11,7 @@ public enum ExceptionCode {
     COMMENT_NOT_FOUND(404, "Comment Not Found"),
     VOTE_NOT_ALLOW (405, "You're already voted"),
     MEMBER_SECESSION(404, "MEMBER_SECESSION");
+
     @Getter
     private int status;
 

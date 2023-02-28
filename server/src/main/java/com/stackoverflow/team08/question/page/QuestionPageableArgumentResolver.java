@@ -1,6 +1,7 @@
 package com.stackoverflow.team08.question.page;
 
 import com.stackoverflow.team08.config.pageable.PageableHandlerMethodArgumentResolver;
+import org.springframework.core.MethodParameter;
 
 
 public class QuestionPageableArgumentResolver extends PageableHandlerMethodArgumentResolver<QuestionPageRequest> {
@@ -8,10 +9,10 @@ public class QuestionPageableArgumentResolver extends PageableHandlerMethodArgum
         super(defaultPageSize, defaultSize);
     }
 
-//	@Override
-//	public boolean supportsParameter(MethodParameter parameter) {
-//		return QuestionPageRequest.class.isAssignableFrom(parameter.getParameterType());
-//	}
+	@Override
+	public boolean supportsParameter(MethodParameter parameter) {
+		return QuestionPageRequest.class.isAssignableFrom(parameter.getParameterType());
+	}
 
     @Override
     protected QuestionPageRequest getPageRequest(int page, int size, String sortString) {

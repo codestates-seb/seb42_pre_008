@@ -1,12 +1,18 @@
 package com.stackoverflow.team08.question.dto;
 
+import com.stackoverflow.team08.tag.dto.TagResponseDto;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Builder
+
 @Getter
+@Setter
+@NoArgsConstructor
 public class QuestionResponseDto {
     private long questionId;
     private long memberId;
@@ -18,5 +24,5 @@ public class QuestionResponseDto {
     private String title;
     private String content;
     private String tryAndExpecting;
-    private String tag;
+    private List<TagResponseDto.Response> tags;
 }

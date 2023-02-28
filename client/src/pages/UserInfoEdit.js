@@ -174,7 +174,8 @@ function UserInfoEdit({loginInfo}) {
         ...userInfo,
         img:formData
     }
-
+    /*** Users PATCH ***/
+    //`${process.env.REACT_APP_API_SERVER}/users/${loginInfo.id}`
     fetch(process.env.REACT_APP_API_USER +'/'+ loginInfo.id, {
         method: "PATCH",
         headers: { "Content-Type": "Application/json" },
@@ -198,6 +199,8 @@ function UserInfoEdit({loginInfo}) {
     const abortCont = new AbortController();
 
     setTimeout(() => {
+        /*** Users GET ***/
+        //`${process.env.REACT_APP_API_SERVER}/users/${loginInfo.id}`
         fetch(process.env.REACT_APP_API_USER +'/'+ loginInfo.id, { signal: abortCont.signal })
             .then((res) => {
                 if (!res.ok) {

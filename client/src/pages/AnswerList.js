@@ -75,10 +75,10 @@ const AnswerList = ({login,userInfo,questionAuthor, handleDelete,id}) => {
     setContent(contentRef.current.getInstance().getMarkdown());
     }
 
-    /*** Answer fetch ***/
+    /*** Answer GET ***/
     useEffect(() => {
         const abortCont = new AbortController();
-
+        //`${process.env.REACT_APP_API_SERVER}/answers?questionId=${id}`
         setTimeout(() => {
         fetch(process.env.REACT_APP_API_ANSWER, { signal: abortCont.signal })
         .then(res => {
@@ -106,12 +106,13 @@ const AnswerList = ({login,userInfo,questionAuthor, handleDelete,id}) => {
             })
     }, [])
     
-    /***Creat Answer***/
+    /*** Answer POST ***/
     const onHandleClick = () => {
         if(content.length === 0) return ;
         const random = Math.round(Math.random()*100)+0
         const date = new Date();
         const today = date.toLocaleDateString().slice(0,-1);
+        //`${process.env.REACT_APP_API_SERVER}/answers`
         fetchCreate( process.env.REACT_APP_API_ANSWER, 
             {
                 "id": random,

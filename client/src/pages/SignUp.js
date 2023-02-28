@@ -218,6 +218,8 @@ function SignUp() {
             "email" : email,
             "password" : password
         }
+        /*** Users POST ***/
+        //`${process.env.REACT_APP_API_SERVER}/users`
         fetch(process.env.REACT_APP_API_USER, {
             method: "POST",
             headers: {"Content-Type" : "application/json"},

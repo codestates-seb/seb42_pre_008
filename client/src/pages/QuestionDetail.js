@@ -87,6 +87,7 @@ const QuestionDetail = ({login,userInfo}) => {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [vote, setVote] = useState('')
+    const [answerId, setAnswerId] = useState(null)
 
     const [questionAuthor,setQuestionAuthor] = useState('') 
 
@@ -97,13 +98,20 @@ const QuestionDetail = ({login,userInfo}) => {
     /*** useParams***/
     const { id } = useParams();
 
-    /*** Answer delete modal ***/
+    /*** modal ***/
     const handleDelete = (url) => {
         setOpenModal(true);
         setDeleteUrl(url)
     }
     const handleConfirm = () => {
-        if (deleteUrl.includes('answer')){fetchDelete(deleteUrl,`/question-detail/${id}`)}
+        if (deleteUrl.includes('answer')){
+         /*** Answer DELTE ***/
+        //`${process.env.REACT_APP_API_SERVER}/answers/${answerId}           
+            fetchDelete(deleteUrl,`/question-detail/${id}`)
+        }
+        
+        /*** Answer DELTE ***/
+        //`${process.env.REACT_APP_API_SERVER}/questions/${id}
         else{fetchDelete(deleteUrl,`/`)}
         setOpenModal(false);
     };
@@ -116,7 +124,8 @@ const QuestionDetail = ({login,userInfo}) => {
         window.scrollTo(0, 0);
       }, []);
 
-    /***Question read***/
+    /*** Question Read ***/
+    //`${process.env.REACT_APP_API_SERVER}/questions/${id}
     useEffect(() => {
         const abortCont = new AbortController();
 
@@ -169,7 +178,7 @@ const QuestionDetail = ({login,userInfo}) => {
             <AnswerList 
                 login={login} userInfo={userInfo} 
                 questionAuthor={questionAuthor} handleDelete={handleDelete}
-                id={id}/>
+                id={id} setAnswerId={setAnswerId}/>
             
         </QuestionDetailWraper>
         </>

@@ -142,7 +142,9 @@ const Question = ({login,userInfo,handleDelete,setVote,vote,data,id}) => {
 
 
 
-
+    /*** question PATCH vote***/
+    //`${process.env.REACT_APP_API_SERVER}/questions/${data.id}/vote/up`  
+    //`${process.env.REACT_APP_API_SERVER}/questions/${data.id}/vote/down`  
     useEffect(() => {
         function handleBeforeUnload() {
             if(checked === 'up') fetchPatch(`${process.env.REACT_APP_API_QUESTION}/${data.id}`,{"votes": data.votes + 1 },)

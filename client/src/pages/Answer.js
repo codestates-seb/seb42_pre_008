@@ -75,7 +75,7 @@ margin-bottom: 1rem;
     }
 `;
 
-const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id}) => {
+const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id,setAnwserId}) => {
     /*** vote ***/
     const [upClicked, setUpClicked] = useState(false);
     const [downClicked, setDownClicked] = useState(false);
@@ -100,6 +100,8 @@ const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id}) => {
     }
 
     /*** fetch link ***/
+
+    //const url =`${process.env.REACT_APP_API_SERVER}/answers/${el.id}`
     const url = process.env.REACT_APP_API_ANSWER + '/' + el.id
     /*** today ***/
     const date = new Date();
@@ -128,13 +130,17 @@ const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id}) => {
             setVote(votes - 1)
         }
     }
-    /*** edit ***/
+    /*** Answer PATCH Adopt ***/
+    //`${process.env.REACT_APP_API_SERVER}/answers/${el.id}`
     const onHandleAdopt = () => {
         fetchPatch(url,
             {
                 "adopt":!el.adopt
             },`/question-detail/${id}`)
     }
+
+     /*** Answer PATCH Edit ***/
+    //`${process.env.REACT_APP_API_SERVER}/answers/${el.id}`
     const onHandleEdit = () => {
 
         setEdit(!edit)
@@ -143,6 +149,9 @@ const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id}) => {
            },`/question-detail/${id}`)
     }
 
+    /*** Answer PATCH Vote ***/
+    //`${process.env.REACT_APP_API_SERVER}/answers/${el.id}/vote/up`   
+    //`${process.env.REACT_APP_API_SERVER}/answers/${el.id}/vote/down`   
     useEffect(() => {
         function handleBeforeUnload() {
             if(checked === 'up') fetchPatch(url,{"votes": el.votes + 1},)
@@ -200,7 +209,9 @@ const Answer = ({el,adopt,login,userInfo,questionAuthor,handleDelete,id}) => {
                     :<button onClick={() => setEdit(!edit)} disabled={ userInfo.name !== el.author }>edit</button>
                     }
                     <button 
-                    onClick={ (e) => handleDelete(e.target.value) } 
+                    onClick={ (e) => {
+                        setAnwserId(el.id)
+                        handleDelete(e.target.value)} } 
                     disabled={ userInfo.name !== el.author } 
                     value = {url}>delete</button>
                     {el.adopt ? 

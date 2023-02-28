@@ -37,6 +37,8 @@ public class MemberService {
             member.setMemberImage("기본이미지");
         }
 
+        // 인증 정보 설정
+        member.setAuthentication(true);
 
         // password encoding 하기
         String encodedPw = passwordEncoder.encode(member.getPassword());

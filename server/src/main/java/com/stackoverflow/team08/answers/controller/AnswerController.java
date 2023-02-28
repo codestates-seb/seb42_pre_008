@@ -39,8 +39,6 @@ public class AnswerController {
 
         // Vote 객체 추가
         answer.setAnswerVote(new AnswerVote());
-        answer.setCreatedAt(LocalDateTime.now());
-        answer.setModifiedAt(LocalDateTime.now());
 
         Answer createdAnswer = answerService.createAnswer(answer);
         URI location = UriCreator.createUri(ANSWER_DEFAULT_URL, createdAnswer.getAnswerId());
@@ -56,7 +54,6 @@ public class AnswerController {
         answerPatchDto.setAnswerId(answerId);
 
         Answer answer = mapper.answerPatchDtoToAnswer(answerPatchDto);
-        answer.setModifiedAt(LocalDateTime.now());
 
         Answer updatedAnswer = answerService.updateAnswer(answer);
 

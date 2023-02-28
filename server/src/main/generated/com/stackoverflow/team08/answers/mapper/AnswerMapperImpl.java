@@ -4,10 +4,7 @@ import com.stackoverflow.team08.answers.dto.AnswerPatchDto;
 import com.stackoverflow.team08.answers.dto.AnswerPostDto;
 import com.stackoverflow.team08.answers.dto.AnswerResponseDto;
 import com.stackoverflow.team08.answers.entity.Answer;
-<<<<<<< HEAD
 import com.stackoverflow.team08.answers.entity.AnswerVote;
-=======
->>>>>>> 87fd81608c10976510178d0206f8e9e4776fa75d
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -15,11 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-<<<<<<< HEAD
-    date = "2023-02-28T11:38:46+0900",
-=======
-    date = "2023-02-25T00:39:02+0900",
->>>>>>> 87fd81608c10976510178d0206f8e9e4776fa75d
+    date = "2023-02-28T21:28:37+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -34,10 +27,7 @@ public class AnswerMapperImpl implements AnswerMapper {
         Answer answer = new Answer();
 
         answer.setContent( answerPostDto.getContent() );
-<<<<<<< HEAD
         answer.setAdopt( answerPostDto.isAdopt() );
-=======
->>>>>>> 87fd81608c10976510178d0206f8e9e4776fa75d
 
         return answer;
     }
@@ -52,10 +42,7 @@ public class AnswerMapperImpl implements AnswerMapper {
 
         answer.setAnswerId( answerPatchDto.getAnswerId() );
         answer.setContent( answerPatchDto.getContent() );
-<<<<<<< HEAD
         answer.setAdopt( answerPatchDto.isAdopt() );
-=======
->>>>>>> 87fd81608c10976510178d0206f8e9e4776fa75d
 
         return answer;
     }
@@ -68,10 +55,7 @@ public class AnswerMapperImpl implements AnswerMapper {
 
         AnswerResponseDto answerResponseDto = new AnswerResponseDto();
 
-<<<<<<< HEAD
         answerResponseDto.setVoteCount( answerAnswerVoteVoteCount( answer ) );
-=======
->>>>>>> 87fd81608c10976510178d0206f8e9e4776fa75d
         answerResponseDto.setAnswerId( answer.getAnswerId() );
         answerResponseDto.setContent( answer.getContent() );
         answerResponseDto.setAdopt( answer.isAdopt() );
@@ -92,7 +76,6 @@ public class AnswerMapperImpl implements AnswerMapper {
 
         return list;
     }
-<<<<<<< HEAD
 
     private int answerAnswerVoteVoteCount(Answer answer) {
         if ( answer == null ) {
@@ -105,6 +88,4 @@ public class AnswerMapperImpl implements AnswerMapper {
         int voteCount = answerVote.getVoteCount();
         return voteCount;
     }
-=======
->>>>>>> 87fd81608c10976510178d0206f8e9e4776fa75d
 }

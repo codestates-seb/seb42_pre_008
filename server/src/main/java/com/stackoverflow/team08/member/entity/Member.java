@@ -1,5 +1,6 @@
 package com.stackoverflow.team08.member.entity;
 
+import com.stackoverflow.team08.audit.Auditable;
 import com.stackoverflow.team08.member.role.MemberRole;
 import com.stackoverflow.team08.member.status.MemberStatus;
 import lombok.*;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
@@ -49,7 +50,7 @@ public class Member {
     private MemberRole memberRole = MemberRole.USER;
 
     @Builder
-    public Member(long memberId, String displayName, String email, String password, String memberImage, String location, String aboutMe, String refreshToken, boolean authentication, MemberStatus memberStatus, MemberRole memberRole) {
+    public Member(long memberId, String displayName, String email, String password, String memberImage, String location, String aboutMe, String refreshToken, boolean authentication) {
         this.memberId = memberId;
         this.displayName = displayName;
         this.email = email;
@@ -59,7 +60,5 @@ public class Member {
         this.aboutMe = aboutMe;
         this.refreshToken = refreshToken;
         this.authentication = authentication;
-        this.memberStatus = memberStatus;
-        this.memberRole = memberRole;
     }
 }

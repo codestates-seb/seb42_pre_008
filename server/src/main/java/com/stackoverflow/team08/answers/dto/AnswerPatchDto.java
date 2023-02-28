@@ -10,9 +10,7 @@ import javax.validation.constraints.NotBlank;
 public class AnswerPatchDto {
     private long answerId;
     private String content;
-
     private int voteCount;
-
     private boolean adopt;
 
     public void setAnswerId(long answerId) {

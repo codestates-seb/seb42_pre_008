@@ -47,7 +47,8 @@ public class AnswerService {
     // 해당 Question에 일치하는 모든 Answer 조회
     @Transactional(readOnly = true)
     public Page<Answer> findAnswers(int page, int size) {
-        return answerRepository.findAllAnswer(PageRequest.of(page, size, Sort.by("answerId").descending()));
+//        return answerRepository.findAllAnswer(PageRequest.of(page, size, Sort.by("answerId").descending()));
+        return answerRepository.findAll(PageRequest.of(page, size, Sort.by("answerId").descending()));
     }
 
     // Answer 삭제

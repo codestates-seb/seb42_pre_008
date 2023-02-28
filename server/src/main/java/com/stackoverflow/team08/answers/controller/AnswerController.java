@@ -7,6 +7,7 @@ import com.stackoverflow.team08.answers.entity.AnswerVote;
 import com.stackoverflow.team08.answers.mapper.AnswerMapper;
 import com.stackoverflow.team08.answers.response.MultiResponseDto;
 import com.stackoverflow.team08.answers.service.AnswerService;
+import com.stackoverflow.team08.question.entity.Question;
 import com.stackoverflow.team08.utils.UriCreator;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ public class AnswerController {
     public ResponseEntity postAnswer(@RequestBody AnswerPostDto answerPostDto) {
         System.out.println("# POST Answer!");
         Answer answer = mapper.answerPostDtoToAnswer(answerPostDto);
+
         // Vote 객체 추가
         answer.setAnswerVote(new AnswerVote());
         answer.setCreatedAt(LocalDateTime.now());
@@ -101,6 +103,24 @@ public class AnswerController {
     public ResponseEntity voteDownAnswer(@PathVariable("answer-id") long answerId) {
         System.out.println("# THIS ANSWER VOTE UP!");
         answerService.voteDownAnswer(answerId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 답변 채택
+    @PostMapping("/{answer-id}/adopt")
+    public ResponseEntity adoptAnswer(@PathVariable("answer-id") long answerId) {
+        System.out.println("# THIS ANSWER ADOPTED");
+        answerService.adoptAnswer(answerId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 답변 채택 취소
+    @PostMapping("/{answer-id}/adoptCancel")
+    public ResponseEntity adoptCancel(@PathVariable("answer-id") long answerId) {
+        System.out.println("# THIS ANSWER ADOPTED");
+        answerService.adoptCancel(answerId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

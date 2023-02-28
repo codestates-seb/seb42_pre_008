@@ -1,5 +1,6 @@
 package com.stackoverflow.team08.question.entity;
 
+import com.stackoverflow.team08.answers.entity.Answer;
 import com.stackoverflow.team08.audit.Auditable;
 //import com.stackoverflow.team08.member.entity.Member;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -48,6 +51,13 @@ public class Question extends Auditable {
 
     public void viewCount(Question question) {
         question.viewCount++;
+    }
+
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers = new ArrayList<>();
+
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
     }
 }
 

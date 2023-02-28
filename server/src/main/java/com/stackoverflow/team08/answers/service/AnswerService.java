@@ -1,15 +1,16 @@
 package com.stackoverflow.team08.answers.service;
 
 import com.stackoverflow.team08.answers.entity.Answer;
-import com.stackoverflow.team08.answers.exception.BusinessLogicException;
-import com.stackoverflow.team08.answers.exception.ExceptionCode;
 import com.stackoverflow.team08.answers.repository.AnswerRepository;
+import com.stackoverflow.team08.exception.BusinessLogicException;
+import com.stackoverflow.team08.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,8 +47,7 @@ public class AnswerService {
     // 해당 Question에 일치하는 모든 Answer 조회
     @Transactional(readOnly = true)
     public Page<Answer> findAnswers(int page, int size) {
-//        return answerRepository.findAllByQuestionId(PageRequest.of(page, size, Sort.by("answerId").descending()));
-        return answerRepository.findAll(PageRequest.of(page, size, Sort.by("answerId").descending()));
+        return answerRepository.findAllAnswer(PageRequest.of(page, size, Sort.by("answerId").descending()));
     }
 
     // Answer 삭제
@@ -75,12 +75,41 @@ public class AnswerService {
         answerRepository.save(findAnswer);
     }
 
+    // 채택 기능
+    public void adoptAnswer(long answerId) {
+        Answer findAnswer = findVerifiedAnswer(answerId);
+
+        // 동일 questionId를 가지는 답변 중 이미 채택된 답변이 있는지 체크
+        findVerifiedAnswerAdopt(findAnswer.getQuestion().getQuestionId());
+
+        findAnswer.setAdopt(true);
+    }
+
+    // 채택 취소 기능
+    public void adoptCancel(long answerId) {
+        Answer findAnswer = findVerifiedAnswer(answerId);
+
+        findAnswer.setAdopt(false);
+    }
+
     // Answer 존재여부 체크
     public Answer findVerifiedAnswer(long answerId) {
         Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
 
-        Answer findAnswer = optionalAnswer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUNT));
+        Answer findAnswer = optionalAnswer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
         return findAnswer;
+    }
+
+    // Answer 채택여부 체크
+    public void findVerifiedAnswerAdopt(long questionId) {
+        List<Answer> answers = answerRepository.adoptedAnswerCheck(questionId);
+
+        answers.stream()
+                .forEach(a -> {
+                    if(a.isAdopt()) {
+                        throw new BusinessLogicException(ExceptionCode.ADOPT_ANSWER_EXIST);
+                    }
+                });
     }
 }

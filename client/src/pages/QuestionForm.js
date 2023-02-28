@@ -1,11 +1,8 @@
-import NavOnLogin from "../component/navNfooter/NavOnLogin";
-import Footer from "../component/navNfooter/Footer";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import useFetch from "../util/useFetch";
 import { useNavigate } from "react-router-dom";
 import Loading from "../component/Loading";
 import { fetchPatch } from "../util/api";

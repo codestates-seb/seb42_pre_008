@@ -71,8 +71,9 @@ public class MemberService {
                 .ifPresent(findMember::setAboutMe);
         Optional.ofNullable(member.getMemberImage())
                 .ifPresent(findMember::setMemberImage);
-        Optional.of(member.isAuthentication())
-                .ifPresent(findMember::setAuthentication);
+        if(member.isAuthentication()){
+            findMember.setAuthentication(true);
+        }
         Optional.ofNullable(member.getRefreshToken())
                 .ifPresent(findMember::setRefreshToken);
 

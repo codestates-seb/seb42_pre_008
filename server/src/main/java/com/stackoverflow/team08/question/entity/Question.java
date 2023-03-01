@@ -57,8 +57,6 @@ public class Question extends Auditable {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<QuestionTag> questionTags = new ArrayList<>();
 
-    //에러콛에 orphan 어쩌고 떴기 때문에 여기도 한번 보기
-
     public void viewCount(Question question) {
         question.viewCount++;
     }
@@ -73,8 +71,6 @@ public class Question extends Auditable {
                 .map(QuestionVote::getStatus)
                 .orElse(VoteStatus.NONE);
     }
-
-
 }
 
 //연관관계 매핑 적용 x

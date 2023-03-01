@@ -24,6 +24,5 @@ public class QuestionResponseDto {
     private String title;
     private String content;
     private String tryAndExpecting;
-
-    private List<TagResponseDto.Response> tags;
+    private List<TagResponseDto.Response> questionTags;
 }

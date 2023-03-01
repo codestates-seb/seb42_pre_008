@@ -12,8 +12,9 @@ public enum ExceptionCode {
     COMMENT_NOT_FOUND(404, "Comment Not Found"),
     VOTE_NOT_ALLOW (405, "You're already voted"),
     MEMBER_SECESSION(404, "MEMBER_SECESSION"),
-    DISPLAY_NAME_EXISTS(404, "This DisplayName is exists");
-
+    DISPLAY_NAME_EXISTS(404, "This DisplayName is exists"),
+    UNAUTHORIZED_MEMBER(401, "Unauthorized member");
+    
     @Getter
     private int status;
 

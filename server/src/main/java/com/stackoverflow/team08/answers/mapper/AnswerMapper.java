@@ -15,6 +15,7 @@ public interface AnswerMapper {
     Answer answerPatchDtoToAnswer(AnswerPatchDto answerPatchDto);
     @Mapping(source = "answerVote.voteCount", target = "voteCount")
     @Mapping(source = "member.memberId", target = "memberId")
+    @Mapping(source = "question.questionId", target = "questionId")
     AnswerResponseDto answerToAnswerResponseDto(Answer answer);
     List<AnswerResponseDto> answerToAnswerResponseDtos(List<Answer> answers);
 }

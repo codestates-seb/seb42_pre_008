@@ -20,6 +20,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Locale;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,9 +40,11 @@ public class MemberController {
     private final JwtCreateService jwtCreateService;
 
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post post){
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post post, Locale locale){
 
         Member postMember = memberMapper.memberPostDtoToMember(post);
+
+        postMember.setLocation(locale.getCountry());
 
         Member createdMember = memberService.createMember(postMember);
 

@@ -5,6 +5,7 @@ import com.stackoverflow.team08.exception.BusinessLogicException;
 import com.stackoverflow.team08.exception.ExceptionCode;
 import com.stackoverflow.team08.member.entity.Member;
 import com.stackoverflow.team08.member.repository.MemberRepository;
+import com.stackoverflow.team08.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,18 +19,17 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
-    private final MemberRepository memberRepository;
+
+    private MemberService memberService;
 
     private final CustomAuthorityUtils customAuthorityUtils;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<Member> optionalMember = memberRepository.findByEmail(username);
+        Member findMember = memberService.existsMemberToFindByEmail(username);
 
-        Member findMember = optionalMember.orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)
-        );
+        memberService.checkAuthorizedMember(findMember);
 
         return new MemberDetails(findMember);
     }

@@ -149,6 +149,11 @@ public class MemberService {
     }
 
     // 인증 여부 확인
+    public void checkAuthorizedMember(Member member){
+        if(!member.isAuthentication()){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+        }
+    }
     
     // OAuth2 에서 넘어온 정보 저장해주기
     public Member oAuth2Update(Member member){

@@ -61,12 +61,11 @@ public class SecurityConfiguration {
                 .and()
                 // 접근 권한 설정
                 .authorizeRequests(auth -> auth
-                        .antMatchers(HttpMethod.GET,"/members/test/jwt").hasRole("USER")
-                        .antMatchers("/members/**").permitAll()
-                        .antMatchers("/answers/**").permitAll()
-                        .antMatchers("/questions/**").permitAll()
-                        .antMatchers("/h2/**").permitAll()
-                        .antMatchers("/auth/login/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH,"/members/**","/answers/**","/questions/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST,"/answers/**","/questions/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE,"/members/**","/answers/**","/questions/**").hasRole("USER")
+                        //.antMatchers("/h2/**").permitAll()
+                        //.antMatchers("/auth/login/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .oauth2Login()

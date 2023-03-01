@@ -7,7 +7,9 @@ import com.stackoverflow.team08.answers.entity.AnswerVote;
 import com.stackoverflow.team08.answers.mapper.AnswerMapper;
 import com.stackoverflow.team08.answers.response.MultiResponseDto;
 import com.stackoverflow.team08.answers.service.AnswerService;
+import com.stackoverflow.team08.member.service.MemberService;
 import com.stackoverflow.team08.question.entity.Question;
+import com.stackoverflow.team08.question.service.QuestionService;
 import com.stackoverflow.team08.utils.UriCreator;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -24,10 +26,14 @@ import java.util.List;
 public class AnswerController {
     private final static String ANSWER_DEFAULT_URL = "/answers";
 
+    private final MemberService memberService;
+    private final QuestionService questionService;
     private final AnswerService answerService;
     private final AnswerMapper mapper;
 
-    public AnswerController(AnswerService answerService, AnswerMapper mapper) {
+    public AnswerController(MemberService memberService, QuestionService questionService, AnswerService answerService, AnswerMapper mapper) {
+        this.memberService = memberService;
+        this.questionService = questionService;
         this.answerService = answerService;
         this.mapper = mapper;
     }
@@ -36,6 +42,13 @@ public class AnswerController {
     public ResponseEntity postAnswer(@RequestBody AnswerPostDto answerPostDto) {
         System.out.println("# POST Answer!");
         Answer answer = mapper.answerPostDtoToAnswer(answerPostDto);
+
+        // memberId
+        long memberId = answerPostDto.getMemberId();
+        long questionId = answerPostDto.getQuestionId();
+
+        answer.setMember(memberService.findMemberToId(memberId));
+        answer.setQuestion(questionService.findVerifiedQuestion(questionId));
 
         // Vote 객체 추가
         answer.setAnswerVote(new AnswerVote());

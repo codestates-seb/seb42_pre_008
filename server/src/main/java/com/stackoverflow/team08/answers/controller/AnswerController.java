@@ -7,6 +7,7 @@ import com.stackoverflow.team08.answers.entity.AnswerVote;
 import com.stackoverflow.team08.answers.mapper.AnswerMapper;
 import com.stackoverflow.team08.answers.response.MultiResponseDto;
 import com.stackoverflow.team08.answers.service.AnswerService;
+import com.stackoverflow.team08.member.service.MemberService;
 import com.stackoverflow.team08.question.entity.Question;
 import com.stackoverflow.team08.utils.UriCreator;
 import org.springframework.data.domain.Page;
@@ -25,10 +26,12 @@ public class AnswerController {
     private final static String ANSWER_DEFAULT_URL = "/answers";
 
     private final AnswerService answerService;
+    private final MemberService memberService;
     private final AnswerMapper mapper;
 
-    public AnswerController(AnswerService answerService, AnswerMapper mapper) {
+    public AnswerController(AnswerService answerService, MemberService memberService, AnswerMapper mapper) {
         this.answerService = answerService;
+        this.memberService = memberService;
         this.mapper = mapper;
     }
 
@@ -36,6 +39,8 @@ public class AnswerController {
     public ResponseEntity postAnswer(@RequestBody AnswerPostDto answerPostDto) {
         System.out.println("# POST Answer!");
         Answer answer = mapper.answerPostDtoToAnswer(answerPostDto);
+        long memberId = answerPostDto.getMemberId();
+        answer.setMember(memberService.findMemberToId(memberId));
 
         // Vote 객체 추가
         answer.setAnswerVote(new AnswerVote());

@@ -9,7 +9,6 @@ import com.stackoverflow.team08.question.dto.QuestionResponseDto;
 import com.stackoverflow.team08.question.dto.QuestionVoteResponseDto;
 import com.stackoverflow.team08.question.entity.Question;
 import com.stackoverflow.team08.tag.mapper.TagMapper;
-import org.jetbrains.annotations.NotNull;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.data.domain.Page;

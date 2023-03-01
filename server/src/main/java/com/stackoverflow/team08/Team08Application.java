@@ -11,5 +11,4 @@ public class Team08Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Team08Application.class, args);
 	}
-
 }

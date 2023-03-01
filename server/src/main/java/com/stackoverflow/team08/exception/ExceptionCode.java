@@ -13,6 +13,7 @@ public enum ExceptionCode {
     VOTE_NOT_ALLOW (405, "You're already voted"),
     MEMBER_SECESSION(404, "MEMBER_SECESSION"),
     DISPLAY_NAME_EXISTS(404, "This DisplayName is exists");
+
     @Getter
     private int status;
 

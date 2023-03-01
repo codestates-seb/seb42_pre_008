@@ -20,12 +20,12 @@ public class MemberAuthenticationFailureHandler implements AuthenticationFailure
         // 인증 실패시 에러 로그 출력
         log.error("로그인 에러 : {} ", exception.getMessage());
 
-        sendErrorResponse(response);
+        sendErrorResponse(response, exception);
     }
 
-    private void sendErrorResponse(HttpServletResponse response) throws IOException {
+    private void sendErrorResponse(HttpServletResponse response, AuthenticationException exception) throws IOException {
         Gson gson = new Gson();
-        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED);
+        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED, exception.getMessage());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));

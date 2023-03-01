@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
 
-    private MemberService memberService;
+    private final MemberService memberService;
 
     private final CustomAuthorityUtils customAuthorityUtils;
 

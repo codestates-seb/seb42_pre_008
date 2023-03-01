@@ -1,11 +1,14 @@
 package com.stackoverflow.team08.member.entity;
 
+import com.stackoverflow.team08.answers.entity.Answer;
 import com.stackoverflow.team08.audit.Auditable;
 import com.stackoverflow.team08.member.role.MemberRole;
 import com.stackoverflow.team08.member.status.MemberStatus;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -48,6 +51,16 @@ public class Member extends Auditable {
     @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole = MemberRole.USER;
+
+    @OneToMany(mappedBy = "member")
+    private List<Answer> answers = new ArrayList<>();
+
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
+        if(answer.getMember() != this) {
+            answer.setMember(this);
+        }
+    }
 
     @Builder
     public Member(long memberId, String displayName, String email, String password, String memberImage, String location, String aboutMe, String refreshToken, boolean authentication) {

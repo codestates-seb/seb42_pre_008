@@ -88,7 +88,7 @@ public class AnswerController {
     }
 
     // 추천 투표
-    @PostMapping("/{answer-id}/voteUp")
+    @PatchMapping("/{answer-id}/vote-up")
     public ResponseEntity voteUpAnswer(@PathVariable("answer-id") long answerId) {
         System.out.println("# THIS ANSWER VOTE UP!");
         answerService.voteUpAnswer(answerId);
@@ -97,7 +97,7 @@ public class AnswerController {
     }
 
     // 비추천 투표
-    @PostMapping("/{answer-id}/voteDown")
+    @PatchMapping("/{answer-id}/vote-down")
     public ResponseEntity voteDownAnswer(@PathVariable("answer-id") long answerId) {
         System.out.println("# THIS ANSWER VOTE UP!");
         answerService.voteDownAnswer(answerId);
@@ -106,7 +106,7 @@ public class AnswerController {
     }
 
     // 답변 채택
-    @PostMapping("/{answer-id}/adopt")
+    @PatchMapping("/{answer-id}/adopt")
     public ResponseEntity adoptAnswer(@PathVariable("answer-id") long answerId) {
         System.out.println("# THIS ANSWER ADOPTED");
         answerService.adoptAnswer(answerId);
@@ -115,7 +115,7 @@ public class AnswerController {
     }
 
     // 답변 채택 취소
-    @PostMapping("/{answer-id}/adoptCancel")
+    @PatchMapping("/{answer-id}/adopt-cancel")
     public ResponseEntity adoptCancel(@PathVariable("answer-id") long answerId) {
         System.out.println("# THIS ANSWER ADOPTED");
         answerService.adoptCancel(answerId);

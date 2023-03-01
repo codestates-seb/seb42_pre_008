@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnswerResponseDto {
+    private long memberId;
     private long answerId;
     private String content;
     private int voteCount;

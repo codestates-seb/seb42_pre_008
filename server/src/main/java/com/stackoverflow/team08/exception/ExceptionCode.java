@@ -14,7 +14,7 @@ public enum ExceptionCode {
     MEMBER_SECESSION(404, "MEMBER_SECESSION"),
     DISPLAY_NAME_EXISTS(404, "This DisplayName is exists"),
     UNAUTHORIZED_MEMBER(401, "Unauthorized member");
-    
+
     @Getter
     private int status;
 

@@ -46,15 +46,15 @@ public class Answer extends Auditable {
           question.getAnswers().add(this);
       }
     }
-//
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
-//
-//    public void setMember(Member member) {
-//        this.member = member;
-//        if(member.getAnswers().contains(this) {
-//            member.getAnswers().add(this)
-//        }
-//    }
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    public void setMember(Member member) {
+        this.member = member;
+        if(member.getAnswers().contains(this)) {
+            member.getAnswers().add(this);
+        }
+    }
 }

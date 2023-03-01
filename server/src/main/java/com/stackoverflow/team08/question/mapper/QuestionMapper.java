@@ -27,6 +27,7 @@ public interface QuestionMapper {
 //    @Mapping(target = "tags", source = "tags")
     Question questionPostToQuestion(QuestionPostDto questionPostDto);
     Question questionPatchToQuestion(QuestionPatchDto questionPatchDto);
+
     QuestionResponseDto questionToQuestionResponse(Question question);
 
 

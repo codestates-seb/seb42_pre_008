@@ -28,9 +28,11 @@ public class Question extends Auditable {
     @Column(nullable = false)
     private String title;
 
+    @Lob
     @Column(nullable = false)
     private String content;
 
+    @Lob
     @Column(nullable = false)
     private String tryAndExpecting;
 

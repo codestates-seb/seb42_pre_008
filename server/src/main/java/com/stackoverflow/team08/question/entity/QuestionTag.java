@@ -31,7 +31,4 @@ public class QuestionTag {
         this.tag = tag;
         this.question = question;
     }
-
-
-
 }

@@ -54,8 +54,10 @@ public class Question extends Auditable {
     @JoinColumn(name = "member_id", updatable = false)
     private Member member;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<QuestionTag> questionTags = new ArrayList<>();
+
+    //에러콛에 orphan 어쩌고 떴기 때문에 여기도 한번 보기
 
     public void viewCount(Question question) {
         question.viewCount++;

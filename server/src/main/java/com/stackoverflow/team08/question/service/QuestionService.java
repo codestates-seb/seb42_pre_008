@@ -34,9 +34,9 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    private Question save(Question question) {
-        return questionRepository.save(question);
-    }
+//    private Question save(Question question) {
+//        return questionRepository.save(question);
+//    }
 
     public Question updateQuestion(Question question) {
         Question findQuestion = findVerifiedQuestion(question.getQuestionId());

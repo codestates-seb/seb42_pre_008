@@ -28,7 +28,7 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
 
         Member member = (Member)authentication.getPrincipal();
 
-        log.info("로그인 한 유저 정보 : {} ", member.toString());
+        log.info("로그인 한 유저 정보 : {} ", member.getEmail());
 
         // 로그인 할때 마다 새로운 토큰을 사용한다.
         String accessToken = jwtCreateService.delegateAccessToken(member);

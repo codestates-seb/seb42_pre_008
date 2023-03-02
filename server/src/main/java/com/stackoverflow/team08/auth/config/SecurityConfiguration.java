@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                 .httpBasic().disable()
                 .formLogin().disable()
                 .csrf().disable()
-                .cors(withDefaults())
+                .cors(httpSecurityCorsConfigurer -> corsConfigurationSource())
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .sessionManagement()

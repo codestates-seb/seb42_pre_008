@@ -42,9 +42,9 @@ public class JwtAuthenticationProcessingFilter extends UsernamePasswordAuthentic
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
         // entity 객체 get
-        Member member = (Member) authResult.getPrincipal();
-
-        Member findMember = memberService.existsMemberToFindByEmail(member.getEmail());
+//        Member member = (Member) authResult.getPrincipal();
+//
+//        Member findMember = memberService.existsMemberToFindByEmail(member.getEmail());
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }

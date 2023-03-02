@@ -1,10 +1,7 @@
 package com.stackoverflow.team08.auth.config;
 
 import com.google.gson.Gson;
-import com.stackoverflow.team08.auth.handler.MemberAuthenticationFailureHandler;
-import com.stackoverflow.team08.auth.handler.MemberAuthenticationSuccessHandler;
-import com.stackoverflow.team08.auth.handler.OAuth2AuthenticationFailureHandler;
-import com.stackoverflow.team08.auth.handler.OAuth2AuthenticationSuccessHandler;
+import com.stackoverflow.team08.auth.handler.*;
 import com.stackoverflow.team08.auth.jwt.JwtTokenizer;
 import com.stackoverflow.team08.auth.jwt.filter.JwtAuthenticationProcessingFilter;
 import com.stackoverflow.team08.auth.jwt.filter.JwtVerificationFilter;
@@ -45,6 +42,7 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils customAuthorityUtils;
     private final JwtCreateService jwtCreateService;
+    private final MemberLogoutSuccessHandler memberLogoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -53,7 +51,7 @@ public class SecurityConfiguration {
                 .httpBasic().disable()
                 .formLogin().disable()
                 .csrf().disable()
-                .cors(withDefaults())
+                .cors(httpSecurityCorsConfigurer -> corsConfigurationSource())
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .sessionManagement()
@@ -63,12 +61,11 @@ public class SecurityConfiguration {
                 .and()
                 // 접근 권한 설정
                 .authorizeRequests(auth -> auth
-                        .antMatchers(HttpMethod.GET,"/members/test/jwt").hasRole("USER")
-                        .antMatchers("/members/**").permitAll()
-                        .antMatchers("/answers/**").permitAll()
-                        .antMatchers("/questions/**").permitAll()
-                        .antMatchers("/h2/**").permitAll()
-                        .antMatchers("/auth/login/**").permitAll()
+                        .antMatchers(HttpMethod.PATCH,"/members/**","/answers/**","/questions/**").hasRole("USER")
+                        .antMatchers(HttpMethod.POST,"/answers/**","/questions/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE,"/members/**","/answers/**","/questions/**").hasRole("USER")
+                        //.antMatchers("/h2/**").permitAll()
+                        .antMatchers(HttpMethod.POST,"/auth/login/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .oauth2Login()
@@ -78,7 +75,9 @@ public class SecurityConfiguration {
                 // 성공 시 Handler
                 .successHandler(new OAuth2AuthenticationSuccessHandler(new Gson(),oAuth2AuthorizedClientService,restTemplateBuilder,memberService,jwtCreateService))
                 // 실패 시 Handler
-                .failureHandler(oAuth2AuthenticationFailureHandler);
+                .failureHandler(oAuth2AuthenticationFailureHandler)
+                .and()
+                .logout().logoutSuccessHandler(memberLogoutSuccessHandler);
 
         return http.build();
     }
@@ -86,10 +85,11 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Location", "Refresh"));
         configuration.setMaxAge(3600L);
 
 

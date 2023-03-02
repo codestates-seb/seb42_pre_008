@@ -38,6 +38,8 @@ public class MemberService {
             member.setMemberImage("기본이미지");
         }
 
+        // 인증 정보 설정
+        member.setAuthentication(true);
 
         // password encoding 하기
         String encodedPw = passwordEncoder.encode(member.getPassword());
@@ -70,8 +72,9 @@ public class MemberService {
                 .ifPresent(findMember::setAboutMe);
         Optional.ofNullable(member.getMemberImage())
                 .ifPresent(findMember::setMemberImage);
-        Optional.of(member.isAuthentication())
-                .ifPresent(findMember::setAuthentication);
+        if(member.isAuthentication()){
+            findMember.setAuthentication(true);
+        }
         Optional.ofNullable(member.getRefreshToken())
                 .ifPresent(findMember::setRefreshToken);
 
@@ -148,6 +151,11 @@ public class MemberService {
     }
 
     // 인증 여부 확인
+    public void checkAuthorizedMember(Member member){
+        if(!member.isAuthentication()){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
+        }
+    }
     
     // OAuth2 에서 넘어온 정보 저장해주기
     public Member oAuth2Update(Member member){

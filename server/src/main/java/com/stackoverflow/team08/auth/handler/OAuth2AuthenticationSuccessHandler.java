@@ -105,16 +105,18 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
             // 랜덤 password 설정
             String uuid = UUID.randomUUID().toString();
 
-            // 임의 멤버 설정
-            Member member = Member.builder()
-                    .displayName((String) attributes.get("name"))
-                    .email(email)
-                    .password(uuid)
-                    .memberImage(imageUrl)
-                    .authentication(false)
-                    .build();
-            // 1차적으로 저장
-            memberService.createMember(member);
+            if(optionalMember.isEmpty()){
+                // 임의 멤버 설정
+                Member member = Member.builder()
+                        .displayName((String) attributes.get("name"))
+                        .email(email)
+                        .password(uuid)
+                        .memberImage(imageUrl)
+                        .authentication(false)
+                        .build();
+                // 1차적으로 저장
+                memberService.createMember(member);
+            }
 
             // 추가정보를 위해서
             String uri = UriComponentsBuilder.fromUriString("http://localhost:8080/test/user")

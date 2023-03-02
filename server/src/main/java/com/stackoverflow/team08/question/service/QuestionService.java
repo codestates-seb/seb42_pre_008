@@ -34,6 +34,14 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
+//    @Transactional
+//    public Question write(Question question, Member member) {
+//        List<Tag> tags = tagService.findAllBy(question.getTagNames());
+//        question = new Question(member, question.getTitle(), question.getContent(), tags);
+//        question = save(question);
+//        return question;
+//    }
+
 //    private Question save(Question question) {
 //        return questionRepository.save(question);
 //    }
@@ -150,6 +158,8 @@ public class QuestionService {
 
         return questions.size();
     }
-
+    private Question save(Question question) {
+        return questionRepository.save(question);
+    }
 
 }

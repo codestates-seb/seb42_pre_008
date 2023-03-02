@@ -31,4 +31,8 @@ public class QuestionTag {
         this.tag = tag;
         this.question = question;
     }
+
+    public String getTagName() {
+        return tag.getTagName();
+    }
 }

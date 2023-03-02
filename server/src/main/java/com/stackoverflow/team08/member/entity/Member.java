@@ -4,6 +4,7 @@ import com.stackoverflow.team08.answers.entity.Answer;
 import com.stackoverflow.team08.audit.Auditable;
 import com.stackoverflow.team08.member.role.MemberRole;
 import com.stackoverflow.team08.member.status.MemberStatus;
+import com.stackoverflow.team08.question.entity.Question;
 import lombok.*;
 
 import javax.persistence.*;
@@ -59,6 +60,15 @@ public class Member extends Auditable {
         answers.add(answer);
         if(answer.getMember() != this) {
             answer.setMember(this);
+        }
+    }
+
+    private List<Question> questions = new ArrayList<>();
+
+    public void addQuestion(Question question) {
+        questions.add(question);
+        if(question.getMember() != this) {
+            question.setMember(this);
         }
     }
 

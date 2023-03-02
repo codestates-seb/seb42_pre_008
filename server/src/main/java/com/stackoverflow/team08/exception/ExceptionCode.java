@@ -16,6 +16,7 @@ public enum ExceptionCode {
     DISPLAY_NAME_EXISTS(404, "이미 존재하는 닉네임 입니다."),
     UNAUTHORIZED_MEMBER(401, "권한이 없는 사용자 입니다."),
     BAD_CREDENTIAL(400, "비밀번호가 맞지 않습니다.");
+
     @Getter
     private int status;
 

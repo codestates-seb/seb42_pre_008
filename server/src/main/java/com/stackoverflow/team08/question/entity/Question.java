@@ -33,7 +33,7 @@ public class Question extends Auditable {
     private String content;
 
     @Lob
-    @Column(nullable = false)
+    @Column
     private String tryAndExpecting;
 
 //    @Column(length = 30)
@@ -53,11 +53,35 @@ public class Question extends Auditable {
     private List<Answer> answers = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", updatable = false)
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<QuestionTag> questionTags = new ArrayList<>();
+
+    public Question(Member writer, String title, String content, List<Tag> tags) {
+        this.member = writer;
+        this.title = title;
+        this.content = content;
+        this.questionTags = new ArrayList<>();
+        tags.forEach(this::addTag);
+    }
+    public Tag addTag(Tag tag) {
+        questionTags.add(new QuestionTag(tag, this));
+        return tag;
+    }
+
+    public boolean isWrittenBy(Member member) {
+        return this.member.getMemberId() == member.getMemberId();
+    }
+    public void setMember(Member member) {
+        this.member = member;
+        if(member.getQuestions().contains(this)) {
+            member.getQuestions().add(this);
+        }
+    }
+
+    //62~67 3.1 memberId 관련 추가 , Member 엔티티에 연관관계 추가
 
     public void viewCount(Question question) {
         question.viewCount++;
@@ -71,6 +95,10 @@ public class Question extends Auditable {
                 .findFirst()
                 .map(QuestionVote::getStatus)
                 .orElse(VoteStatus.NONE);
+    }
+
+    public List<String> getTagNames() {
+        return questionTags.stream().map(QuestionTag::getTagName).collect(Collectors.toList());
     }
 }
 

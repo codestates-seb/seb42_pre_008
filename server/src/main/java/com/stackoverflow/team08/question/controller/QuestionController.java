@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -57,13 +58,31 @@ public class QuestionController {
 
 
     @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody QuestionPostDto questionPostDto) {
+    public ResponseEntity postQuestion(Principal principal,
+            @Valid @RequestBody QuestionPostDto questionPostDto
+    ) {
+
         Question question = questionService.createQuestion(mapper.questionPostToQuestion(questionPostDto));
+        question.setMember(memberService.findMemberToEmail(principal.getName()));
+//        //64,65 추가 3.1 memberId 관련 추가
 
         URI location = UriCreator.createUri(QUESTION_DEFAULT_URL, question.getQuestionId());
 
         return ResponseEntity.created(location).build();
     }
+
+//    @PostMapping
+//    public ResponseEntity<SingleResponseDto<QuestionResponseDto>> post(
+//            @AuthenticationPrincipal Member member,
+//            @Valid @RequestBody QuestionPostDto post
+//    ) {
+//        Question question = questionService.write(mapper.questionPostToQuestion(post), member);
+//        QuestionResponseDto response = mapper.questionToQuestionResponse(question);
+//        mapper.setPropertiesToResponse(member, question, response);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(new SingleResponseDto<>(response));
+//    }
+
 
 
     @PostMapping("/{question-id}/{member-id}/vote/up")

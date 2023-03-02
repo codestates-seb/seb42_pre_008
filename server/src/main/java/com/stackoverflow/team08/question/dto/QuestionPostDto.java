@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class QuestionPostDto {
+
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;
 

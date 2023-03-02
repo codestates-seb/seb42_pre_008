@@ -27,7 +27,7 @@ public interface QuestionMapper {
 //    @Mapping(target = "tags", source = "tags")
     Question questionPostToQuestion(QuestionPostDto questionPostDto);
     Question questionPatchToQuestion(QuestionPatchDto questionPatchDto);
-
+    @Mapping(source = "member.memberId", target = "memberId") //3.1 memberId 관련 추가
     QuestionResponseDto questionToQuestionResponse(Question question);
 
 
@@ -62,4 +62,11 @@ public interface QuestionMapper {
     }
 
 //    List<QuestionResponseDto> questionsToQuestionResponses(Page<Question> page, Member build);
+
+//    default void setPropertiesToResponse(Member member, Question question, QuestionResponseDto response) {
+//        Optional.ofNullable(member)
+//                .ifPresent(presentMember -> {
+//                    response.setIsItWriter(question.isWrittenBy(presentMember));
+//                });
+//    }
 }

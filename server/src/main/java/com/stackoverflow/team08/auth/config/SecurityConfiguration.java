@@ -28,8 +28,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -90,10 +92,12 @@ public class SecurityConfiguration {
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
 
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 
     // Jwt 검증 필터 추가
     public class CustomFilterConfigurer  extends AbstractHttpConfigurer<CustomFilterConfigurer , HttpSecurity>{

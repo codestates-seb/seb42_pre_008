@@ -7,6 +7,7 @@ import com.stackoverflow.team08.answers.entity.AnswerVote;
 import com.stackoverflow.team08.answers.mapper.AnswerMapper;
 import com.stackoverflow.team08.answers.response.MultiResponseDto;
 import com.stackoverflow.team08.answers.service.AnswerService;
+import com.stackoverflow.team08.member.entity.Member;
 import com.stackoverflow.team08.member.service.MemberService;
 import com.stackoverflow.team08.question.entity.Question;
 import com.stackoverflow.team08.question.service.QuestionService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,15 +42,18 @@ public class AnswerController {
     }
 
     @PostMapping
-    public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto) {
+    public ResponseEntity postAnswer(@Valid @RequestBody AnswerPostDto answerPostDto,
+                                     Principal principal) {
         System.out.println("# POST Answer!");
         Answer answer = mapper.answerPostDtoToAnswer(answerPostDto);
 
         // memberId
-        long memberId = answerPostDto.getMemberId();
+//        long memberId = answerPostDto.getMemberId();
+        Member member = memberService.findMemberToEmail(principal.getName());
         long questionId = answerPostDto.getQuestionId();
 
-        answer.setMember(memberService.findMemberToId(memberId));
+//        answer.setMember(memberService.findMemberToId(memberId));
+        answer.setMember(member);
         answer.setQuestion(questionService.findVerifiedQuestion(questionId));
 
         // Vote 객체 추가

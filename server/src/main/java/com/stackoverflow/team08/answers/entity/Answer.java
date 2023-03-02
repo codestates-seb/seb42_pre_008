@@ -37,7 +37,7 @@ public class Answer extends Auditable {
     private boolean adopt;
 
     @ManyToOne
-    @JoinColumn(name = "QUESTION_ID")
+    @JoinColumn(name = "QUESTION_ID", nullable = false)
     private Question question;
 
     public void setQuestion(Question question) {
@@ -48,7 +48,7 @@ public class Answer extends Auditable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
+    @JoinColumn(name = "MEMBER_ID", nullable = false)
     private Member member;
 
     public void setMember(Member member) {

@@ -1,10 +1,7 @@
 package com.stackoverflow.team08.auth.config;
 
 import com.google.gson.Gson;
-import com.stackoverflow.team08.auth.handler.MemberAuthenticationFailureHandler;
-import com.stackoverflow.team08.auth.handler.MemberAuthenticationSuccessHandler;
-import com.stackoverflow.team08.auth.handler.OAuth2AuthenticationFailureHandler;
-import com.stackoverflow.team08.auth.handler.OAuth2AuthenticationSuccessHandler;
+import com.stackoverflow.team08.auth.handler.*;
 import com.stackoverflow.team08.auth.jwt.JwtTokenizer;
 import com.stackoverflow.team08.auth.jwt.filter.JwtAuthenticationProcessingFilter;
 import com.stackoverflow.team08.auth.jwt.filter.JwtVerificationFilter;
@@ -30,6 +27,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -43,6 +41,7 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils customAuthorityUtils;
     private final JwtCreateService jwtCreateService;
+    private final MemberLogoutSuccessHandler memberLogoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -75,7 +74,9 @@ public class SecurityConfiguration {
                 // 성공 시 Handler
                 .successHandler(new OAuth2AuthenticationSuccessHandler(new Gson(),oAuth2AuthorizedClientService,restTemplateBuilder,memberService,jwtCreateService))
                 // 실패 시 Handler
-                .failureHandler(oAuth2AuthenticationFailureHandler);
+                .failureHandler(oAuth2AuthenticationFailureHandler)
+                .and()
+                .logout().logoutSuccessHandler(memberLogoutSuccessHandler);
 
         return http.build();
     }
@@ -87,6 +88,7 @@ public class SecurityConfiguration {
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Location", "Refresh"));
         configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -54,5 +54,7 @@ public class MemberAuthenticationSuccessHandler implements AuthenticationSuccess
         ObjectMapper mapper = new ObjectMapper();
         String memberResponse = mapper.writeValueAsString(build);
         response.getWriter().write(memberResponse);
+        response.getWriter().write("Bearer" + accessToken);
+        response.getWriter().write(refreshToken);
     }
 }

@@ -139,6 +139,8 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
 
             response.setHeader("Authorization", "Bearer " + accessToken);
             response.setHeader("Refresh", refreshToken);
+            response.getWriter().write("Bearer" + accessToken);
+            response.getWriter().write(refreshToken);
         }
     }
     
